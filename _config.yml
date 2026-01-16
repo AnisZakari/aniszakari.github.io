@@ -1,8 +1,8 @@
 # Site Settings
-title: "Scale Up Your Knowledge in Data Science"
-description: "Personal blog about data science, machine learning, and AI"
+title: "Scale Up Your Knowledge in AI Engineering"
+description: "Personal blog about data science, machine learning, and AI Engineering"
 url: "https://aniszakari.github.io"  
-baseurl: ""  # Leave empty if using username.github.io, or set to "/repository-name"
+baseurl: ""  
 
 # Repository (optional - for GitHub edit links)
 # repository: YOUR_USERNAME/personal-blog  # Uncomment and update when ready
@@ -20,7 +20,7 @@ plugins:
 author:
   name: "Anis Zakari"
   avatar: # Path to avatar image (optional)
-  bio: "Data scientist and ML engineer"  # Optional bio
+  bio: "I used to be a Data Scientist in NLP. I used to be an ML Engineer. Now I’m a Lead AI Engineer, and I make AI chatbots for a living."  # Optional bio
   location: # Optional location
   email: "anis.zakari.pro@gmail.com"
   links:
@@ -36,6 +36,11 @@ timezone: Europe/Paris  # Update to your timezone
 
 # Build Settings
 markdown: kramdown
+kramdown:
+  input: GFM
+  math_engine: mathjax
+  hard_wrap: false
+  auto_ids: true
 highlighter: rouge
 
 # Exclude from processing
@@ -47,10 +52,6 @@ exclude:
   - .git
   - .gitignore
   - README.md
-  - s.sh
-  - fix_image_sizes.rb
-  - clean_all_posts.rb
-  - check_articles.rb
   - ARTICLE_CHECK_REPORT.md
   - _attachments
   - _wp_global_styless
@@ -74,7 +75,7 @@ sidebar:
   - title: "About"
     image: # Path to sidebar image
     image_alt: # Alt text for image
-    text: "Data scientist and ML engineer writing about AI, machine learning, and data science."
+    text: "Lead AI Engineer, writing about AI Engineering, machine learning, and Data science."
 
 # Defaults
 defaults:
