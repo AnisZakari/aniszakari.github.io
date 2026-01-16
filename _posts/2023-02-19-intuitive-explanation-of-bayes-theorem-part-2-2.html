@@ -1,0 +1,372 @@
+---
+layout: post
+title: Intuitive explanation of bayes theorem – Part 2/2
+date: 2023-02-19 20:16:04.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Statistics
+tags:
+- bayes
+- bayes theorem
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  wordads_ufa: s:wpcom-ufa-v3-beta:1676854779
+  _publicize_job_id: '81649127588'
+  timeline_notification: '1676834166'
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:00'
+  reader_suggested_tags: '["Statistics","Machine Learning","Data Science","Artificial
+    Intelligence","Bayes Theorem"]'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2023/02/19/intuitive-explanation-of-bayes-theorem-part-2-2/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In my previous <a href="https://standardscaler.wordpress.com/2023/01/20/intuitive-explanation-of-bayes-theorem/">article about Bayes theorem</a> I attempted to explain in a simple way the main ideas behind the formula. Today, let's take it to another level! I'll show you a way that allows you to update your prior beliefs given new information. Some people call this way to use the Bayes Theorem the diachronic Bayes because it evolves through time with new information ! Indeed, you update your believes as you collect more evidence.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Recall the Bayes Theorem:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-19-17-11-13.png?w=400" width="400"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's just chage a bit the notation and Introduce the notions of "hypothesis" and "Data"<br />
+Let H be hypothesis and D be the Data, the formula becomes:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-19-17-12-43.png?w=400" width="400"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that it's not the "final form" of the formula, generally we expand the denominator so it can be calculated. Recall that in <a href="https://standardscaler.wordpress.com/2023/01/20/intuitive-explanation-of-bayes-theorem/">my previous blog post</a> we used the law of total probability to expand it.<br />
+The idea is to break <strong>P(D)</strong> into smaller pieces, I've prepared a little drawing to make it clearer (feel free to read my previous article if it's still not crystal clear).<br />
+<br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-19-17-14-44.png?w=400" width="400"></p>
+<p><br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The smaller pieces must form a partition of D which meach that they are mutually exclusives (no overlap between the pieces) and colletively exhaustive (the sum of the pieces equals <strong>D</strong>).</p>
+<p>If you find these notations somewhat enigmatic for now, don't worry we will dive into an example shortly, hopefully it will be clearer.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Before that, I'd like to comment a bit each quantity of the Bayes formula.<br />
+<br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-19-17-16-38.png?w=550" width="550"><br />
+<br><br />
+<br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="P(H--%7C-D)">P(H  | D)<a class="anchor-link" href="#P(H--%7C-D)"></a><br />
+</h4>
+<p>This is called the <strong>posterior probability</strong> because it's the result you get after applying the bayes theorem. It gives you the probability of the hypothesis given the Data. This quantity is equal to the <strong>Likelihood</strong> times <strong>Prior</strong> divided by the probability of the Data.</p>
+<p>Generally we don't mention <strong>P(D)</strong> at all, instead we just say that <strong>P(H | D)</strong>  is proportional to the <strong>Likelihood</strong> x <strong>Prior</strong>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-19-17-18-25.png?w=300" width="300"><br />
+<br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="P(D)">P(D)<a class="anchor-link" href="#P(D)"></a><br />
+</h4>
+<p>This is the probability of the Data, This quantity might sound somewhat vague. As said before, we generally don't mention it at all because most of the time we don't actually need it (at least at first). We can notice that the denominator (which is P(D) ) in the "expanded" version of the Bayes theorem is in reality the same expression as the numerator.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-19-17-20-00.png?w=300" width="300"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The only difference is that It sums over all the possible hypothesis. So in fact when you calculated all the <strong>P(D | H_i)P(H_i</strong>) you can just sum them together and the result would be equal to <strong>P(D)</strong> (Again this is just the law of total probability). In fact, this quantity can be seen as a normalizing constant that makes all the probabilities add up to 1. In other words we don't really have to worry about P(D) and explicitly calculate it at first, you'll be able to find it a the last step of your calculation, you'll see in the example :) .</p>
+<p><em>Note that this quantity can be very hard to calculate in some cases, especially for continuous variables that involve tricky distributions. That won't be the case in our example.</em></p>
+<p><br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="P(D-%7C-H)">P(D | H)<a class="anchor-link" href="#P(D-%7C-H)"></a><br />
+</h4>
+<p>This is called the <strong>likelihood</strong> because it is "how likely the Data is given the hypothesis" This is the easiest quantity you'll have to deal with.</p>
+<p><br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="P(H)">P(H)<a class="anchor-link" href="#P(H)"></a><br />
+</h4>
+<p>This is called the <strong>prior</strong> because it reflects your prior belief about the hypothesis. Generally this probability comes from the general knowledge or a study or sometimes it's only a subjective value which can be seen as prejudices. This is the reason why sometimes bayesian statistics are criticized and controversial.</p>
+<p><br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Let's-use-the-formula-in-an-example">Let's use the formula in an example<a class="anchor-link" href="#Let's-use-the-formula-in-an-example"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You are at a party and Bob would like too introduce you to some of his friends. Some of them have a bad reputation, they are konwn to be nasty. During the party you meet 3 groups of friends. Now the party is over, it's time to go home you decide to order an uber but you can't find your mobile phone. A kind person in the party comes to you and tells you that she saw someone dressed in black stealing your phone but she can't figure out exactly who this guy was.</p>
+<p><strong>Suppose that for each group of friends the people stayed together all party long which means they didn't mix up with other groups.</strong></p>
+<p>In the first group there were 3 people dressed in Black and 5 with other colors.<br />
+In the second group there were 6 people dressed in Black and 5 with other colors<br />
+In the third group there were 5 people dressed in Black and 4 with other colors</p>
+<p>Group 1 --&gt; B: 3 | O: 5<br><br />
+Group 2 --&gt; B: 6 | O: 5<br><br />
+Group 3 --&gt; B: 5 | O: 4</p>
+<p><strong>Also, you have no clue which group has done this, which means that each group has a priori the same probability of guilt</strong></p>
+<p>Which group has a posteriori the highest probability of containing the thief ?</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Solution">Solution<a class="anchor-link" href="#Solution"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Recall the formula:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-19-18-00-36.png?w=300" width="300"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We want to calculate the probability of the hypothesis given the Data</p>
+<p>Here the hypothesis are:</p>
+<ul>
+<li>H1: Group 1 is guilty </li>
+<li>H2: Group 2 is guilty </li>
+<li>H3: Group 3 is guilty </li>
+</ul>
+<p>Let's calculate The probability associated with each hypothesis given the data so we can find the most probable scenario.</p>
+<p>We have 2 quantities to really care about that is the <strong>likelihood</strong> P(D | H) and the <strong>prior</strong> P(H).</p>
+<p>as each group has a priori the same probability of beeing guilty, the prior is distributed like so:</p>
+<p>P(H = H1) = P(H = H2) = P(H = H3) = 1/3<br><br />
+(In the statistics lingo we also say that the variables are drawn from a uniform distribution.)</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-19-18-08-02.png?w=300" width="300"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now the <strong>likelihoods</strong> !</p>
+<p>The likelihood is P(D | H).<br />
+The idea here is to use the fact that the thief is dressed in black to evaluate how likely a group is to be guilty.</p>
+<ul>
+<li>P(D = Black | H = Group 1) = 3/(3+5) = 0.38</li>
+<li>P(D = Black | H = Group 2) = 6/(6+5) = 0.55</li>
+<li>P(D = Black | H = Group 3) = 5(5+4) = 0.56</li>
+</ul>
+<p><br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-19-18-45-37.png?w=300" width="300"><br />
+<br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now the work is almost done, we now  have to multiply each <strong>Prior</strong> with its associated <strong>Likelihood</strong>.</p>
+<p><img alt="" height="300" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-19-18-50-38.png?h=300"><br />
+<br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As you can see in the column PxL (<strong>Prior</strong> times <strong>Likelihood</strong>) the values don't add up to one. If we want to address this problem we simply have to divide each value by the sum of this column. In fact the sum of all theses values equals to P(D), what we have named "the normalizing constant". This gives us the Posterior.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="150" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-19-18-54-35.png?h=150"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It turns out that group 2 and 3 have very close values<br />
+<br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-19-18-56-54.png?w=300" width="300"><br />
+<br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>That data didn't help really...</p>
+<p>But the nice thing about Diachronic Bayes is that you can save theses posterior probabilities somewhere and wait for new events. When you collect new data your prior distribution or belief won't be anymore 1/3, 1/3, 1/3 but it will be 0.26, 0.36, 0.38 as you gained new information with the data you gathered, in other words, you updated your believes.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Suppose now a friend of yours has experienced the same drama the day after you (yeah those people party every day :D ).<br />
+After the party your friend comes to you and you have a talk. He somehow managed to have more accurate likelihoods, that is:</p>
+<ul>
+<li>Group 1 Likelihood: 0.2 </li>
+<li>Group 2 Likelihood: 0.25 </li>
+<li>Group 3 Likelihood: 0.55 </li>
+</ul>
+<p>You decide to combine his information with yours. To be able to do that you take as a <strong>prior</strong> the posterior of your previous analysis and you associate it with the <strong>likelihoods</strong> of your friend.<br />
+<br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="250" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-19-19-30-16.png?h=250"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's draw the posterior distribution<br />
+<br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-19-19-35-38.png?w=300" width="300"><br />
+<br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Okay... now that you gathered all the information you could get, the posterior distribution highly suggests that you should have a little talk with these nasty bad boys of the group 3 :D</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Hopefully you now have a better understanding of how you can use Bayes Theorem in a diachronic way. This is the end of the article but there is still so much to talk about regarding Bayesian statistics. In particular <strong>Bayesian inference</strong> (how to predict new data), <strong>Bayesian networks</strong> (graphical models that represent probabilistic relationships between variables), <strong>Markov Chains Monte Carlo</strong> aka <strong>MCMC</strong> (allow for parameter estimation such as means, variances..., and exploration of tricky posterior distribution) but also the <strong>Naive Bayes Classifier</strong> (A machine learning model that uses Bayes Theorem).</p>
+</div>
+</div>
+</div>
+<p><!-- /wp:html --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:jetpack/subscriptions {"fontSize":"13px","customFontSize":"13px","className":"is-style-split"} /--><br />
+</body></html></p>

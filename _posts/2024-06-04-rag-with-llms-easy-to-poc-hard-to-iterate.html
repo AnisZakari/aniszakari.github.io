@@ -1,0 +1,55 @@
+---
+layout: single
+title: 'RAG with LLMs: Easy to POC, Hard to Iterate On.'
+date: 2024-06-04 22:10:26.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Generative AI
+- Natural Language Processing (NLP)
+tags:
+- ai systems
+- Complexity
+- cost
+- Large language models
+- latency
+- LLM
+- Machine Learning
+- natural language processing
+- optimization
+- product development
+- retrieval augmented generation
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  reader_suggested_tags: '["LLM","AI","Artificial Intelligence","Rag","Chatgpt"]'
+  _publicize_job_id: '95170870333'
+  timeline_notification: '1717532366'
+  firehose_sent: '1717532366'
+  _elasticsearch_data_sharing_indexed_on: '2024-06-04 20:19:26'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2024/06/04/rag-with-llms-easy-to-poc-hard-to-iterate/"
+---
+<p>The paradox of LLMs is that they have made POCs (Proofs of Concept) incredibly easy to create, but at the same time, they have made iterating on the product more difficult. This is particularly visible with RAG (Retrieval Augmented Generation) systems.</p>
+
+<p>RAG systems are initially very simple systems; they require relatively little effort to build with frameworks/libraries like LangChain or LlamaIndex. This generic approach generally works very well on a limited test subset.</p>
+
+<p>Then, over time, we must inevitably complexify the solution to improve its performance and create custom code blocks for the use case, while keeping production constraints in mind. We often find ourselves simultaneously optimizing 5 opposing axes:</p>
+
+<p>1) The relevance of the system's response (effectively provides the expected answer).<br>2) The behavior of the LLM (tone, output format in JSON/XML, etc.).<br>3) The system's latency (time between the message and the response).<br>4) The cost of a system response.<br>5) The complexity of the solution.</p>
+
+<p>Optimize the relevance of the response and, with the sensitivity of prompts and the system, you end up altering the behavior of the LLM.</p>
+
+<p>Separate the optimization step for relevance and behavior into two distinct independent phases so that one does not influence the other, and you now end up with higher latency and cost.</p>
+
+<p>Use a smaller and faster LLM, you improve latency but increase the complexity of the solution by having to incorporate more context and examples into the prompts.</p>
+
+<p>The "one size fits all approach" works very well and very quickly at the POC stage. To take it a step further, more creativity, more customization, and more thought about the data and overall system design will be required.</p>

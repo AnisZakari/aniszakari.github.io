@@ -1,0 +1,61 @@
+---
+layout: post
+title: Open source LLMs are sometimes cheaper than APIs
+date: 2023-12-30 20:03:50.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Generative AI
+- Natural Language Processing (NLP)
+- Personal Thoughts
+tags:
+- API
+- batch processing
+- chatbot
+- cost saving
+- GPU
+- inference
+- LLM
+- NLP
+- open source
+- SageMaker
+- streaming
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  firehose_sent: '1703963032'
+  timeline_notification: '1703963034'
+  _publicize_job_id: '90692976157'
+  wordads_ufa: s:wpcom-ufa-v4:1703963396
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:06'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2023/12/30/open-source-llms-are-sometimes-cheaper-than-apis/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:paragraph --><html><body></p>
+<p>There are cases where using an open source LLM is cheaper than going through API calls. The main obstacle to using open source models is the inference cost associated with serving, but you'll see that there are exceptions. I'm extending here Pierre-Carl Langlais' line of thinking. In one of his Linkedin post he describes a text annotation use case via LLMs that is cheaper and faster for him than using APIs.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>More generally, I think we need to distinguish between two situations: streaming, where we need to process data in real time, and batch processing, where we can afford to wait.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>The chatbot is a good illustration of the streaming case: the user sends their request and expects an immediate response. In this case, going through APIs like OpenAI, Bedrock, Azure or VertexAI is generally more cost effective, because you only pay for what you consume, without having to rent remote machines 24/7 to host the model.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>On the other hand, for batch processing, we can afford to wait to build up a large enough data set. We can then rent a machine for the duration of processing and do everything in one go. For example, an A10G GPU (64GB VRAM) on SageMaker only costs $2/hour. We then repeat this routine periodically as needed.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Use cases that lend themselves to batch processing include: text annotation, complex labeling, generating descriptions from summary information, text correction, exam grading, text summarization, annotated dataset generation, document translation, named entity extraction, customer service QA...</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>And I haven't even talked about all the other advantages, besides cost, that using open source models offers.</p>
+<p><!-- /wp:paragraph --><br />
+</body></html></p>

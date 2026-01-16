@@ -1,0 +1,97 @@
+---
+layout: post
+title: Managing a Mainstream Open Source Library is Tough
+date: 2024-06-02 17:32:39.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Software Engineering
+tags:
+- code review
+- documentation
+- open source
+- Python
+- software development
+- testing
+- workflow
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  firehose_sent: '1717342362'
+  _publicize_job_id: '95111029993'
+  timeline_notification: '1717342364'
+  _elasticsearch_data_sharing_indexed_on: '2024-06-02 15:32:43'
+  reader_suggested_tags: '["Python","Technology","Software Development","AI","Programming"]'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2024/06/02/managing-a-mainstream-open-source-library-is-tough/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:paragraph --><html><body></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Managing a mainstream open-source library is a full-time job that requires implementing an efficient workflow to avoid being overwhelmed.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>This is particularly noticeable with Langchain, where at certain times of the day, you refresh the Pull Requests page on GitHub, and there's almost a new one every 10 minutes.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>While I'm not a fan of all Langchain's features, I'm quite admiring of the daily workload of the dev teams: nearly 10,000 Pull Requests processed to date for ~2,400 contributors. To handle this flow of code to review, they have implemented the following workflow:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>To contribute, you must follow the standard "fork and pull request" procedure, meaning you cannot push directly to their repo; you must make a PR from a fork you have modified.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":2024,"sizeSlug":"large","linkDestination":"none"} --></p>
+<figure class="wp-block-image size-large"><img src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2024/06/image-1.png?w=1024" alt="" class="wp-image-2024"></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>Before coding anything, you must install the project and its various dependencies with poetry, which will also create a virtual environment for you and centralize all project configurations in the pyproject.toml file.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>If you implement a new feature, you will need to document it, add unit tests (and integration tests if necessary), and provide a Jupyter notebook to facilitate understanding and provide concrete usage examples.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Then your code will have to pass a battery of tests, including the following technologies:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul class="wp-block-list">
+<!-- wp:list-item --></p>
+<li>pytest for unit tests / integration tests.</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>ruff, a super-fast linter / code formatter written in Rust.</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>mypy, which will ensure that all the typing of your functions is consistent.</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>codespell will search for any typos that may have crept into your comments / docstrings.</li>
+<p><!-- /wp:list-item -->
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>(Incidentally, it's interesting to see that they don't use GitHub pre-commit).</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Makefile is used to automate the commands to be executed, so you can run "make test", "make format", "make lint", etc., locally to check your code.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Finally, when you push your PR, a GitHub Actions CI will trigger to perform the same checks as mentioned above, but additionally, it will ensure code compatibility with Python versions 3.8, 3.9, 3.10, and 3.11.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>If your proposal passes all tests and is deemed worthy of interest, it will be reviewed by a team member and potentially merged.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>This will undoubtedly put off more than one person, but the idea is to guarantee and maintain a high level of quality. This approach will allow filtering, simplify the review, and decrease the time spent on it.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>There are undoubtedly some good practices to be gained.</p>
+<p><!-- /wp:paragraph --><br />
+</body></html></p>

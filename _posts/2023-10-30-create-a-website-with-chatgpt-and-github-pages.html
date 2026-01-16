@@ -1,0 +1,1108 @@
+---
+layout: post
+title: Create a website with ChatGPT and Github Pages
+date: 2023-10-30 00:20:36.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Generative AI
+- Non classé
+tags:
+- ChatGPT
+- css
+- Github
+- Github Pages
+- javascript
+- Website
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  footnotes: ''
+  _oembed_6ed3a84463b227d9595e015204dfe5ae: "{{unknown}}"
+  _oembed_3cad2a345f7c5a9e1fb188b132d68c40: "{{unknown}}"
+  enclosure: |
+    https://github.com/AnisZakari/tutorial_create_website_with_ChatGPT/raw/main/back_video.mp4
+    10931345
+    video/mp4
+  _wp_old_date: '2023-10-29'
+  _publicize_job_id: '88912659773'
+  timeline_notification: '1698621640'
+  wordads_ufa: s:wpcom-ufa-v4:1698651004
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:03'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2023/10/30/create-a-website-with-chatgpt-and-github-pages/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://standardscaler.wordpress.com/wp-content/uploads/2023/10/2023-10-28-21-20-37.png"><img alt="main_img" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/2023-10-28-21-20-37.png"></a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The aim of this tutorial is to learn GitHub Pages and enhance your skills in HTML, CSS and JavaScript by building a website in a fun, engaging way. We'll use ChatGPT to guide and enhance the learning process.</p>
+<p>Let's start by designing a simple landing page for an AI company using GitHub Pages. This can later be expanded into a full website</p>
+<p>Chek out the resulting website <a href="https://aniszakari.github.io/tutorial_create_website_with_ChatGPT/">here</a><br><br />
+You can find the full Github example <a href="https://github.com/AnisZakari/tutorial_create_website_with_ChatGPT">here</a></p>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li>A <a href="https://www.github.com">GitHub</a> Account</li>
+<li>Git command knowledge</li>
+<li>Basic understanding of HTML and CSS.</li>
+<li>[OPTIONAL] An IDE such as VScode, pycharm ...</li>
+</ul>
+<p>As you know, I myself have a basic grasp of HTML, CSS, and JavaScript since it's not my regular focus, but ChatGPT has got your back</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="What-is-GitHub-Pages-?">What is GitHub Pages ?<a class="anchor-link" href="#What-is-GitHub-Pages-?"></a><br />
+</h2>
+<p>GitHub Pages is a GitHub service for hosting static websites directly from repositories.</p>
+<p>It's free, user-friendly, supports custom domains, and integrates with Jekyll. Additionally, it leverages Git's version control.</p>
+<p>However, it's limited to static content, has a 1GB repository size cap, and lacks advanced backend features like databases.<br />
+So if you’re expecting a lot of traffic or want complex features, paying for a great hosting service would be the way to go.</p>
+<p><strong>Prohibited uses :</strong><br />
+GitHub Pages is not intended for or allowed to be used as a free web-hosting service to run your online business, e-commerce site, or any other website that is primarily directed at either facilitating commercial transactions or providing commercial software as a service (SaaS). GitHub Pages sites shouldn't be used for sensitive transactions like sending passwords or credit card numbers. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#prohibited-uses">See GitHub's documentation on prohibited uses for more details.</a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Setup-the-github-project">Setup the github project<a class="anchor-link" href="#Setup-the-github-project"></a><br />
+</h2>
+<p>I suppose that you are already familiar with the basics of github and git commands, if it's not the case, there are plenty of free resources on the net, please check them before diving into this tutorial.</p>
+<p>Once you are logged in to your Github account, go to your repositories and create a new one</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://standardscaler.wordpress.com/wp-content/uploads/2023/08/2023-08-15-22-33-37.png"><img alt="img" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/2023-08-15-22-33-37.png"></a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that in order to publish a GitHub Pages site, your repository must be public. Private repositories are not supported for hosting GitHub Pages websites for free</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://standardscaler.wordpress.com/wp-content/uploads/2023/08/2023-08-15-22-38-03.png"><img alt="img" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/2023-08-15-22-38-03.png"></a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>After the repository has been created, you can copy its link.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://standardscaler.wordpress.com/wp-content/uploads/2023/08/2023-08-15-22-40-50.png"><img alt="img" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/2023-08-15-22-40-50.png"></a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now you can clone the project locally using either a terminal window or the built-in terminal in the IDE of your choice</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+[code language="bash"]git clone link-to-your-github-project.git<br />
+cd your-github-project[/code]
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="ChatGPT-to-the-rescue">ChatGPT to the rescue<a class="anchor-link" href="#ChatGPT-to-the-rescue"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we'll have ChatGPT do most of the work for us, the idea is to get him generate the components of our website, that is to say:</p>
+<ul>
+<li>
+<p><strong>index.html</strong>:<br><br />
+file that contains the structure and content of web pages using HTML markup. They define the semantic elements like headings, paragraphs, links, etc</p>
+</li>
+<li>
+<p><strong>style.css</strong>:<br><br />
+file to add styling to web pages using CSS code. They control visual elements like colors, layout, fonts, etc.</p>
+</li>
+<li>
+<p><strong>script.js</strong>:<br><br />
+file to add interactivity and dynamic behavior to web pages using JavaScript code. They enable functionality like click events, animations, data manipulation, etc.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Iterating-with-ChatGPT">Iterating with ChatGPT<a class="anchor-link" href="#Iterating-with-ChatGPT"></a><br />
+</h2>
+<p>To properly follow along with this tutorial, you can access the full chat history <a href="https://chat.openai.com/share/5acdc273-29d4-4ac7-87e5-0e9597c858e4">here</a></p>
+<p>Here is the prompt I used to ask ChatGPT:</p>
+<p><strong>Prompt:</strong></p>
+<blockquote><p>
+You are the best Web Developer from Apple, create a beautiful website for me on GitHub Pages. <br><br />
+This website is for my company, I'm making Ai products. I want it to be dynamic with fancy javascript things.<br />
+also here is the logo of my company: <br><br />
+<code>https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/main/ai_company_logo.png</code><br />
+I want you to provide full code for the following files: <br><br />
+- style.css <br><br />
+- script.js <br><br />
+- index.html <br><br />
+index has to reference style.css and script.js <br></p>
+<p>Remember it has to be very attractive ! Do not provide only raw html please. <br><br />
+You can resize the logo if you want.</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that I added an image of the logo to my repository beforehand, so I was able to reference its link in the code ChatGPT generated, even though this may not be the best way to do it.</p>
+<p>Oh and by the way, I generated the logo image using <a href="https://openai.com/dall-e-2">DALLE 2</a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>ChatGPT's answer:</strong></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary><strong>index.html</strong></summary>
+<p>[code language="html"]<br />
+&lt;!DOCTYPE html&gt;<br />
+&lt;html lang="en"&gt;<br />
+&lt;head&gt;<br />
+    &lt;meta charset="UTF-8"&gt;<br />
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;<br />
+    &lt;title&gt;Your AI Company&lt;/title&gt;<br />
+    &lt;link rel="stylesheet" href="style.css"&gt;<br />
+    &lt;script src="script.js" defer&gt;&lt;/script&gt;<br />
+&lt;/head&gt;<br />
+&lt;body&gt;<br />
+    &lt;!-- Landing Section --&gt;<br />
+    &lt;section id="landing"&gt;<br />
+        &lt;img id="company-logo" src="https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/main/ai_company_logo.png" alt="Company Logo"&gt;<br />
+        &lt;h1&gt;Your AI Company&lt;/h1&gt;<br />
+        &lt;p&gt;Innovating the Future&lt;/p&gt;<br />
+        &lt;button&gt;Learn More&lt;/button&gt;<br />
+    &lt;/section&gt;<br />
+    &lt;!-- About Section --&gt;<br />
+    &lt;section id="about"&gt;<br />
+        &lt;h2&gt;About Us&lt;/h2&gt;<br />
+        &lt;p&gt;We are a leading company in AI product development, dedicated to revolutionizing the tech industry.&lt;/p&gt;<br />
+    &lt;/section&gt;<br />
+    &lt;!-- Products Section --&gt;<br />
+    &lt;section id="products"&gt;<br />
+        &lt;h2&gt;Our AI Products&lt;/h2&gt;<br />
+        &lt;div class="product-card" id="product1"&gt;Product 1&lt;/div&gt;<br />
+        &lt;div class="product-card" id="product2"&gt;Product 2&lt;/div&gt;<br />
+        &lt;div class="product-card" id="product3"&gt;Product 3&lt;/div&gt;<br />
+    &lt;/section&gt;<br />
+    &lt;!-- Footer --&gt;<br />
+    &lt;footer&gt;<br />
+        &lt;p&gt;Contact us at: contact@yourcompany.com&lt;/p&gt;<br />
+        &lt;div id="social-links"&gt;<br />
+            &lt;a href="#"&gt;Facebook&lt;/a&gt;<br />
+            &lt;a href="#"&gt;Twitter&lt;/a&gt;<br />
+            &lt;a href="#"&gt;LinkedIn&lt;/a&gt;<br />
+        &lt;/div&gt;<br />
+    &lt;/footer&gt;<br />
+&lt;/body&gt;<br />
+&lt;/html&gt;<br />
+[/code]<br />
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary><strong>style.css</strong></summary>
+<p>[code language="css"]body {<br />
+    font-family: 'Arial', sans-serif;<br />
+    margin: 0;<br />
+    padding: 0;<br />
+    background-color: #f5f5f5;<br />
+}</p>
+<p>#landing {<br />
+    height: 100vh;<br />
+    display: flex;<br />
+    flex-direction: column;<br />
+    align-items: center;<br />
+    justify-content: center;<br />
+    background-color: #333;<br />
+    color: #fff;<br />
+}</p>
+<p>#company-logo {<br />
+    width: 150px;<br />
+    height: 150px;<br />
+}</p>
+<p>#about {<br />
+    padding: 40px;<br />
+    text-align: center;<br />
+    background-color: #eee;<br />
+}</p>
+<p>#products {<br />
+    padding: 40px;<br />
+    display: flex;<br />
+    justify-content: space-around;<br />
+    background-color: #fff;<br />
+}</p>
+<p>.product-card {<br />
+    width: 200px;<br />
+    height: 200px;<br />
+    background-color: #333;<br />
+    color: #fff;<br />
+    display: flex;<br />
+    align-items: center;<br />
+    justify-content: center;<br />
+    transition: transform 0.3s;<br />
+}</p>
+<p>.product-card:hover {<br />
+    transform: scale(1.1);<br />
+}</p>
+<p>footer {<br />
+    padding: 20px;<br />
+    text-align: center;<br />
+    background-color: #333;<br />
+    color: #fff;<br />
+}</p>
+<p>#social-links a {<br />
+    margin: 0 10px;<br />
+    text-decoration: none;<br />
+    color: #fff;<br />
+}[/code]<br />
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary><strong>script.js</strong></summary>
+<p>[code language="javascript"]document.addEventListener("DOMContentLoaded", () =&gt; {<br />
+    const productCards = document.querySelectorAll(".product-card");</p>
+<p>    productCards.forEach(card =&gt; {<br />
+        card.addEventListener("mouseenter", () =&gt; {<br />
+            card.style.backgroundColor = "#555";<br />
+        });<br />
+        card.addEventListener("mouseleave", () =&gt; {<br />
+            card.style.backgroundColor = "#333";<br />
+        });<br />
+    });<br />
+});[/code]<br />
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Using VS Code, I created the index.html, style.css, and script.js files locally in the same directory. I then opened the index.html file in my web browser to view the website. Below is a screenshot of the resulting page displayed:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://standardscaler.wordpress.com/wp-content/uploads/2023/08/2023-08-15-23-12-46.png"><img alt="img" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/2023-08-15-23-12-46.png"></a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The result is not that bad ! But there are few issues we can improve:</p>
+<ol>
+<li>I don't like the fonts.</li>
+<li>The large gray header takes up too much space.</li>
+<li>"Learn More" button is very ugly !</li>
+<li>It would be better to have real product images rather than placeholders.</li>
+</ol>
+<p>Let's tackle these improvements:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Prompt</strong>:</p>
+<blockquote><p>
+Could you change the fonts ? I don't like them, maybe we could have instead roboto or montserrat ?
+</p></blockquote>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>ChatGPT:</strong></p>
+<blockquote><p>
+Of course! Both Roboto and Montserrat are excellent choices for web design due to their readability and modern look. I'll incorporate Montserrat as the primary font, but you can easily switch to Roboto or any other font if you prefer.</p>
+<p>To use Montserrat from Google Fonts, you'll need to add a link to the font in the <code>index.html</code> in the <code>&lt;head&gt;</code> section:</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary><strong>index.html</strong></summary>
+<p>[code language="html"]<br />
+&lt;!DOCTYPE html&gt;<br />
+&lt;html lang="en"&gt;<br />
+&lt;head&gt;<br />
+    &lt;meta charset="UTF-8"&gt;<br />
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;<br />
+    &lt;title&gt;Your AI Company&lt;/title&gt;<br />
+    &lt;link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&amp;display=swap" rel="stylesheet"&gt;<br />
+    &lt;link rel="stylesheet" href="style.css"&gt;<br />
+    &lt;script src="script.js" defer&gt;&lt;/script&gt;<br />
+&lt;/head&gt;<br />
+&lt;body&gt;<br />
+    ...<br />
+&lt;/body&gt;<br />
+&lt;/html&gt;<br />
+[/code]<br />
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary><strong>style.css</strong></summary>
+<p>[code language="css"]body {<br />
+    font-family: 'Montserrat', sans-serif;<br />
+    margin: 0;<br />
+    padding: 0;<br />
+    background-color: #f5f5f5;<br />
+}<br />
+#landing {<br />
+    ...<br />
+}<br />
+#company-logo {<br />
+    ...<br />
+}<br />
+#about {<br />
+    ...<br />
+}<br />
+#products {<br />
+    ...<br />
+}<br />
+.product-card {<br />
+    ...<br />
+}<br />
+footer {<br />
+    ...<br />
+}<br />
+#social-links a {<br />
+    ...<br />
+}[/code]<br />
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ok nice, I impemented the changes, now let's address the other issues</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Prompt</strong>:</p>
+<blockquote><p>
+Ok nice ! now the header (the gray part) is way too big ! please make it shorter, also the "learn more" button is very ugly and not modern, please rework this
+</p></blockquote>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>ChatGPT</strong>:</p>
+<blockquote><p>
+Absolutely, let's refine the design further:</p>
+<p>Landing Section: I'll reduce the height of the landing section to make it shorter.<br />
+Learn More Button: I'll redesign the "Learn More" button to give it a modern, attractive look.</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary><strong>style.css</strong></summary>
+<p>[code language="css"]body {<br />
+    font-family: 'Montserrat', sans-serif;<br />
+    margin: 0;<br />
+    padding: 0;<br />
+    background-color: #f5f5f5;<br />
+}</p>
+<p>#landing {<br />
+    height: 60vh;  /* Reduced height */<br />
+    display: flex;<br />
+    flex-direction: column;<br />
+    align-items: center;<br />
+    justify-content: center;<br />
+    background-color: #333;<br />
+    color: #fff;<br />
+}</p>
+<p>#company-logo {<br />
+    width: 150px;<br />
+    height: 150px;<br />
+}</p>
+<p>#about {<br />
+    padding: 40px;<br />
+    text-align: center;<br />
+    background-color: #eee;<br />
+}</p>
+<p>#products {<br />
+    padding: 40px;<br />
+    display: flex;<br />
+    justify-content: space-around;<br />
+    background-color: #fff;<br />
+}</p>
+<p>.product-card {<br />
+    width: 200px;<br />
+    height: 200px;<br />
+    background-color: #333;<br />
+    color: #fff;<br />
+    display: flex;<br />
+    align-items: center;<br />
+    justify-content: center;<br />
+    transition: transform 0.3s;<br />
+}</p>
+<p>.product-card:hover {<br />
+    transform: scale(1.1);<br />
+}</p>
+<p>/* Updated button styling */<br />
+button {<br />
+    background-color: #ff4500;  /* Orangish color */<br />
+    color: #fff;<br />
+    border: none;<br />
+    padding: 10px 20px;<br />
+    border-radius: 30px;  /* Rounded edges */<br />
+    font-weight: 500;<br />
+    letter-spacing: 1px;<br />
+    transition: background-color 0.3s;<br />
+}</p>
+<p>button:hover {<br />
+    background-color: #ff6347;  /* Slightly different shade for hover effect */<br />
+    cursor: pointer;<br />
+}</p>
+<p>footer {<br />
+    padding: 20px;<br />
+    text-align: center;<br />
+    background-color: #333;<br />
+    color: #fff;<br />
+}</p>
+<p>#social-links a {<br />
+    margin: 0 10px;<br />
+    text-decoration: none;<br />
+    color: #fff;<br />
+}[/code]<br />
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Meanwhile I generated some extra images with DALLE 2 for the products, I added them into the repository and fetched the links.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Prompt</strong>:</p>
+<blockquote><p>
+ok here are the images corresponding to product 1, product 2 and product 3</p>
+<p>product 1<br />
+<a href="https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/main/product_1.png">https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/main/product_1.png</a></p>
+<p>product 2<br />
+<a href="https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/main/product_2.png">https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/main/product_2.png</a></p>
+<p>product 3<br />
+<a href="https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/main/product_3.png">https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/main/product_3.png</a></p>
+<p>could you integrate them ?</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>ChatGPT</strong>:</p>
+<blockquote><p>
+Certainly! Let's integrate the product images into the design.</p>
+<p>First, I'll update the <code>index.html</code><br />
+to include the images within the product cards:</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary><strong>index.html</strong></summary>
+<p>[code language="html"]...<br />
+<!-- Products Section --></p>
+<section id="products">
+<h2>Our AI Products</h2>
+<div class="product-card" id="product1">
+<img alt="Product 1" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/product_1.png"></p>
+<p>Product 1</p>
+</div>
+<div class="product-card" id="product2">
+<img alt="Product 2" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/product_2.png"></p>
+<p>Product 2</p>
+</div>
+<div class="product-card" id="product3">
+<img alt="Product 3" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/product_3.png"></p>
+<p>Product 3</p>
+</div>
+</section>
+<p>...[/code]<br />
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next, I'll update the style.css to style the images and the text within the product cards:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary><strong>style.css</strong></summary>
+<p>[code language="css"]/* ... */<br />
+.product-card {<br />
+    width: 200px;<br />
+    height: 250px;  /* Adjusted height to accommodate image and text */<br />
+    background-color: #f5f5f5;<br />
+    color: #333;<br />
+    display: flex;<br />
+    flex-direction: column;<br />
+    align-items: center;<br />
+    justify-content: space-between;<br />
+    padding: 10px;<br />
+    border: 1px solid #ddd;<br />
+    border-radius: 10px;  /* Rounded edges */<br />
+    transition: transform 0.3s, box-shadow 0.3s;<br />
+}<br />
+.product-card:hover {<br />
+    transform: scale(1.05);<br />
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);  /* Shadow effect on hover */<br />
+}<br />
+.product-card img {<br />
+    width: 100%;<br />
+    height: 150px;<br />
+    object-fit: cover;<br />
+    border-radius: 5px;  /* Rounded edges */<br />
+}<br />
+.product-card p {<br />
+    margin-top: 10px;<br />
+    font-weight: 500;<br />
+}<br />
+/* ... */[/code]<br />
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>At this point the website looks like that</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://standardscaler.wordpress.com/wp-content/uploads/2023/08/2023-08-15-23-38-38.png"><img alt="img" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/2023-08-15-23-38-38.png"></a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The updates look much better! But let's refine a few more things:</p>
+<ul>
+<li>The product images aren't centered properly, likely due to the "Our AI Products" box on the left.</li>
+<li>Instead of a big gray header, a background video could make it more dynamic. There are plenty of websites that let you download high quality videos for free like <a href="https://www.pexels.com/videos/">pexels.com</a>
+</li>
+<li>When hovering over the products, the background turns dark gray and doesn't revert back. This seems to be an issue with the JavaScript file.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Prompt:</strong></p>
+<blockquote><p>
+few remarks: <br><br />
+- I prefer "Our AI Products"  to be above  the product cards not on the left <br><br />
+- I would like to add a background video behind the logo in the header of my website. <br><br />
+The video file is located at this URL: <br><br />
+https://github.com/AnisZakari/tutorial_create_website_with_ChatGPT/raw/main/back_video.mp4 <br><br />
+-  I think that the issue with the product card staying dark gray after the hover state comes from the script.js file, could you check it ?
+</p></blockquote>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>ChatGPT:</strong></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>
+- Certainly! I'll adjust the layout to place the "Our AI Products" title above the product cards. <br><br />
+- Great choice! Background videos can add a dynamic touch to the landing page and immediately engage visitors. <br><br />
+Let's integrate the video into your landing section.<br><br />
+- Ah, I see the issue. The script.js file is indeed setting the background color of the product cards to #555 on mouse enter and #333 on mouse leave. This overrides the CSS styles, which is why the background color remains dark gray after the hover effect...
+</p></blockquote>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>After several iterations of refinements and adjustments guided by discussions with ChatGPT, we have arrived at the following design:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary><strong>index.html</strong></summary>
+<p>[code language="html"]<br />
+&lt;!DOCTYPE html&gt;<br />
+&lt;html lang="en"&gt;<br />
+&lt;head&gt;<br />
+    &lt;meta charset="UTF-8"&gt;<br />
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;<br />
+    &lt;title&gt;Your AI Company&lt;/title&gt;<br />
+    &lt;link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&amp;display=swap" rel="stylesheet"&gt;<br />
+    &lt;link rel="stylesheet" href="style.css"&gt;<br />
+    &lt;script src="script.js" defer&gt;&lt;/script&gt;<br />
+&lt;/head&gt;<br />
+&lt;body&gt;<br />
+    &lt;!-- Landing Section --&gt;<br />
+    &lt;section id="landing"&gt;<br />
+        &lt;video autoplay muted loop id="bgVideo"&gt;<br />
+            &lt;source src="https://github.com/AnisZakari/tutorial_create_website_with_ChatGPT/raw/main/back_video.mp4"<br />
+                type="video/mp4"&gt;<br />
+            Your browser does not support HTML5 video.<br />
+        &lt;/video&gt;<br />
+        &lt;div class="landing-content"&gt;<br />
+            &lt;img id="company-logo"<br />
+                src="https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/main/ai_company_logo.png"<br />
+                alt="Company Logo"&gt;<br />
+            &lt;h1&gt;Your AI Company&lt;/h1&gt;<br />
+            &lt;p&gt;Innovating the Future&lt;/p&gt;<br />
+            &lt;button&gt;Learn More&lt;/button&gt;<br />
+        &lt;/div&gt;<br />
+    &lt;/section&gt;<br />
+    &lt;!-- About Section --&gt;<br />
+    &lt;section id="about"&gt;<br />
+        &lt;h2&gt;About Us&lt;/h2&gt;<br />
+        &lt;p&gt;We are a leading company in AI product development, dedicated to revolutionizing the tech industry.&lt;/p&gt;<br />
+    &lt;/section&gt;<br />
+    &lt;!-- Products Section --&gt;<br />
+    &lt;section id="products"&gt;<br />
+        &lt;h2&gt;Our AI Products&lt;/h2&gt;<br />
+        &lt;div class="products-grid"&gt;<br />
+            &lt;div class="product-card" id="product1"&gt;<br />
+                &lt;img src="https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/main/product_1.png"<br />
+                    alt="Product 1"&gt;<br />
+                &lt;p&gt;Product 1&lt;/p&gt;<br />
+            &lt;/div&gt;<br />
+            &lt;div class="product-card" id="product2"&gt;<br />
+                &lt;img src="https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/main/product_2.png"<br />
+                    alt="Product 2"&gt;<br />
+                &lt;p&gt;Product 2&lt;/p&gt;<br />
+            &lt;/div&gt;<br />
+            &lt;div class="product-card" id="product3"&gt;<br />
+                &lt;img src="https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/main/product_3.png"<br />
+                    alt="Product 3"&gt;<br />
+                &lt;p&gt;Product 3&lt;/p&gt;<br />
+            &lt;/div&gt;<br />
+        &lt;/div&gt;<br />
+    &lt;/section&gt;<br />
+    &lt;!-- Footer --&gt;<br />
+    &lt;footer&gt;<br />
+        &lt;p&gt;Contact us at: contact@yourcompany.com&lt;/p&gt;<br />
+        &lt;div id="social-links"&gt;<br />
+            &lt;a href="#"&gt;&lt;img<br />
+                    src="https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/main/icons/facebook_logo.png"<br />
+                    alt="Facebook"&gt;&lt;/a&gt;<br />
+            &lt;a href="#"&gt;&lt;img<br />
+                    src="https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/792c7f7f0d792fcef3399a4572d0da00e9648af1/icons/twitter_logo.svg"<br />
+                    alt="Twitter"&gt;&lt;/a&gt;<br />
+            &lt;a href="#"&gt;&lt;img<br />
+                    src="https://raw.githubusercontent.com/AnisZakari/tutorial_create_website_with_ChatGPT/792c7f7f0d792fcef3399a4572d0da00e9648af1/icons/linkedin_logo.svg"<br />
+                    alt="LinkedIn"&gt;&lt;/a&gt;<br />
+        &lt;/div&gt;<br />
+    &lt;/footer&gt;<br />
+&lt;/body&gt;<br />
+&lt;/html&gt;<br />
+[/code]<br />
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary><strong>style.css</strong></summary>
+<p>[code language="css"]body {<br />
+    font-family: 'Montserrat', sans-serif;<br />
+    margin: 0;<br />
+    padding: 0;<br />
+    background-color: #f5f5f5;<br />
+}<br />
+#landing {<br />
+    position: relative;<br />
+    height: 60vh;<br />
+    display: flex;<br />
+    align-items: center;<br />
+    justify-content: center;<br />
+    color: #fff;<br />
+    overflow: hidden;<br />
+    /* Ensures that the video won't overflow the section */</p>
+<p>}<br />
+.landing-content {<br />
+    position: relative;<br />
+    z-index: 1;<br />
+    text-align: center;<br />
+}<br />
+#bgVideo {<br />
+    position: fixed;<br />
+    /* Fixes the video in place */<br />
+    z-index: -1;<br />
+    /* Keeps the video behind the content */<br />
+    top: 50%;<br />
+    left: 50%;<br />
+    min-width: 100%;<br />
+    min-height: 100%;<br />
+    width: auto;<br />
+    height: auto;<br />
+    transform: translateX(-50%) translateY(-50%);<br />
+}<br />
+#company-logo {<br />
+    width: 250px;<br />
+    height: 250px;<br />
+}<br />
+#about {<br />
+    padding: 40px;<br />
+    text-align: center;<br />
+    background-color: #eee;<br />
+}<br />
+#products {<br />
+    padding: 40px;<br />
+    display: flex;<br />
+    flex-direction: column;<br />
+    align-items: center;<br />
+    background-color: #fff;<br />
+}<br />
+.product-card {<br />
+    width: 150px;<br />
+    height: 220px;<br />
+    background-color: transparent;<br />
+    color: #333;<br />
+    display: flex;<br />
+    flex-direction: column;<br />
+    align-items: center;<br />
+    justify-content: space-between;<br />
+    padding: 10px;<br />
+    border: 1px solid #ddd;<br />
+    border-radius: 10px;<br />
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s ease;<br />
+}<br />
+.product-card:hover {<br />
+    transform: scale(1.1);<br />
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);<br />
+    background-color: #f5f5f5;<br />
+}<br />
+.product-card:active,<br />
+.product-card:focus {<br />
+    background-color: transparent;<br />
+}<br />
+.product-card img {<br />
+    width: 100%;<br />
+    height: 120px;<br />
+    object-fit: cover;<br />
+    border-radius: 5px;<br />
+}<br />
+.product-card p {<br />
+    margin-top: 10px;<br />
+    font-weight: 500;<br />
+}<br />
+.products-grid {<br />
+    display: flex;<br />
+    justify-content: space-around;<br />
+    width: 100%;<br />
+    max-width: 600px;<br />
+}<br />
+/* Updated button styling */<br />
+button {<br />
+    background-color: #ff4500;<br />
+    color: #fff;<br />
+    border: none;<br />
+    padding: 10px 20px;<br />
+    border-radius: 30px;<br />
+    font-weight: 500;<br />
+    letter-spacing: 1px;<br />
+    transition: background-color 0.3s;<br />
+}<br />
+button:hover {<br />
+    background-color: #ff6347;<br />
+    cursor: pointer;<br />
+}<br />
+footer {<br />
+    padding: 20px;<br />
+    text-align: center;<br />
+    background-color: #333;<br />
+    color: #fff;<br />
+}<br />
+#social-links {<br />
+    display: flex;<br />
+    justify-content: center;<br />
+    align-items: center;<br />
+    padding: 10px 0;<br />
+}<br />
+#social-links a {<br />
+    margin: 0 10px;<br />
+    text-decoration: none;<br />
+}<br />
+#social-links img {<br />
+    width: 45px;<br />
+    /* Adjust size as needed */<br />
+    height: 45px;<br />
+    /* Adjust size as needed */<br />
+    transition: transform 0.3s;<br />
+}<br />
+#social-links img:hover {<br />
+    transform: scale(1.2);<br />
+    /* Slightly enlarges the icon on hover */<br />
+}<br />
+#social-links a:nth-child(1) img {<br />
+    /* Targets the first image in #social-links */<br />
+    width: 30px;<br />
+    /* Reduced size */<br />
+    height: 30px;<br />
+    /* Reduced size */<br />
+}[/code]<br />
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary><strong>script.js</strong></summary>
+<p>[code language="javascript"]document.addEventListener("DOMContentLoaded", () =&gt; {<br />
+    const productCards = document.querySelectorAll(".product-card");</p>
+<p>    productCards.forEach(card =&gt; {<br />
+        card.addEventListener("mouseenter", () =&gt; {<br />
+            // You can add other dynamic behavior here if needed<br />
+        });<br />
+        card.addEventListener("mouseleave", () =&gt; {<br />
+            // You can add other dynamic behavior here if needed<br />
+        });<br />
+    });<br />
+});[/code]<br />
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It finally looks like that</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://standardscaler.wordpress.com/wp-content/uploads/2023/08/2023-08-16-21-04-22.png"><img alt="img" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/2023-08-16-21-04-22.png"></a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now you can push your code changes to GitHub:</p>
+<p>[code language="bash"]git status # view changed files<br />
+git add . # add all changed files to staging<br />
+git commit -m "my commit message" # commit changes with a message<br />
+git push # push commits to GitHub[/code]
+</p></div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Setting-Up-GitHub-Pages">Setting Up GitHub Pages<a class="anchor-link" href="#Setting-Up-GitHub-Pages"></a><br />
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have built the webpage locally, the next step is to configure GitHub settings to host it live on GitHub Pages.<br />
+Follow the instructions bellow:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://standardscaler.wordpress.com/wp-content/uploads/2023/08/2023-08-16-21-07-34.png"><img alt="img" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/2023-08-16-21-07-34.png"></a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You may notice a small orange dot next to your latest commit after pushing to GitHub. This indicates that GitHub Pages is building your site (there's a GitHub pipeline running behind the scenes). Your website will be published shortly once the build is complete</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://standardscaler.wordpress.com/wp-content/uploads/2023/08/2023-08-16-21-11-21.png"><img alt="img" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/2023-08-16-21-11-21.png"></a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There we go !</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://standardscaler.wordpress.com/wp-content/uploads/2023/08/2023-08-16-21-12-12.png"><img alt="img" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/2023-08-16-21-12-12.png"></a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To find the live website URL, go to the repository Settings tab, click on Pages in the left sidebar, and you will see the web address for your published GitHub Pages site.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://standardscaler.wordpress.com/wp-content/uploads/2023/08/2023-08-16-21-12-56.png"><img alt="img" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/2023-08-16-21-12-56.png"></a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>That's it for today falks ! I hope you enjoyed this tutorial !</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion"></a><br />
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This was an opportunity to get familiar with GitHub Pages and rethink teaching methods.</p>
+<p>The sole objective is to create a landing page, but that will naturally force you to improve on:</p>
+<ul>
+<li>Git/GitHub</li>
+<li>How to ask questions to ChatGPT</li>
+<li>HTML/CSS/JavaScript</li>
+</ul>
+<p>Of course, at some point you may reach the limits of your understanding on one or more of these points. And in some cases, ChatGPT may not be able to guide you. This is where you'll be forced to consult external resources or to focus on your code to understand what's happening. That's where real learning will take place.</p>
+</div>
+</div>
+</div>
+<p><!-- /wp:html --><br />
+</body></html></p>

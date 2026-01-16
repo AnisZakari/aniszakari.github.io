@@ -1,0 +1,48 @@
+---
+layout: post
+title: Deploy Python lambda functions using Docker Containers
+date: 
+type: post
+parent_id: '0'
+published: false
+password: ''
+status: draft
+categories:
+- Non classé
+tags: []
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  _oembed_f07ccba7f51be71a0ed5a93e510c5fa4: "{{unknown}}"
+  _oembed_351b44f81582a124b1e1df4fa5677cd4: "{{unknown}}"
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:syntaxhighlighter/code {"language":"bash"} --><html><body></p>
+<pre class="wp-block-syntaxhighlighter-code">docker ps</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code">CONTAINER ID  IMAGE    ... PORTS                   NAMES
+45eec0e12d63  postgres ... 0.0.0.0:5432-&gt;5432/tcp  test_postgres_1
+</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>Let’s grab the <code>CONTAINER ID</code> and stop/remove the container.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code {"language":"bash"} --></p>
+<pre class="wp-block-syntaxhighlighter-code">docker stop 45eec0e12d63
+docker rm 45eec0e12d63</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>https://www.philschmid.de/aws-lambda-with-custom-docker-image</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>https://simplernerd.com/docker-port-allocated/</p>
+<p><!-- /wp:paragraph --><br />
+</body></html></p>

@@ -1,0 +1,76 @@
+---
+layout: post
+title: Padding strategy matters when Fine tuning LLMs
+date: 2024-03-10 22:49:13.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Generative AI
+- Machine Learning
+tags:
+- fine-tuning
+- Large language models
+- LLMs
+- padding
+- sequence length
+- tokenization
+- training data
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  wordads_ufa: s:wpcom-ufa-v4:1710108761
+  firehose_sent: '1710108519'
+  reader_suggested_tags: '["Large Language Models","Artificial Intelligence","LLMS","AI","Chatgpt"]'
+  _publicize_job_id: '92624771592'
+  timeline_notification: '1710108519'
+  _elasticsearch_data_sharing_indexed_on: '2024-03-10 22:08:40'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2024/03/10/padding-strategy-matters-when-fine-tuning-llms/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:paragraph --><html><body></p>
+<p>A poor padding strategy can disrupt an LLM after fine-tuning, and the reasons are quite subtle. This is especially true since there is no pad_token in the Llama2 or Mistral tokenizers.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>A neural network is a sequence of matrix multiplications. When working with text and variable sequence lengths, padding is required to normalize them to a common length to allow matrix representation.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>This padding simply consists of filling the sequences with a special token until they reach the length of the longest sequence in the batch.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>It turns out that most LLMs were pre-trained without padding. As decoders, they predict the next word based on previous words. It is then enough to split the training corpus into equal sequence lengths and train the model on it (even if sometimes the splitting is not very graceful). No need for padding, besides in many models like Mistral or Llama2, the padding token doesn't even exist in the tokenizer.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>When fine-tuning these models on specific instructions, we provide the instructions and expected responses in a single block (we concatenate both). There is no reason for the sequences to be the same length. To process all of this in batches, padding is then required. Having no padding token, one way to get by is to use the eos (end of sequence) or unk (unknown) token instead.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Then, what do we do? Right or left padding?</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul>
+<!-- wp:list-item --></p>
+<li>With eos, I'm personally not very comfortable doing left padding: the model is asked to stop the sequence even though it hasn't started. Doing right padding, why not.</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>With &lt;unk&gt;, doing left or right padding should be fairly equivalent.</li>
+<p><!-- /wp:list-item -->
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>On the other hand for inference, you have in my opinion no choice but to do left padding. Simply because the decoder will rely on your last token to predict the next one; if it's padding, the quality of the response will be altered.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>One last approach that seems quite elegant and effective for fine-tuning is to do as in initial training: no padding, concatenate the entire question-answer dataset and slice it into identical chunks of N tokens.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Curious to know your padding strategies.</p>
+<p><!-- /wp:paragraph --><br />
+</body></html></p>

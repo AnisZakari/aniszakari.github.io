@@ -1,0 +1,401 @@
+---
+layout: single
+title: Understanding projections - They are everywhere in Machine Learning !
+date: 2022-12-16 14:40:33.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linear Algebra
+- Machine Learning
+tags:
+- cosine
+- dotproduct
+- PCA
+- Projections
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  wordads_ufa: s:wpcom-ufa-v3-beta:1676584012
+  _publicize_job_id: '79696954820'
+  timeline_notification: '1671198036'
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:00'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2022/12/16/understanding-projections-they-are-all-over-the-place-in-machine-learning/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>These days I felt like writing an article about projections. Simply because I noticed that projections are one of these mathematical tools that people daily use without even realizing it.</p>
+<p>I'll try to make things clear by going step by step but I assume you have some remembrance of high school level maths and some basic notions of linear algebra. Hopefully this article won't be to difficult to read.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Scalar-projection-of-a-vector">Scalar projection of a vector<a class="anchor-link" href="#Scalar-projection-of-a-vector"></a><br />
+</h1>
+<p>Let's use a practical situation to describe a projection. Let's say that for some reason, someone is trapped on top of a leaning pole. He asks you to put a mattress on the ground so that he can safely jump on it.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="drawing" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-25-14-544.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The problem is that you are not exactly sure where to put the mattress. That's where projections come into action.</p>
+<p>In a sense,  yo can see it as measuring the shadow of the leaning pole, caused by the sunlight that casts rays perpendicular to the ground. That's what we call an orthogonal projection.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Before jumping into the problem, I would like to be clear about some basic notations.<br><br />
+let <strong>a</strong> be a data point that has two coordinates <code>x=3</code> and <code>y=4</code>.<br><br />
+then, knowing these coordinates, the data point is fully defined and you can put <strong>a(3,4)</strong> on the graph.</p>
+<p>But the same coordinates are also useful to define not the data point anymore but the vector.<br><br />
+You can differentiate them with the little arrow above the <strong>a</strong>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="notations" height="320" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-46-26.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>These two guys are defined the same way but they are not exactly the same mathematical object.</p>
+<p>Firstly, this is interesting to note that <strong>a(3,4)</strong> is sufficient to define the object <strong>a</strong> as a vector because we are working with position vectors and such vectors always starts at the origin (0,0). So when we write <strong>a(3,4)</strong> we implicitly say that this vector starts from (0,0) and goes to the point (3,4).</p>
+<p>There are several ways you can intepret vectors but for now let's just stick with the basic way to see it:<br><br />
+It's an object that has a magnitude and points towards a direction.</p>
+<p>So we can use this vector <strong>a(3,4)</strong> to model our leaning pole.</p>
+<p>Also note that <strong>i</strong> is the unit vector that points towards the point (1,0).<br><br />
+It is called a unit vector because its norm or magnitude is 1.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So here is to problem, knowing that the leaning pole's height is 5m and that it points towards the point (3,4), what is the distance d ?</p>
+<p><img height="250" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-47-02.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>the answer is quite immediate with a little bit of high school math.<br><br />
+the answer is $d = h\cos \theta$</p>
+<ul>
+<li>also h is just the magnitude of the vector <strong>a</strong> which can be written |a|</li>
+<li>$\cos \theta$ can be written using the dot product between <strong>a</strong> and <strong>i</strong>.</li>
+</ul>
+<p>generally, you can see a dot product being written &lt;<strong>a</strong>, <strong>i</strong>&gt; or $a^T \cdot i$ or even just <strong>a</strong>.<strong>i</strong>.<br><br />
+I'will use the linear algebra notation which is $a^T \cdot i$</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img height="150" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-47-36.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So the distance d can now simply be written:</p>
+<p><img height="100" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-48-22.png"></p>
+<p>And now you can see why it's interesting to take a unit vector,  because the final expression becomes so simple ! The projection of <strong>a</strong> on <strong>i</strong> is just the dot product of <strong>a</strong> and <strong>i</strong></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And as you might have guessed (because the example is actually trivial) the result is 3</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-48-52.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that the dot product of two vector is always a scalar. Interestingly in french the dot product is called a "produit scalaire" because it is the product of two vectors that returns a scalar.</p>
+<p>So we just have to put the mattress on the x axis (on the ground) and put it 3m away from the leaning pole so this gentleman can safely jump.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Vector-projection-of-a-vector">Vector projection of a vector<a class="anchor-link" href="#Vector-projection-of-a-vector"></a><br />
+</h1>
+<p>Now, sometimes we don't really care about just having a scalar as a final output.<br><br />
+Instead we want the result as a vector which means having the coordinates of the projected point.</p>
+<p>To do so, we can simply associate the scalar d with the direction of <strong>i</strong>.<br><br />
+This is simply done with the product <strong>d.i</strong></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="drawing" height="50" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-49-17.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>now you get the projection as a vector (you can check on the graph that the answer is correct).<br><br />
+Basically what we have done is that we transformed a magnitude into a vector by giving this magnitude a direction.</p>
+<p>This operation is called an outer product, like a dot product, an outer product involves two vectors.<br><br />
+In our case d can be seen as a 1x1 vector.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Projection-of-a-Matrix">Projection of a Matrix<a class="anchor-link" href="#Projection-of-a-Matrix"></a><br />
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now things are becoming interesting !<br />
+What if we didn't have only one vector to project onto <strong>u</strong> but 2 and we wanted to do all the projection with a single operation ? This is what matrices are made for !</p>
+<p>Let's get back to the original graph with an extra vector <strong>b</strong></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="drawing" width="250" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-49-49.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can then stack the vectors into a matrix called <strong>A</strong></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="drawing" height="200" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-50-47.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This way, we can perform the dot product with <strong>u</strong> for each line of the matrix (for each vector).</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-51-16.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We end up with the projection of <strong>a</strong> and <strong>b</strong> onto <strong>u</strong> (<strong>i</strong> becomes <strong>u</strong> because it's just more handy to have a unit vector called <strong>u</strong>). These are wrapped up in the output vector. As seen previously these scalars 3 and 4 are the magnitudes of the projections.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's give those magnitudes a direction with the outer product so they can become vectors.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-51-36.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As a conclusion, if u is a unit vector these simple formulas can get vectors projected !</p>
+<ul>
+<li>for a vector <strong>a</strong> onto <strong>u</strong> : $a \cdot u \cdot u^T$  </li>
+<li>for a matrix <strong>A</strong> onto <strong>u</strong> : $A \cdot u \cdot u^T$  </li>
+</ul>
+<p>Note if the vector you are projecting on is not normalized, you can normalize it by dividing it with its norm !</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="A-less-trivial-example-(but-still-easy)">A less trivial example (but still easy)<a class="anchor-link" href="#A-less-trivial-example-(but-still-easy)"></a><br />
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's take an example where the vector you are projecting on is less trivial and doesn't have a magnitude of 1.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="drawing" height="150" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-51-59.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First, let's normalize this bad boy <strong>v</strong>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="drawing" height="150" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-52-19.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We'll now use <strong>u</strong> which points towards the same direction than v but has a magnitude of 1.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The projection of <strong>a</strong> on <strong>u</strong> is written $p_u(a)$</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-52-39.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see on the graph that the projected vector is indeed (2.5, 2.5)</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Projections-are-ubiquitous-in-Machine-Learning">Projections are ubiquitous in Machine Learning<a class="anchor-link" href="#Projections-are-ubiquitous-in-Machine-Learning"></a><br />
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Projections are all over the place in ML, especially in the linear models like PCA or Linear Regression. Previously what I've explained in that a matrix <strong>A</strong> can be projected on a vector <strong>u</strong> just with a matrix multiplication <strong>A.u</strong>.</p>
+<p>Does it ring a bell ?</p>
+<p>If it doesn't let's take a closer look at how we can interpret <strong>A.u</strong>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Remember that we can interpret a matrix as a stacking of data points/vectors (rows) or a stacking of features (columns).</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="drawing" height="150" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-52-54.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>A.u</strong> can be written like so</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="drawing" height="150" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-16-13-53-14.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This can now be read as a linear combination of the columns. Everytime we multiply a matrix with a vector, we are calculating a weighted sum of the columns, the weights being the coefficients in the vector.</p>
+<p>Now this should explain a lot of things as linear combinations are ubiquitous in ML.</p>
+<p>Indeed, think about PCA where we are looking for the linear combination of the features/columns that maximizes variance. In fact this linear combination <strong>X.u</strong> is just the projection of X on <strong>u</strong>. If we rephrase it, we are looking for a vector <strong>u</strong> so that the projection of X on <strong>u</strong> has the highest possible variance.</p>
+<p>In a sense, we could say that linear combinations and projections are "cousins".</p>
+<p>That's all for today folks !</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-25-17-366.png"></p>
+</div>
+</div>
+</div>
+<p><!-- /wp:html --></p>
+<p><!-- wp:jetpack/subscriptions {"buttonWidth":"","fontSize":"13px","customFontSize":"13px","padding":12} /--><br />
+</body></html></p>

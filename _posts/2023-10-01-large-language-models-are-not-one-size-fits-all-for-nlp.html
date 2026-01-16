@@ -1,0 +1,65 @@
+---
+layout: post
+title: Large Language Models Are Not One-Size-Fits-All for NLP
+date: 2023-10-01 23:16:28.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Generative AI
+- Natural Language Processing (NLP)
+tags:
+- classificatio
+- classification
+- keyword extraction
+- LLM
+- NLP
+- semantic analysis
+- tf-idf
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  footnotes: ''
+  wpcom_is_first_post: '1'
+  _publicize_job_id: '88108745466'
+  timeline_notification: '1696194991'
+  wordads_ufa: s:wpcom-ufa-v4:1696195188
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:04'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2023/10/01/large-language-models-are-not-one-size-fits-all-for-nlp/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://standardscaler.wordpress.com/wp-content/uploads/2023/10/tfidf_vs_gpt3.png" target="_blank"><img alt="tfidf_vs_gpt" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/tfidf_vs_gpt3.png"></a></p>
+<p>Using a jackhammer to crack a nut... That's kind of what we're doing when we use a large language model for a basic NLP task... What about good old TF-IDF?</p>
+<p>We've gotten into the habit of using large language models for all sorts of tasks. We have to admit, they've become easy to access via APIs, interfaces, cloud provider services or even locally. But this ease of use shouldn't lead to laziness, especially when it comes to being more efficient and less demanding on computing resources.</p>
+<p>Let's consider the use case where we need to select keywords from a text. For example, to classify a document or to automatically suggest tags to a user for SEO.</p>
+<p>There is a proven NLP method that allows us to do this fairly easily. It's called TF-IDF.</p>
+<p>Suppose we have a corpus of documents. The statistical TF-IDF method assumes that important words are probably not the ones that are abundant across all documents, because those are common.</p>
+<p>On the flip side, words that are frequent in only a few documents are likely the most important.</p>
+<p>For a given word, in a given document, the score assigned is:</p>
+<p>The frequency of the word's appearance in the document (TF - Term Frequency).</p>
+<p>Weighted by the ratio of the total number of documents over the number of documents where the term appears (IDF - Inverse Document Frequency).</p>
+<p>I suggest a little <a href="https://lnkd.in/evjYikuZ" target="_blank">code example on Github</a> using the first paragraph of the iPhone Wikipedia page. I "cheat" a bit by using each sentence as a document, clean up the words a bit, do some lemmatization, and apply tf-idf using bigrams (consecutive word pairs) as well.</p>
+<p>The result isn't perfect but this low-cost method can largely suffice in some cases. Plus, it can be refined later with more advanced techniques.</p>
+<p>Of course tf-idf has its limitations, it's a purely statistical method and thus doesn't take semantics into account. It requires a certain number of documents and words for the result to be relevant, etc... But NLP shouldn't be reduced to just large language models!</p>
+</p></div>
+</p></div>
+</p></div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html"> </div>
+</p></div>
+</p></div>
+<p><!-- /wp:html --><br />
+</body></html></p>

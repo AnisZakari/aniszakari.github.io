@@ -1,0 +1,337 @@
+---
+layout: single
+title: What is Entropy ?  — Intuitive explanation with code.
+date: 2022-12-19 23:52:22.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Machine Learning
+- Statistics
+tags:
+- Decision Trees
+- Entropy
+- Information
+- information theory
+- Python
+- Shannon
+meta:
+  timeline_notification: '1671490344'
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  wordads_ufa: s:wpcom-ufa-v3-beta:1677451340
+  _wp_old_date: '2022-12-18'
+  _publicize_job_id: '79793698147'
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:48:59'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2022/12/19/what-is-entropy-intuitive-explanation-with-code/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You may be familiar with variance, it is a useful measure when looking for how spread the data is. When I say spread, I'm referring to the dispersion of data around the sample's mean. Indeed, when the data is very spread it is often considered that it contains a lot of information. I say often because sometimes the data can be spread but it is not information, only noise. The concept of information is very important in Statistics and thus in Data Science. Entropy is one of those concepts that sounds magical at first and that is easily misunderstood and poorly taught. I'll try to keep this article as simple as possible, without using anything from information theory.</p>
+<p>Consider those two examples:</p>
+<p><code>A = [0, 0, 0, 0, 0]</code><br><br />
+<code>B = [0, 1, 1, 2, 2]</code></p>
+<p>In the list A there’s barely any information because the value is always the same, you won’t learn anything from there. In contrast, the list B contains several different values, which means you’ll probably learn something from it if those values are relevant. This concept might ring you a bell.</p>
+<p>The concept of Entropy or Shannon Entropy has some similarities with variance. It is also a way to quantify the amount of information in the data. However, it is somewhat different than variance in the sense that it actually doesn’t care about the values themselves. Entropy is only interested in their probabilities. Let's stick with this idea of using probabilities to describe a system. Notice that in list A the probability associated with 0 is 100% but at the same time we said that there's no information. In this regard, we can say that the more uncertainty there is, the more information there is.</p>
+<p>Let's put words on the previous lists and let say  you want to choose a country for your summer holidays.<br />
+You want to choose the country so that you maximize the probability that the wether is sunny. The following lists contain the forecasts for the 5 coming days.</p>
+<p><code>A = [Sunny, Sunny, Sunny, Sunny, Sunny]</code><br><br />
+<code>B = [Sunny, Cloudy, Cloudy, Rainy, Rainy]</code></p>
+<p>Now it becomes clear that you'll choose country A as country B has an uncertain weather (a high entropy)</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="low_entropy" height="200" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-16-02-12.png?h=200"></p>
+<p>In this case, it's not very informative, thus it has low entropy.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the second case, there is more variety (more information or higher entropy), the probabilities are spread across sunny, cloudy and rainy. With variety comes a way more complete information.</p>
+<p><img alt="high_entropy" height="200" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-16-04-09.png?h=200"></p>
+<p>To put it in a nutshell, entropy is a <strong>way of quantifying uncertainty</strong>. This is probably the most intuitive way to see it. Uncertainty is inversely proportional to probability, that is to say, the more uncertain an outcome is, the least probable it is. As you might have guessed, the uncertainty is maximum when the distribution is uniform (all the probabilities are the same), basically it's a stalemate, it's chaos, you can't take any decision based on the probabilities... which is exactly the scenario where we said that information is maximum. Maximizing information is equivalent to maximizing uncertainty.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Intuition-behind-the-formula">Intuition behind the formula<a class="anchor-link" href="#Intuition-behind-the-formula"></a><br />
+</h2>
+<p>That's pretty much it, entropy is used to describe a probability distribution.<br />
+Now, I don't want to give you the formula yet, instead I would like to try to re-build it from scratch.</p>
+<p>Imagine that you are given a bunch of different distributions and you have to find the one that has the least information/uncertainty. That is to say that the dream scenario would be to have one bar with 100% and 0% probability for all the others. The worst scenario would be to have all the probabilities equally distributed (note that what we do here is basically what's done in decision trees where we try to minimize uncertainty or impurity).</p>
+<p><img alt="entropy_scenarios" height="350" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-16-05-13.png?h=350"></p>
+<p>Now, with which formula/metric would you come up with to characterize theses states ?</p>
+<p>The first thing I would try in this situation is to multiply all the probabilities together. The reasoning behind it is, as all the probabilities should add up to 1, one would expect that if a probability is very high, the others would be very low, thus all the tiny probabilities will make the whole product shrink to something near zero.</p>
+<p>In contrast if the probabilities are all equally distributed, it prevents from having a very tiny probability that will make our product close to zero.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>for instance:<br><br />
+<code>A = [98%, 1%, 1%]--&gt; 0.98 * 0.01 * 0.01 = 0.000098</code></p>
+<p><code>B = [33%, 33%, 33%]--&gt; 0.33 * 0.33 * 0.33 = 0.037</code></p>
+<p>Note that I didn't want to take the scénario <code>[100%, 0%, 0%]</code> as it's obvious that any zero in the list would lead to a product of 0.</p>
+<p>It looks like it's working ! B has the highest information/uncertainty. However it's quite annoying to deal with very small numbers (look at A). Multiplying many numbers smaller than 1 leads to very tiny results. A cool way to address this is to use the logarithm function because the product becomes a sum:<br><br />
+<code>log(a*b) = log(a) + log(b)</code></p>
+<p>Also, log is a monotonically increasing function, thus it doesn't change the relations of order.</p>
+<p><code>A --&gt; log(0.98 * 0.01 * 0.01) = log(0.98) + log(0.01) + log(0.01) = - 9.23</code></p>
+<p><code>B --&gt; log(0.33 * 0.33 * 0.33) = log(0.33) + log(0.33) + log(0.33) = -3.29</code></p>
+<p>B remains the one that has the highest uncertainty and the numbers are not tiny !<br />
+But guess what, there's another issue. Indeed log(x) tends to -infinity when x approaches 0.</p>
+<p>A trick to address this is to multiply log(p) by p because x*log(x) tends towards 0 when x approaches 0.</p>
+<p><code>A --&gt; 0.98*log(0.98) + 0.01*log(0.01) + 0.01*log(0.01) = - 0.11</code></p>
+<p><code>B --&gt;  0.33*log(0.33) + 0.33*log(0.33) + 0.33*log(0.33) = -1.09</code></p>
+<p>This time the relation of order is changed (I'll explain why later), and a way to address this issue is to multiply the whole thing by -1.</p>
+<p><code>A --&gt; -1* [0.98*log(0.98) + 0.01*log(0.01) + 0.01*log(0.01)] = 0.11</code></p>
+<p><code>B --&gt; -1* [0.33*log(0.33) + 0.33*log(0.33) + 0.33*log(0.33)] = 1.09</code></p>
+<p>B is the one with the highest uncertainty, the numbers are not tiny and we don't have problems anymore with p=0. So it looks like we achieved our goal !</p>
+<p>the general form of the formula is</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="compact_way_to_write_equation" height="50" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-16-07-50.png?h=50"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Interpretation">Interpretation<a class="anchor-link" href="#Interpretation"></a><br />
+</h2>
+<p>The easiest way to interpret this quantity is to tweak a bit the formula.<br />
+In fact the formula can be written like so:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="entropy_explicit_formula" height="50" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-16-11-49.png?h=50"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>These formulas are equivalents because:</p>
+<p>$\log(\frac{1}{p}) = \log(1) - \log(p) = -\log(p)$</p>
+<p>Then this looks an awful lot like an expected value.<br />
+Recall that the general formula for the expected value is.</p>
+<p>$\text{ExpectedValue}(X) = \sum_{i=1}^{n} x_{i} \times p_{i}$</p>
+<p>Where x in our context is the uncertainty $\log(\frac{1}{p})$.</p>
+<p>If you are not used to expected values, you can just see it as a weighted average.</p>
+<p>In conclusion, you can see the entropy as the expected uncertainty of the distribution (the weighted average of the uncertainty) in the distribution, it helps you answer the question "How uncertain my distribution is ?".</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Further-explanation">Further explanation<a class="anchor-link" href="#Further-explanation"></a><br />
+</h2>
+<p>Let's take a closer look of what we have done previously, when you tried to build the formula from scratch.<br />
+To do so we make things even simpler and compute the uncertainty in the case of two possibilities, that will make us able to plot it on a graph. Indeed, in the case of two possibilities when you choose the first probability <code>p</code> then the other is <code>(1-p)</code>.</p>
+<p>In this context, the product of the probabilities is <code>p(1-p)</code></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="product_of_probs" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-15-54-59.png?w=512" width="512"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see that the plot increases from <code>x=0</code> up until <code>x=0.5</code> then it decreases.<br />
+This is what we expected, if the probabilities are equally distributed then  p = 0.5 and (1-p) = 0.5 thus the uncertainty is at its peak. Also, the graph is obviously symmetric because if <code>p = 0.2</code> then <code>(1-p) = 0.8</code>, it's the same as <code>p = 0.8</code> and <code>(1-p) = 0.2</code></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="log_product_of_probs" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-15-56-30.png?w=512" width="512"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>When we apply the log we get <code>log(p(1-p)) = log(p) + log(1-p)</code><br />
+all the values become negatives but the relations of order are preserved, the function reaches its maximum for <code>x=0.5</code> like previously. The only issue is that the functions tends to -infinity when x approaches 0 or 1.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="force_to_zero" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-15-57-00.png?w=512" width="512"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>multiplying all the terms with their probabilities leads to <code>plog(p) + (1-p)log(1-p)</code>.<br />
+As seen previously, it changes the relations of order. The reason is that it forces the function to be equal to 0 for the values <code>x = 0</code> and <code>x = 1</code> which flips the graph. Also, all the other values are lowered because they are being multiplied by their probability which are numbers smaller than 1.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="multiply_by_minus_one" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-15-58-15.png?w=512" width="512"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So we just multiply the whole thing by -1 to get what we want.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="log_base_2" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-15-59-55.png?w=512" width="512"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>you can use whatever base you want for the log, if you choose the log base 2 then you can say that the results are in bits and the maximum value that the function can take is 1.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="I-still-don't-understand-why-there-is-a-logarithmic-function-in-the-Shannon-entropy-formula-?">I still don't understand why there is a logarithmic function in the Shannon entropy formula ?<a class="anchor-link" href="#I-still-don't-understand-why-there-is-a-logarithmic-function-in-the-Shannon-entropy-formula-?"></a><br />
+</h3>
+<p>There are at least 3 good reasons :</p>
+<ul>
+<li>
+<p>It is suitable when dealing with huge or tiny numbers. For instance<br><br />
+$\log_{2}(100000) = 16.6$ , which makes the output much more practical.</p>
+</li>
+<li>
+<p>It coincides with <a href="https://en.wikipedia.org/wiki/Entropy_(statistical_thermodynamics">Gibbs entropy</a>) formula  used in thermodynamics, and very often it is useful in science to link concepts between disciplines in order to make analogies.</p>
+</li>
+<li>
+<p>The formula has some interesting additive properties. Feel free to read <a href="https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf">Shannon’s original paper</a> if you are interested to know more about this topic.</p>
+</li>
+</ul>
+<h3 id="How-is-Shanon-Entropy-different-from-variance,-where-is-it-used-?">How is Shanon Entropy different from variance, where is it used ?<a class="anchor-link" href="#How-is-Shanon-Entropy-different-from-variance,-where-is-it-used-?"></a><br />
+</h3>
+<ul>
+<li>They both measure information but entropy is all about probabilities, that is to say you are trying to characterize a probability distribution, it doesn't care about the values themselves. This is interesting because you can compute the entropy of any categorical data which can't be done with variance. This works even if the data is non numerical, example: <code>["one", "one", "two", "one"]</code>
+</li>
+<li>Entropy is used in Machine Learning, especially in Decision trees as an impurity criterion.<br />
+the Decision tree splits the data at each node using impurity. The goal here is to choose the feature that minimizes the impurity. When the impurity is low  it means that most of the labels are correctly predicted, in other words the uncertainty is very low. You keep adding nodes until the impurity doesn't decrease anymore. Note that this Idea goes with the previous point, the entropy trick makes the decision trees able to deal with numerical and categorical datas.  </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="How-to-use-Entropy-in-Python-?">How to use Entropy in Python ?<a class="anchor-link" href="#How-to-use-Entropy-in-Python-?"></a><br />
+</h3>
+<p>There is a method in scipy that computes entropy but it doesn’t take an array of labels as input, it takes an array of probabilities instead. So you have to compute first the probabilities associated with each label before using the entropy method from scipy.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]# Get probabilities associated with every label<br />
+import numpy as np<br />
+labels = [0,0,1,1,1]<br />
+values, counts = np.unique(labels, return_counts=True)<br />
+probs = counts / len(labels)<br />
+print("values:", values)<br />
+print("counts:", counts)<br />
+print("probs:", probs)</p>
+<p>#&gt;&gt;&gt; values: [0, 1]<br />
+#&gt;&gt;&gt; counts: [2, 3]<br />
+#&gt;&gt;&gt; probs: [0.4, 0.6][/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now, we can plug <code>probs</code> in the <code>entropy</code> method. The original formula uses the log base 2 because communication/ information was thought in terms of bits but you can choose whatever base you want.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]from scipy.stats import entropy</p>
+<p>e = entropy(probs, base=2)<br />
+print(e)<br />
+#&gt;&gt;&gt; 0.9709505944546688[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Finally we can define a function that takes a list of labels as input and returns its shannon entropy.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]from scipy.stats import entropy</p>
+<p>def entropy_from_labels(labels, base=2):<br />
+  """Take a list of labels as input and return its shannon entropy"""<br />
+  value, counts = np.unique(labels, return_counts=True)<br />
+  probs = counts/len(labels)<br />
+  return entropy(probs, base=base)</p>
+<p>entropy_from_labels(labels, base=2)<br />
+#&gt;&gt;&gt; 0.9709505944546688[/code]
+</p></div>
+</div>
+</div>
+</div>
+<p><!-- /wp:html --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:jetpack/subscriptions {"fontSize":"13px","customFontSize":"13px"} /--><br />
+</body></html></p>

@@ -1,0 +1,61 @@
+---
+layout: post
+title: Let's talk about AI agents and LangChain…
+date: 2024-01-02 09:10:00.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Natural Language Processing (NLP)
+tags:
+- ai agent
+- langchain
+- LLM
+- modularity
+- NLP
+- orchestrator
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  timeline_notification: '1704183037'
+  firehose_sent: '1704183034'
+  wordads_ufa: s:wpcom-ufa-v4:1704183219
+  reader_suggested_tags: '["LLM","AI","Chatgpt","NLP","Artificial Intelligence"]'
+  _publicize_job_id: '90749441841'
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:06'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2024/01/02/lets-talk-about-ai-agents-and-langchain/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:paragraph --><html><body></p>
+<p>Let's talk about AI agents and LangChain...With LLMs, you need to "code agile". Just as teams need to adapt quickly to changes, these applications must be able to easily absorb technological developments.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Indeed, models, tools, methods and techniques are progressing daily. What is coded today could become obsolete in a few months. Along the way, you may want to change the LLM, vector store, embedding model, etc.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Of course, modularity is already a good practice, we haven't reinvented the wheel. But with the frantic pace of AI, we probably feel this need even more. The idea is to design the most decoupled blocks possible. For example, you can use abstract classes and implement the technical logic in child classes.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Nevertheless, some couplings may remain, for example prompt templates are closely linked to the chosen LLM models. Some technological choices will be more difficult to change. I'm thinking in particular of orchestrators like Langchain, which are central, which are involved in each of the blocks, and which already provide their share of abstractions.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>I'll take this opportunity to provide some feedback on Langchain. For classic cases, it does its job, but if you want to do things that are slightly outside the scope, you quickly end up having to reimplement certain components. In general, very simple things become relatively complex to manage.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>I ended up recoding a lot of bricks custom. It's more straightforward and easier to debug. The concept of chains is very interesting on paper, but in practice, there are lots of nebulous things and the documentation doesn't explain all the subtleties. Most of the time, I look directly at the code implementation to understand certain behaviors.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>LangChain remains a nice utility brick, I use it in particular for the document loader, chunking and conversational memory management.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>I haven't tested alternatives to Langchain yet, I'm looking forward to testing LlamaIndex or Haystack.</p>
+<p><!-- /wp:paragraph --><br />
+</body></html></p>

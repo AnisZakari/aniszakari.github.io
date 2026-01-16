@@ -1,0 +1,56 @@
+---
+layout: post
+title: Are LLM Benchmarks Reliable? Not Such a Simple Question...
+date: 2023-10-30 00:12:25.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Generative AI
+tags:
+- Hugging Face
+- LLM benchmarks
+- MMLU
+- model evaluation
+- NLP metrics
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  _publicize_job_id: '88912521218'
+  timeline_notification: '1698621150'
+  wordads_ufa: s:wpcom-ufa-v4:1698621272
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:04'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2023/10/30/are-llm-benchmarks-reliable-not-such-a-simple-question/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Are LLM Benchmarks Reliable? Not Such a Simple Question...</p>
+<p>"When a measure becomes a target, it ceases to be a good measure” - Charles Goodhart.</p>
+<p>Let's take Hugging Face's Open LLM Leaderboard, very useful for comparing LLMs. It uses 4 benchmarks including the most popular "MMLU".</p>
+<p>The MMLU is a set of question-answering to assess "multi-task accuracy" across 57 tasks (math, history, computer science...).</p>
+<p>I see 3 points of attention:</p>
+<p>1/ The first is that MMLU implementation is not universal. In the LLama 1 scientific paper, the 65B version achieves an MMLU score of 0.637 while at the time, on HuggingFace's leaderboard, it only had 0.488 (before HuggingFace synchronized the leaderboard score with the publication).</p>
+<p>So why?</p>
+<p>First, it's important to understand an LLM predicts the next word based on its probability.</p>
+<p>In the original MMLU implementation, used by the LLama team, the model must, when faced with a question, select an answer among 4 choices (A, B, C or D). The score does not take into account the entire LLM vocabulary, but is limited to these four letters. So even if the expected answer is "B" and the most probable word in the model's vocabulary is "Voyage", followed by "B", the model is deemed correct because consideration is limited to the probabilities of A, B, C or D.</p>
+<p>In the HuggingFace Leaderboard implementation that uses the "Harness" variant, we calculate the probabilities the model associates with the full answer sequences, for example "A: This is answer A”, “B: This is answer B", etc. The score is still limited to the 4 given answers but considers the full sequence.</p>
+<p>So two MMLU scores from different sources may not be directly comparable depending on implementation.</p>
+<p>2/ Some models may have been trained or tuned directly on the benchmarks, causing a data leak from the evaluation set. This is obviously a form of cheating, sometimes intentional. The Hugging Face team normally does what is needed to regularly remove contaminated models from the ranking but some remain. One sign is when "small models" have scores comparable to very large ones. In this case, HuggingFace could request access to the dataset for verification.</p>
+<p>3/ Generic metrics like MMLU are probably not relevant for your much more specific use cases (summarizing, interacting with humans etc.)</p>
+<p>Benchmarks should be used as a guide and starting point but not absolute truth. Do your own evaluation for your use case and it's very likely the results will surprise you.</p>
+</div>
+</div>
+</div>
+<p><!-- /wp:html --><br />
+</body></html></p>

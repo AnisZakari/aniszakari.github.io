@@ -1,0 +1,68 @@
+---
+layout: post
+title: The importance of monitoring  LLMs performances in production
+date: 2023-07-22 11:42:27.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags:
+- ChatGPT
+- Generative AI
+- LLM
+- Monitoring
+- News
+meta:
+  wordads_ufa: s:wpcom-ufa-v3-beta:1691527424
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  timeline_notification: '1690018950'
+  _publicize_job_id: '85964092858'
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:02'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2023/07/22/the-importance-of-monitoring-llms-performances-in-production/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Is-ChatGPT-becoming-less-capable-over-time?">Is ChatGPT becoming less capable over time?<a class="anchor-link" href="#Is-ChatGPT-becoming-less-capable-over-time?"></a><br />
+</h4>
+<p>(This article is a transcript in English of one of my <a href="https://www.linkedin.com/posts/anis-zakari_chatgpt-deviendrait-moins-bon-avec-le-temps-activity-7088034893485481984-a9Li?utm_source=share&amp;utm_medium=member_desktop">french LinkedIn posts</a>)</p>
+<p>This is what a recent <a href="https://lnkd.in/ea5CgAZ2">Stanford study</a> suggests, which caused quite a stir over the past few days:</p>
+<p>While the study is debated, it raises a very interesting point.</p>
+<p>The need to have a system to evaluate the performance of LLMs (Large Language Models) in production.</p>
+<p>Whether you use different models via an API, compare open source models, or explore fine-tuned versions of the same model, you will need a point of comparison.</p>
+<p>The authors proceeded as follows:</p>
+<p>They created sets of questions covering 4 tasks: solving math problems, answering sensitive questions, generating functional code, and formulating visual reasoning.</p>
+<p>What is interesting is that one reason for choosing these types of problems is that they have objective answers and are therefore easy to evaluate. Another noteworthy point is that through the ability to answer sensitive questions, they quantified the model's propensity to give answers it should not (crucial for evaluating its ethics).</p>
+<p>Regarding the metrics used:</p>
+<ul>
+<li>Accuracy (rate of correct answers or executable code portion depending on the task)</li>
+<li>Verbosity (length of response)</li>
+<li>Overlap of responses between two versions of the same model</li>
+</ul>
+<p>Measuring overlap may seem surprising at first, but it is also interesting! It allows quantifying to what extent two versions of the same model (here GPT-3.5 in March and June 2023) give the same response to the same question. In other words, it measures the "continuity" between two versions. I think we could, for example, reuse this approach to compare two differently fine-tuned versions of the same model.</p>
+<p>Finally, they concluded that between two versions of GPT-4, performance significantly declined.</p>
+<p>In any case, I think there are quite a few interesting ideas to leverage...</p>
+<p>In case you woudlike to reuse the datasets of questions used in the paper, here is the link to the project:<br />
+<a href="https://github.com/lchen001/LLMDrift">https://github.com/lchen001/LLMDrift</a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+</div>
+</div>
+</div>
+<p><!-- /wp:html --><br />
+</body></html></p>

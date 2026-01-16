@@ -1,0 +1,56 @@
+---
+layout: post
+title: Unmasking Confidential Data in ML Models with Membership Inference Attacks
+date: 2023-08-08 22:34:38.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Machine Learning
+tags:
+- Data Science
+- Ethics
+- Membership inference attack
+- MIA
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  wordads_ufa: s:wpcom-ufa-v3-beta:1691527032
+  timeline_notification: '1691526880'
+  _publicize_job_id: '86470741026'
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:02'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2023/08/08/unmasking-confidential-data-in-ml-models-with-membership-inference-attacks/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>(This article is a transcript in English of <a href="https://www.linkedin.com/posts/anis-zakari_connaissez-vous-le-mia-en-data-science-activity-7092104615067799552-ejTh?utm_source=share&amp;utm_medium=member_desktop">one of my french LinkedIn posts</a>)</p>
+<p>MIA, or Membership Inference Attack, is a technique that lets you determine whether specific data was used to train a ML model. It can be used for malicious purposes or, on the contrary, to audit cybersecurity.</p>
+<p>In particular, when auditing a model, MIA can be used to check if confidential data was unknowingly used by the model.</p>
+<p>The major challenge is that when you test an online AI service, you don't have access to the model's internal architecture or how it was trained. You're faced with a "black box": you feed it data and get back predictions, without knowing what's happening inside.</p>
+<p>But how do we proceed?</p>
+<p>ML models learn from a training dataset. Meanwhile, Data Scientists must ensure that these models don't overfit and can generalize to new data. A strong assumption used by MIA is that, despite precautions, these models still tend to be more confident about data they've seen during training.</p>
+<p>For instance, for an image classification into 3 categories, if prediction probabilities are [99%, 0.5%, 0.5%], one could argue the model is "unusually" certain. Hence, it's likely that the image was part of the training data.</p>
+<p>However, at this stage, we generally don't have access to these probabilities. So, we need to find a technique to indirectly estimate them.</p>
+<p>To do this, we'll create our own models. Either we manage to gather information on the target architecture, or we "guess" it or at least create models with similar behavior. These exact or approximate clones are called "shadow models."</p>
+<p>Now, we need data to train these shadow models. This is probably the most complex part since you either need access to data similar to the target model's or you must generate a synthetic dataset by iterating on the target model using specific techniques.</p>
+<p>Lastly, we need another model known as the "attack" model. This takes the probabilities from the shadow model and will determine if the data was part of the target model's training set or not.</p>
+<p>There are some reservations:<br />
+It's a relatively complex method with limited applicability. It's primarily effective on modest-sized models, supervised learning, or GANs. Moreover, recent criticisms of MIA suggest their efficiency largely depends on models' overfitting.</p>
+<p>It's safe to say that they can't really be applied to LLMs right now.</p>
+<p>But in the near future, who knows?"</p>
+</div>
+</div>
+</div>
+<p><!-- /wp:html --><br />
+</body></html></p>

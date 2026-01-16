@@ -1,0 +1,217 @@
+---
+layout: single
+title: 'Cosine similarity: an Intuitive and simple explanation'
+date: 2022-12-17 14:18:41.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linear Algebra
+- Machine Learning
+- Natural Language Processing (NLP)
+tags:
+- cosine
+- cosine similarity
+- metric
+- NLP
+- Projections
+meta:
+  wordads_ufa: s:wpcom-ufa-v3-beta:1676584298
+  _publicize_job_id: '79725310473'
+  timeline_notification: '1671283123'
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:00'
+  reader_suggested_tags: '["NLP","Machine Learning","AI","Artificial Intelligence","Generative
+    Ai"]'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2022/12/17/intuitive-and-simple-explanation-of-cosine-similarity/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:paragraph {"placeholder":"Vous êtes-vous déjà produit(e) sur scène ou avez-vous déjà fait un discours ?"} --><html><body></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:html --></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Cosine similarity is one of the most important metric in Natural Language Processing.<br />
+It is most often used to quantify a distance between two embeddings (or 2 vectors).<br />
+As embeddings are supposed to gather semantic information, the cosine similarity between two embeddings becomes somewhat a semantic distance.</p>
+<p>If you are not familiar with this metric in ML and you just heard of the cosine from high school, you may wonder what the hell the adjacent side over the hypotenuse on a right triangle has to do with vectors and similarities :D . You'll see in this article that the cosine serves different purposes.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As always in Machine Learning and especially in Linear Algebra, it's always good to use simple examples in order to understand concepts, generally, you'll be able to generalize the reasoning afterwards. In Linear algebra, whenever it's possible, I recommand you to build your inuition in 2 dimensions first, simply because you can plot 2D vectors on a graph so you can visualize what's going on.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The question we are going to answer is "what is the cosine of two vectors on 2D ?", but before let met introduce you the idea behind the cosine measure. In fact, it's a very simple concept, you just want to know if 2 vectors point towards the same direction.<br />
+Indeed, if it's the case well you can say that the vectors are very similar, otherwise if they are perpendicular, they are very different.</p>
+<p>Before considering the cosine itself, an intuitive way to determine if 2 vectors points to the same direction is to measure the angle between them.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="first_examples" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-14-22-30-14.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's examine these cases:</p>
+<ul>
+<li>in the first example, the vectors <strong>u</strong> and <strong>v</strong> point towards the same direction, the angle between them is 0°.<br />
+the vectors can't be more similar, in this case, the similarity is equal to 1.</li>
+<li>in the second example, the vectors <strong>u</strong> and <strong>v</strong> are perpendicular, they form an angle of 90°, they can't be more different than that. In this case the similarity is equal to 0 </li>
+<li>in the last example. the angle between <strong>u</strong> and <strong>v</strong> is a bit less than 45°. In this case the similarity lays between 0 and 1 (the result is quite close to 1 though.)</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By looking at the first example, we should realize that if we are only interested in directions then the magnitude of the vectors don't matter. So why don't we just get rid of the magnitudes and see if it doesn't simplify the problem ? To do so, it's very simple, we just have to divide the vectors by their respective norms so they become unit vectors.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="example_2" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-14-23-13-49.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>
+<p>In the first example, Now <strong>u</strong> and <strong>v</strong> have the same magnitude and point towards the same direction, they are identical. Note that if we were to project <strong>v</strong> on <strong>u</strong> the magnitude of the projected vector would be the same as the magnitude of <strong>v</strong> which is 1.</p>
+</li>
+<li>
+<p>In the second example, if we were to project <strong>u</strong> on <strong>v</strong>, the projected vector would have a magnitude of 0.</p>
+</li>
+<li>
+<p>In the third example, the projection of <strong>u</strong> on <strong>v</strong> would have a magnitude of +/- 0.89.</p>
+</li>
+</ul>
+<p>Wait a minute, instead of calculating an angle between two vectors, can't we just calculate a projection? The answer is yes :) and this is exactly what is a cosine but don't tell anybody.</p>
+<p><img alt="cosine_sine" height="250" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-13-55-57.png?h=250"></p>
+<p><strong>So here is the key takeway</strong>: measuring the angle between the vectors is closely related to measuring the magnitude of the projected vector (if <strong>u</strong> and <strong>v</strong> are unit vectors). You can visualize in the animation bellow that the magnitude of the projection decreases as the angle between the vectors increases.</p>
+<p><em>Note: as long as you are working with unit vectors, it doesn't matter if you project <strong>u</strong> on <strong>v</strong> or <strong>v</strong> on <strong>u</strong>, the result is the same.</em></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="quadrant" height="250" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/cosine_circle.gif?h=250"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So in fact the cosine similarity is all about calculating the projection of a vector on another when these have a magnitude of 1. Luckily it's very easy to calculate it, it's just a dot product.<br />
+Please read <a href="https://standardscaler.wordpress.com/2022/12/16/understanding-projections-they-are-all-over-the-place-in-machine-learning/">my blog post about projections</a> if you don't feel confortable with this assertion.</p>
+<p>Note: $P_v(u)$ stands for projection of u on v.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-14-23-25-42.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can always make a vector have a magnitude of 1 by dividing it by its norm.<br />
+so the formula that always work to calculate a cosine it the following one.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="cosine_formula" height="100" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-14-23-32-21.png?h=100"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In fact, <strong>you can see a cosine as a normalized version of a dot product</strong>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Let's-get-more-concrete-with-a-simple-example.">Let's get more concrete with a simple example.<a class="anchor-link" href="#Let's-get-more-concrete-with-a-simple-example."></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Up until now, theses vectors remained somewhat abstract. Now suppose that you have two documents <strong>u</strong> and <strong>v</strong>, for each one you want to know if it deals with cats or dogs. So for each document you'll count the number of repetitions of the words "cat" and "dog".</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="example_with_words" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-15-02-12-26.png"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>
+<p>In the first example, on document <strong>u</strong>, the frequency of cat is 2 while the frequency of dog is 0, thus we can say that the document is all about cats. On document <strong>v</strong> it's also all about cats with a frequency of 4.<br />
+In that regards both documents are similar in the sense that the topic is the same.In this case, the similarity is equal to 1. The word cat could have a frequency of 900, it won't change the fact that it's all about cats, this is why the magnitude of the vector doesn't matter, we only need the normalized version of it or in other words, we only need the direction of the vectors.</p>
+</li>
+<li>
+<p>In the second example, <strong>u</strong> is all about dogs while <strong>v</strong> is all about cats, the documents can't be any different thus the similarity is 0, this is the case where the vectors are perpendicular.</p>
+</li>
+<li>
+<p>In the third example, <strong>u</strong> is mostly about cats and a bit about dogs while <strong>v</strong> is all about cats. The documents are still a lot similar, the value of the similarity if you were to compute the cosine is 0.89.</p>
+</li>
+</ul>
+<p>By now, I hope you can get a more pragmatic sense of what having the same direction for two vectors really means. In fact it means that the vectors (or the documents if you want to be more concrete) have similar ratios or distribution across the features.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>That's it for this small article folks :) , I hope it helped you getting a sense of what the cosine is and why we use it as a measure of similarity in NLP.</p>
+</div>
+</div>
+</div>
+<p><!-- /wp:html --></p>
+<p><!-- wp:jetpack/subscriptions {"fontSize":"13px","customFontSize":"13px"} /--><br />
+</body></html></p>

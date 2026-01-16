@@ -1,0 +1,827 @@
+---
+layout: post
+title: Deploy a sentence transformer model on AWS Lambda via Docker
+date: 2023-01-06 19:14:25.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Machine Learning
+- MLOps and Coding
+- Natural Language Processing (NLP)
+tags:
+- Amazon Web Services
+- AWS
+- Bert
+- deployment
+- Docker
+- ECR
+- embeddings
+- HuggingFace
+- Lambda
+- MLOps
+- NLP
+- sentence transformers
+- transformers
+meta:
+  _last_editor_used_jetpack: block-editor
+  _oembed_a452746de74f501396082fdcf1626245: "{{unknown}}"
+  _oembed_a640a24c3217a8c65cfa37710cb7aaa6: "{{unknown}}"
+  _wpcom_is_markdown: '1'
+  _oembed_813c89316e5b66be75aa2049f4b76c21: "{{unknown}}"
+  _publicize_job_id: '80307523791'
+  timeline_notification: '1673028867'
+  wordads_ufa: s:wpcom-ufa-v3-beta:1676584508
+  _oembed_b4fd35acac3f0928e0e7f1d4cb0e7422: "{{unknown}}"
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:00'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2023/01/06/deploy-a-sentence-transformer-model-on-aws-lambda-via-docker/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Today, let's dive into the beautiful (and sometimes very painful) world of deployment.</p>
+<p>This is really when things start to be very exciting as a you generally go from a model in a notebook to a product/service that can be delivered to users :) . At the same time a lot of things can go wrong during the process, so it's really important to be organized and to stay focused !</p>
+<p>We are going to deploy a <a href="https://www.sbert.net/">sentence transformer model</a> on AWS lambda via Docker. This post covers most of the needs but won't dive too much into advanced details otherwise it won't be a blog post anymore but a full deployment course.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="Prerequisites">Prerequisites<a class="anchor-link" href="#Prerequisites"></a><br />
+</h5>
+<p>To follow this tutorial, you should:</p>
+<ul>
+<li>have <a href="https://www.docker.com/">Docker</a> installed and know the basics.</li>
+<li>have an <a href="https://aws.amazon.com/">AWS account</a> </li>
+<li>have <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">AWS-CLI</a> installed</li>
+<li>know the basic bash commands </li>
+<li>be familiar with Python</li>
+<li>be familiar with <a href="https://docs.python.org/3/tutorial/venv.html">Python virtual environments </a>
+</li>
+</ul>
+<p>Yes, you should know quite a lot of things already, uh ? :)</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="Link-to-the-Github-repo">Link to the Github repo<a class="anchor-link" href="#Link-to-the-Github-repo"></a><br />
+</h5>
+<p>You can find all the files used in this blog post on <a href="https://github.com/AnisZakari/deploy_sentence_transformer_model_aws">my Github repo</a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Few-words-about-Lambda">Few words about Lambda<a class="anchor-link" href="#Few-words-about-Lambda"></a><br />
+</h2>
+<p>To briefly introduce AWS Lambda, it is a compute service that lets you run code without provisioning or managing servers. In other words you provide the code and AWS takes care of the rest.</p>
+<p>Lambda can be used without Docker but AWS let you package and deploy Lambda functions as container images of up to 10GB in size ! This is very useful when dealing with sentence transformers because they can be very heavy !</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Create-a-virtual-environment">Create a virtual environment<a class="anchor-link" href="#Create-a-virtual-environment"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I highly recommand you to create a new python environments each time you are working on a new project.<br />
+A virtual environment is a tool that helps to keep dependencies required by different projects separate by creating isolated python virtual environments for them.</p>
+<p>The most critical thing is perhaps to keep track of the versions of the different packages used. Let say you don't work with virtual environments, you built your app A with <code>pytorch version x</code>, then you are working on another app B that requires <code>pytorch version y</code>, you go back to app A Using <code>pytorch version y</code>, this can make the whole app crash or even worse, it may continue to work but with differences in the outputs which makes the debbuging very difficult.</p>
+<p>Every single thing that can reduce head scratching in deployment is very welcome.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>create an environment with python 3.7 using the terminal :</p>
+<p><code>python3.7 -m venv &lt;name_of_your_env&gt;</code></p>
+<p>or</p>
+<p><code>python3.7 -m virtualenv &lt;name_of_your_env&gt;</code></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>once created you can activate the environnment like so:</p>
+<p><code>source &lt;name_of_your_env&gt;/bin/activate</code></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>later on, if you need to deactivate your environment, you can use the following command:</p>
+<p><code>deactivate</code></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Choose-your-sentence-transformer-model">Choose your sentence transformer model<a class="anchor-link" href="#Choose-your-sentence-transformer-model"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can try a lot of different <a href="https://www.sbert.net/docs/pretrained_models.html">models provided by HuggingFace</a>, you have to find the best compromise between model size and performances for your use case. Note that some of the models are multilingual some are not, I highly recommand you to read the documentation of each model before using it.</p>
+<p>For the sake of simplicity I will be using one of the tiniest model : <code>all-MiniLM-L6-v2</code>, it weights 80 Mb.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>One you chose your model, you can quickly use it, it's very simple. Just install the sentence transformers library like so :</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+[code language="bash"]pip install -U sentence-transformers[/code]
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>and then</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]from sentence_transformers import SentenceTransformer</p>
+<p># The first time you run this line, it will download and install the chosen model.<br />
+model = SentenceTransformer('all-MiniLM-L6-v2')</p>
+<p>sentences = ['This framework generates embeddings for each input sentence',<br />
+    'Sentences are passed as a list of string.',<br />
+    'The quick brown fox jumps over the lazy dog.']</p>
+<p>sentence = 'This is my input sentence'</p>
+<p># Sentences are encoded by calling model.encode()<br />
+embeddings = model.encode(sentences)<br />
+# See how the model can also take as input a text rather than a list of texts.<br />
+embedding = model.encode(sentence)</p>
+<p>print(embeddings.shape)<br />
+print(embedding.shape)</p>
+<p>#&gt;&gt;&gt; (3, 384)<br />
+#&gt;&gt;&gt; (384,)[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The output <code>embeddings</code> is a numpy array of shape <strong>(3, 384)</strong>. The first element of the shape <strong>3</strong> refers to the number of sentences in the input list. Then each sentence is being vectorized by the model in a space of 384 dimensions, which is why the second element of the shape is <strong>384</strong>.</p>
+<p>In the same fashion, <code>embedding</code> is a numpy array of shape (384,). There's only one element in the tuple as the input is a string, not a list of strings. It would have had a shape of (1, 384) if the input was wrapped in a list.</p>
+<p>The key takeways here are :</p>
+<ul>
+<li>The first time you use a model, it will automatically be downloaded (we have to keep this in mind for the deployment)</li>
+<li>The input for the model can be a text or a list of texts, depending on this, the output's shape will be different. </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that you've carefully chosen the model that better suits your use case, let's make a simple app.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Code-your-app">Code your app<a class="anchor-link" href="#Code-your-app"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The core module is generally named <code>app.py</code>. Inside this module, the core function is conventionally named <code>lambda_handler</code>, this is the function that will be used by AWS Lambda. This very function has some constraints to satisfy. Indeed, it must have two arguments <code>event</code> and <code>context</code>, we don't have to worry too much about <code>context</code> however <code>event</code> is where the input should be located. <code>event</code> has to be a dictionnary, this is mandatory because of the way Lambda functions work (they expect a JSON as input and return a JSON as output).</p>
+<p>A part from that, there's no particular constraints to point out, at least for now. :)</p>
+<p>In our case we design a very simple input of the following form:</p>
+<p>[code language="javascript"]event = {"my_input": my input sentence...}[/code]
+</p></div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]# app.py file</p>
+<p>from sentence_transformers import SentenceTransformer</p>
+<p>model_name = 'all-MiniLM-L6-v2'</p>
+<p>model = SentenceTransformer(model_name)</p>
+<p>def my_app(my_input):<br />
+    """Simple app that tranforms text(s) into vector(s) using a sentence transformer model"""<br />
+    output = model.encode(my_input)<br />
+    return output</p>
+<p>def lambda_handler(event:dict, context:str):<br />
+    # unpacking my_input.<br />
+    my_input = event['my_input']<br />
+    # using the transformer model.<br />
+    # don't forget to convert the numpy array to list so it can be JSON Serializable.<br />
+    output = my_app(my_input).tolist()<br />
+    return output[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can't make a simpler app than that :) .</p>
+<ul>
+<li>
+<code>my_app</code> just uses the <code>encode</code> method of the sentence transformer, in order to casually transform the input into embeddings.</li>
+<li>
+<code>lambda_handler</code> is simply a wrapper for <code>my_app</code>, in fact, it does the same thing but is slightly different so it can suit the way Lambda functions are designed (JSON &amp; context in, JSON out).</li>
+</ul>
+<p>If you were wondering, actually it doesn't have a lot of use to make such an app, I just want to avoid writing code as much as possible, for this tutorial. The main motivation here is to give you a template you can adapt.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Make-requirements.txt">Make requirements.txt<a class="anchor-link" href="#Make-requirements.txt"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A useful command to know is :</p>
+<p>[code language="bash"]pip freeze&gt;requirements.txt[/code]</p>
+<p>This will create in your directory a file named <code>requirements.txt</code> with all the packages used in a particular environment.<br />
+If you don't want to bother, this can be a very quick way to make requirements.</p>
+<p>in our case, we can make things even simpler as the only package installed is <code>sentence-transformers</code>. You'll also need <code>huggingface-hub</code>, for some reason this lib is not automatically installed with <code>sentence-transformers</code> despite beeing a dependency. Lastly we use a cpu only version of torch to make its size smaller and because there's no GPU available with lambda.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+[code language="bash"]#requirements.txt file</p>
+<p>https://download.pytorch.org/whl/cpu/torch-1.10.1%2Bcpu-cp37-cp37m-linux_x86_64.whl<br />
+huggingface-hub==0.11.1<br />
+sentence-transformers==2.2.2[/code]
+</p></div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Make-DockerFile">Make DockerFile<a class="anchor-link" href="#Make-DockerFile"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The DockerFile is where we have to list informations about how to build the Docker image.<br />
+We want our Image to:</p>
+<ul>
+<li>be able to execute python scripts</li>
+<li>to contain our app and requirements</li>
+<li>but also <strong>to contain the sentence transformer model beforehand</strong>. </li>
+</ul>
+<p>Remember we used the model <code>all-MiniLM-L6-v2</code>, remember also that if an environment doesn't contain the desired model, it will be automatically downloaded ...</p>
+<p>Knowing that an instance of the image is created each time there is a user request, it would be absolutely disastrous if the model is downloaded again and again each time. To avoid it we have to specify in the DockerFile where to download the model, this way it will be available inside the image without the need to redownload it.</p>
+<p>you can browse <a href="https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/">this webpage</a> to find all the models of HuggingFace. Our model can be reached via this link <a href="https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/all-MiniLM-L6-v2.zip">https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/all-MiniLM-L6-v2.zip</a></p>
+<p>The DockerFile should look like this.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+[code language="yaml"]# Dockerfile</p>
+<p># We install python 3.7 from the AWS repository<br />
+FROM public.ecr.aws/lambda/python:3.7</p>
+<p># Set environment variable ENV_NAME = Docker, you'll understand why we do it in a moment.<br />
+ENV ENV_NAME Docker</p>
+<p># Copy app.py and requirements.txt in the Docker Image we are building.<br />
+COPY app.py requirements.txt ./</p>
+<p># Upgrade pip if needed<br />
+RUN python -m pip install --upgrade pip</p>
+<p># Install Sentence Transformer and other dependencies in requirements.txt<br />
+RUN pip3 install --no-cache-dir -r requirements.txt --default-timeout=2000</p>
+<p># Create the directory 'model'<br />
+RUN mkdir -p ./model</p>
+<p># Download the sentence-transfomer model and put it in the directory './model'<br />
+RUN curl https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/all-MiniLM-L6-v2.zip -o ./model/all-MiniLM-L6-v2.zip</p>
+<p># Unzip the model<br />
+RUN unzip ./model/all-MiniLM-L6-v2.zip -d ./model/all-MiniLM-L6-v2</p>
+<p># Delete the zip file as we don't need it anymore<br />
+RUN rm ./model/all-MiniLM-L6-v2.zip</p>
+<p># Give full access to the dir so that it won't trigger the error permission denied in AWS Lambda<br />
+# "[Errno 13] Permission denied: './all-MiniLM-L6-v2/modules.json'",<br />
+RUN chmod -R 644 ./model<br />
+RUN chmod -R 755 ./model</p>
+<p>#The CMD command​ specifies the instruction that is to be executed when a Docker container starts.<br />
+CMD ["app.lambda_handler"][/code]
+</p></div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Adapt-app.py">Adapt app.py<a class="anchor-link" href="#Adapt-app.py"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>At this point your folder should look like this</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+[code language="bash"]# your project folder should look like this</p>
+<p>├── Dockerfile              # Dockerfile<br />
+├── requirements.txt        # pip requirements<br />
+└──  app.py                  # the core module[/code]
+</p></div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>When the Docker container is built, it would look like this.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+[code language="bash"]# When The Docker container is built, it would look like this</p>
+<p>├── requirements.txt        # pip requirements<br />
+├── app.py                  # the core module<br />
+└── model                   # directory with the sentence-transformer model<br />
+    └── all-MiniLM-L6-v2    # the sentence-transformer model[/code]
+</p></div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We have to slightly adapt the code in app.py in order to use a sentence transformer model from a local path. If you read the <a href="https://www.sbert.net/docs/package_reference/SentenceTransformer.html#:%7E:text=class,Optional%5Bstr%5D%20%3D%20None">documentation</a>, you'll find out that instead of passing the model name to load it, you can directly pass the path to the model directory.</p>
+<blockquote>
+<p>Parameters:  model_name_or_path – If it is a filepath on disc, it loads the model from that path. If it is not a path, it first tries to download a pre-trained SentenceTransformer model. If that fails, tries to construct a model from Huggingface models repository with that name.</p>
+</blockquote>
+<p>the problem is that <strong>this parameter changes depending on the environment we work in</strong>.</p>
+<ul>
+<li>When we work locally we have to use <code>model_name_or_path = 'all-MiniLM-L6-v2'</code>
+</li>
+<li>When we work in the Docker environment we have to use <code>model_name_or_path = 'model/all-MiniLM-L6-v2'</code>
+</li>
+</ul>
+<p><strong>how to distinguish between environments ?</strong><br><br />
+That's where the previous environment variable <code>ENV_NAME</code> defined in the DockerFile comes into action. Everything becomes clearer it the snippet bellow.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]# app.py file</p>
+<p>from sentence_transformers import SentenceTransformer<br />
+import os </p>
+<p># Check if the environment variable ENV_NAME is set and equal to 'Docker'<br />
+# Otherwise if it's not set, we are working locally, we don't need to pass the path to the model.<br />
+if os.environ.get('ENV_NAME') == 'Docker':<br />
+    model_name_or_path = 'model/all-MiniLM-L6-v2'<br />
+    os.environ['TRANSFORMERS_CACHE'] = './model'<br />
+else:<br />
+    model_name_or_path = 'all-MiniLM-L6-v2'</p>
+<p>model = SentenceTransformer(model_name_or_path)</p>
+<p>def my_app(my_input):<br />
+    """Simple app that tranforms text(s) into vector(s) using a sentence transformer"""<br />
+    output = model.encode(my_input)<br />
+    return output</p>
+<p>def lambda_handler(event:dict, context:str):<br />
+    # unpacking my_input<br />
+    my_input = event['my_input']<br />
+    # don't forget to convert the numpy array to list so it can be JSON Serializable<br />
+    output = my_app(my_input).tolist()<br />
+    return output[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This simple tweak is very handy because the same code can be run locally or in the Docker environment !</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Build-the-Docker-Image">Build the Docker Image<a class="anchor-link" href="#Build-the-Docker-Image"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Allright, an important step is now to build the Docker image.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+[code language="bash"]docker build -t my_transformer_app .[/code]
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Test-the-Docker-Image">Test the Docker Image<a class="anchor-link" href="#Test-the-Docker-Image"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Once your image is up and running, you can test it with the following tip.</p>
+<p>First, in a new terminal window run your docker container. This will run a local server.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+[code language="bash"]docker run -p 9000:8080 my_transformer_app[/code]
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In your original terminal window you can then send a request like so.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+[code language="bash"]curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"my_input": "hello world"}'[/code]
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By doing this, we are sending a Json  to the server created by docker with the input "hello world" inside but you can pass whatever string you want.<br />
+If everything works correctly, you'll get a nice vector back  :)</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Going-online">Going online<a class="anchor-link" href="#Going-online"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What are we going to do now ?</p>
+<p>We are going to push the Dockerized model into ECR, then we'll create our lambda function from the container image, this is as simple as that !</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/ml-2181-pytorch-1-white.png?w=800" width="800"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Push-your-Docker-Image-to-AWS-ECR">Push your Docker Image to AWS ECR<a class="anchor-link" href="#Push-your-Docker-Image-to-AWS-ECR"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>ECR (Elastic Container Registery) is an AWS managed container image registry, we are going to use it in order to push our image.</p>
+<ul>
+<li>Go to the <a href="https://console.aws.amazon.com/ecr/">Amazon ECR console</a> .</li>
+<li>If it's the first time you access the console, Choose <strong>Get Started</strong>, for <strong>Visibility settings</strong>, choose <strong>Private</strong>.</li>
+<li>If it's not, you can go ahead and click on the button <strong>Create repository</strong>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-04-15-47-40.png?w=800" width="800"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to make things simpler, make the repository name the same as the name of the Docker Image.<br />
+You can leave all the other settings as is.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="400" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-04-15-50-57.png?h=400"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can finish the creation of the repository by hitting the <strong>Create repository</strong> button.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-04-16-00-09.png?w=600" width="600"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Your repository is now up and running.<br />
+Finally, you simply have to hit the <strong>View push commands</strong> button and follow the instructions in order to push your image.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-04-16-03-50.png?w=800" width="800"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It may take some minutes before it's done, be patient !<br />
+At the end of the process, when you refresh the page you can see your image with all its information displayed.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="300" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-04-16-08-08.png?h=300"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>That's it for this part :)</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Create-your-Lambda-function-using-the-Docker-Image.">Create your Lambda function using the Docker Image.<a class="anchor-link" href="#Create-your-Lambda-function-using-the-Docker-Image."></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Creating a function with Lambda takes only few minutes:</p>
+<ul>
+<li>Open <a href="https://console.aws.amazon.com/lambda/home#/functions">the function page</a> of the lambda console.</li>
+<li>Choose <strong>Create function</strong> </li>
+<li>Select <strong>Container image</strong>
+</li>
+<li>Enter a function name</li>
+<li>Click <strong>Browse Images</strong> and choose the image you've just created</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-04-16-14-39.png?w=800" width="800"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-05-14-54-26.png?w=800" width="800"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Configure-ressources">Configure ressources<a class="anchor-link" href="#Configure-ressources"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If everything went as expected, you should end up having this function overview.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-05-15-04-00.png?w=800" width="800"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that your function is created, you have to configure the amount of ressources (CPU, RAM...) it needs to run properly.</p>
+<ul>
+<li>Click <strong>Configuration</strong> in the navigation bar</li>
+<li>Choose <strong>General configuration</strong>
+</li>
+<li>Then <strong>Edit</strong>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-05-15-07-30.png?w=800" width="800"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>
+<p>The heavier the sentence transformer model is, the more ressources and computation time it requires.<br />
+In my case, because the model is very tiny, <strong>512 mb of RAM is allright</strong>, but sometimes you'll need 2,3 or maybe 4GB of RAM, only for the setence transformer model, I'm not even including other objects stored in the memory (other libraries, variables, data...). If you have no idea how much RAM you need, you can perform tests in order to establish it. As a very approximate rule of thumb, the RAM you need should be at least 4 x the size of your sentence transformer model. Keep in mind AWS let you allocate up to 10 GB of RAM.</p>
+</li>
+<li>
+<p>Note that the <strong>CPU is automatically set by AWS</strong>, the function is allocated CPU proportional to the RAM configured.</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>Tiemout is also important to configure, in my case <strong>setting timeout to 30 sec</strong> does the job but again you have to determine the value by performing tests.</p>
+</li>
+<li>
+<p>You can leave <strong>Execution Role</strong> as is, configuring roles are useful when you need to give your function access to other AWS ressources (S3, Redshift, SNS ...) or in the contrary to limit them, which is not our case.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-05-15-24-20.png?w=600" width="600"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Test-the-deployed-lambda-function">Test the deployed lambda function<a class="anchor-link" href="#Test-the-deployed-lambda-function"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>AWS provides a test interface. you can access it by clicking <strong>Test</strong> in the navigation bar.<br />
+A test event is always a JSON input to your function.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-05-15-31-55.png?w=800" width="800"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's perform a very simple test, just so we can make sure everything runs properly.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+[code language="javascript"]# Test event<br />
+{<br />
+    "my_input": "hello hello"<br />
+}<br />
+`[/code]
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-05-15-46-00.png?w=800" width="800"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The function runs ! It returned an embedding of a size of 384, the max memory used is 322 MB and the computation time is 10 seconds.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Again, you can find all the files used in this blog post on <a href="https://github.com/AnisZakari/deploy_sentence_transformer_model_aws">my Github repo</a>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And voila ! Congratulations for making it this far 8-) 8-) 8-) ! I hope you've found this tutorial useful !</p>
+</div>
+</div>
+</div>
+<p><!-- /wp:html --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:jetpack/subscriptions {"fontSize":"13px","customFontSize":"13px"} /--><br />
+</body></html></p>

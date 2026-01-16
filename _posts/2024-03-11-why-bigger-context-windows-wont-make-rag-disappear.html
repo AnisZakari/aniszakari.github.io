@@ -1,0 +1,75 @@
+---
+layout: post
+title: Why bigger context windows won't make RAG disappear.
+date: 2024-03-11 22:53:37.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Generative AI
+- Machine Learning
+- Natural Language Processing (NLP)
+tags:
+- context length
+- costs
+- GPU memory
+- Large language models
+- LLMs
+- rag
+- retrieval augmented generation
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  wordads_ufa: s:wpcom-ufa-v4:1710194541
+  _jetpack_memberships_contains_paywalled_content: ''
+  _jetpack_memberships_contains_paid_content: ''
+  reader_suggested_tags: '["AI","LLM","Rag","Artificial Intelligence","LLMS"]'
+  _publicize_job_id: '92650639832'
+  firehose_sent: '1710194239'
+  timeline_notification: '1710194239'
+  _elasticsearch_data_sharing_indexed_on: '2024-03-11 21:57:19'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2024/03/11/why-bigger-context-windows-wont-make-rag-disappear/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:paragraph --><html><body></p>
+<p>We sometimes hear that RAG (Retrieval Augmented Generation) is destined to disappear because LLMs have an increasingly large context window and can therefore receive more and more words.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>In other words, we'll soon be able to pass an entire database to the LLM in one prompt and let it figure it out to answer the question asked.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Personally, I don't think this is a good approach, and for several reasons:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>The computational cost increases quadratically with the number of words. More simply put, the more words you send to an LLM, the more you tax the GPU memory.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>If you host the LLM yourself on a GPU instance, the direct consequence is that you'll probably have to opt for a larger instance, so pay more.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>If you go through an API, the consequence is also that it's more expensive because you pay per token. You'll also hit query rate limits faster.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>With very long prompts, context loss or hallucinations are encouraged (see the "Lost in the Middle" publication).</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>And finally, I haven't been able to experiment with such solutions with better results than RAG.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>From my point of view, it's more expensive, it takes longer, and it's generally not as good.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>All of this reminds me a bit of deep learning a few years ago. The approach was to realize that we have mind-boggling data streams and extraordinary computing capabilities, so we might as well use them. Even if the data is not quality, the promise was that quantity would make up for it.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>We’ve come back a bit from that narrative today by saying that we don't need that much data; it must, however, be qualitative.</p>
+<p><!-- /wp:paragraph --><br />
+</body></html></p>

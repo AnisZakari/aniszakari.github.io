@@ -1,0 +1,95 @@
+# Site Settings
+title: "Scale Up Your Knowledge in Data Science"
+description: "Personal blog about data science, machine learning, and AI"
+url: "https://YOUR_USERNAME.github.io"  # Change this to your GitHub username
+baseurl: ""  # Leave empty if using username.github.io, or set to "/repository-name"
+
+# Repository (optional - for GitHub edit links)
+# repository: YOUR_USERNAME/personal-blog  # Uncomment and update when ready
+
+# Theme
+remote_theme: mmistakes/minimal-mistakes@4.24.0
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-remote-theme
+  - jekyll-include-cache
+
+# Author
+author:
+  name: "Anis Zakari"
+  avatar: # Path to avatar image (optional)
+  bio: "Data scientist and ML engineer"  # Optional bio
+  location: # Optional location
+  email: "anis.zakari.pro@gmail.com"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-github"
+      url: "https://github.com/YOUR_USERNAME"  # Update with your GitHub username
+
+# Language
+lang: en
+
+# Timezone
+timezone: Europe/Paris  # Update to your timezone
+
+# Build Settings
+markdown: kramdown
+highlighter: rouge
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - .gitignore
+  - README.md
+  - s.sh
+  - fix_image_sizes.rb
+  - clean_all_posts.rb
+  - check_articles.rb
+  - ARTICLE_CHECK_REPORT.md
+  - _attachments
+  - _wp_global_styless
+  - _wp_navigations
+  - _nav_menu_items
+
+# Collections
+collections:
+  pages:
+    output: true
+
+# Permalinks
+permalink: /:year/:month/:day/:title/
+
+# Minimal Mistakes specific settings
+search: true
+minimal_mistakes_skin: default  # "air", "aqua", "contrast", "dark", "dirt", "neon", "sunrise"
+
+# Sidebar settings
+sidebar:
+  - title: "About"
+    image: # Path to sidebar image
+    image_alt: # Alt text for image
+    text: "Data scientist and ML engineer writing about AI, machine learning, and data science."
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: false  # Disable until you set up comments
+      share: true
+      related: true
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: single

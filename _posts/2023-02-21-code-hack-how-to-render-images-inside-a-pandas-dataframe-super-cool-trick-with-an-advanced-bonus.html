@@ -1,0 +1,455 @@
+---
+layout: post
+title: Code Hack - How to render images inside a pandas DataFrame ? Super cool trick
+  with an advanced bonus :)
+date: 2023-02-21 19:42:04.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- MLOps and Coding
+tags:
+- code hack
+- dataframe
+- images
+- pandas
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  timeline_notification: '1677004929'
+  _publicize_job_id: '81707628302'
+  wordads_ufa: s:wpcom-ufa-v3-beta:1677447842
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:00'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2023/02/21/code-hack-how-to-render-images-inside-a-pandas-dataframe-super-cool-trick-with-an-advanced-bonus/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Have you ever wondered if there was an easy way too render images inside a pandas DataFrame ?<br />
+How cool would it be to simply write down something like <code>render_images(df)</code> and that's it, that would do the trick for you ?</p>
+<p>Today I'll show you a super cool trick to exactly do that ! Even better, I'll show you an "advanced technique" so that you could even do something like <code>df.render_images()</code>. In other words, you'll include the rendering function directly in the <code>pd.DataFrame</code> object :)</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="240" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-21-17-18-14.png?h=240"><br />
+<br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="How-to-display-an-image-in-a-notebook">How to display an image in a notebook<a class="anchor-link" href="#How-to-display-an-image-in-a-notebook"></a><br />
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First things first, the normal way to display images in notebooks is to use libraries like matplotlib, PIL, OpenCV etc...<br />
+Let's go ahead with the PIL library to show a quick example.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]from PIL import Image<br />
+path_to_img = 'images/standard_scaler_logo_black.jpg'</p>
+<p># Create the image instance<br />
+img = Image.open(path_to_img)</p>
+<p># Here you can either use display(img) or img.show()<br />
+display(img)[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="150" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-21-17-47-12.png?h=150"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now you can normally see a beautiful logo :)<br />
+That being said, you can't really use these kind of libraries along with dataframes, they simply don't work together.</p>
+<p>How to do then ? Well there's a cool module that is able to render html stuff that is <code>IPython.core.display.HTML</code><br />
+basically you provide the html code, it will render stuff, simple, efficient.</p>
+<p>Bellow a simple html code to display an image and to constraint its width to 100px.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+[code language="html"]<img src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/standard_scaler_logo_black.jpg" width="100">[/code]
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>src</code> can be the local path to the image or its url.<br />
+Let's see what <code>IPython.core.display.HTML</code> can do for us</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]from IPython.core.display import HTML</p>
+<p>HTML('<img src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/standard_scaler_logo_black.jpg" width="100">')[/code]
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="100" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-21-17-47-12.png?h=100"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Having worked on some websites, I personally find it very satisfying to display an image with html code, that stuff is very smooth.<br />
+The best part of this thing is yet to come :) . For now, let's write a simple fonction that automatically does the html formatting.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]def image_formatter_html(path_or_url):<br />
+    """html formatter for images. It takes as input an image path or<br />
+    a image url."""<br />
+    html_code = f'&lt; img src="{path_or_url}" width="100"&gt;'<br />
+    return html_code</p>
+<p># Now we can do all the stuff with a one-liner.<br />
+HTML(image_formatter_html(path_to_img))[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="100" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-21-17-47-12.png?h=100"><br />
+<br><br></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="DataFrame-as-a-html-table">DataFrame as a html table<a class="anchor-link" href="#DataFrame-as-a-html-table"></a><br />
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's build a simple 3 columns DataFrame. One of the columns is <code>logo_path</code> and it contains the paths to the images</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]import pandas as pd</p>
+<p>data_as_dict ={<br />
+   "image_name":[<br />
+      "logo_black",<br />
+      "logo_blue",<br />
+      "logo_double",<br />
+      "logo_purple"<br />
+   ],<br />
+   "image_description":[<br />
+      "standard logo",<br />
+      "background blue",<br />
+      "double effect",<br />
+      "background purple"<br />
+   ],<br />
+   "logo_path":[<br />
+      "images/standard_scaler_logo_black.jpg",<br />
+      "images/standard_scaler_logo_blue.jpg",<br />
+      "images/standard_scaler_logo_double.jpg",<br />
+      "images/standard_scaler_logo_purple.jpg"<br />
+   ]<br />
+}</p>
+<p>df = pd.DataFrame(data_as_dict)<br />
+df.head()[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-21-17-49-00.png?w=500" width="500"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A nice feature in the pandas dataframe is that you can export it in html format with the command <code>df.to_html()</code><br />
+Another very cool stuff is that you can provide formatters to the <code>to_html</code> function. In other words we can use our previous function <code>image_formatter_html</code> to transform the column <code>logo_path</code>. For example <code>images/standard_scaler_logo_black.jpg</code> will become <code>&lt;img src="images/standard_scaler_logo_black.jpg" width=150&gt;</code></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]# Don't forget to set the `escape = False` argument otherwise<br />
+# that won't work. The formatters argument takes a dictionary as input<br />
+# it must have the following format {"column_name": formatting_function}</p>
+<p>html_code = df.to_html(formatters={'logo_path': image_formatter_html}, escape = False)<br />
+HTML(html_code)[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-21-17-50-21.png?w=360" width="360"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Isn't it beautiful ? :) . It will always amaze me how it can get me so excited to implement such basic stuff when we live in a world where super impressive things like ChatGPT exist :D</p>
+<p>That being said, let's write the function that puts all the things together.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]def render_images_inside_df(df, path_column):<br />
+    """render images inside a dataframe by providing the column<br />
+    where we can find paths or urls to the images"""<br />
+    html_code = df.to_html(formatters={path_column: image_formatter_html}, escape = False)<br />
+    return HTML(html_code)[/code]
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]render_images_inside_df(df, path_column='logo_path')[/code]
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-21-17-50-21.png?w=360" width="360"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can leave it as is if it suits you.<br />
+If you want to refine a little more the function I can suggest you some more stuff.<br />
+For instance we can add the <code>img_width</code> argument so that we can set the size of the images.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]def render_images_inside_df(df, path_column, img_width=150):<br />
+    """render images inside a dataframe by providing the column where we can find<br />
+    paths or urls to the images"""<br />
+    def image_formatter_html(path_or_url):<br />
+        """html formatter for images. It takes as input an image path or<br />
+        a image url."""<br />
+        html_code = f'&lt; img src="{path_or_url}" width="{img_width}"&gt;'<br />
+        return html_code</p>
+<p>    return HTML(df.to_html(formatters={'logo_path': image_formatter_html}, escape = False))[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that there is some sophistication here, we define an inner function <code>image_formatter_html</code>.<br />
+Why is that so ? Recall that <code>formatters</code> takes a dictionary as input, it has to be in following format <code>{"column_name": formatting_func}</code><br />
+The thing is we can't pass any extra argument to <code>formating_func</code>. To address this problem we define an inner function so that we can have access to <code>img_width</code> without explicitly setting an extra argument to <code>image_formatter_html</code>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]render_images_inside_df(df, path_column='logo_path', img_width=50)[/code]
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-21-17-51-50.png?w=350" width="350"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><br><br></p>
+<h2 id="Full-code">Full code<a class="anchor-link" href="#Full-code"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]from IPython.core.display import HTML<br />
+import pandas as pd</p>
+<p>def render_images_inside_df(df, path_column, img_width=150):<br />
+    """render images inside a dataframe by providing the column where we can find<br />
+    paths or urls to the images"""</p>
+<p>    def image_formatter_html(path_or_url):<br />
+        """html formatter for images. It takes as input an image path or<br />
+        a image url."""<br />
+        html_code = f'<img src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/%7Bpath_or_url%7D" width="{img_width}">'<br />
+        return html_code</p>
+<p>    return HTML(df.to_html(formatters={'logo_path': image_formatter_html}, escape = False))[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><br><br></p>
+<h1 id="Bonus---how-to-include-the-rendering-function-directly-in-the-dataframe-object-by-subclassing-pd.DataFrame">Bonus - how to include the rendering function directly in the dataframe object by subclassing pd.DataFrame<a class="anchor-link" href="#Bonus---how-to-include-the-rendering-function-directly-in-the-dataframe-object-by-subclassing-pd.DataFrame"></a><br />
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you are not familiar with the concept of classes in python, I recommend you to read on the subject before diving into this last paragraph. However if you are in a hurry or lazy, in a nutshell a class is a code template for creating objects. Objects have member variables and have behavior associated with them.</p>
+<p>The idea here is to subclass <code>pd.DataFrame</code> and to add a function named <code>render_images</code> so that we can invoke it simply with a nasty <code>df.render_images(...)</code></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]import pandas as pd </p>
+<p># Subclassing pd.DataFrame. In other words we create a new class "dataframe_plus" that is going to inherit<br />
+# every existing functions of pd.DataFrame, we then add our own custom function<br />
+class dataframe_plus(pd.DataFrame):<br />
+    def render_images(self, path_column, img_width=80):<br />
+        return render_images_inside_df(self, path_column, img_width)[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]# Instantiate the dataframe with the brand new class "dataframe_plus"<br />
+# We use the same data `data_as_dict` as used in the beginning of the post.<br />
+df = dataframe_plus(data_as_dict)[/code]
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]# Now we can call the function directly within the object, how cool is that ?<br />
+df.render_images('logo_path')[/code]
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Full-code">Full code<a class="anchor-link" href="#Full-code"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]from IPython.core.display import HTML<br />
+import pandas as pd</p>
+<p># Subclassing pd.DataFrame. In other words we create a new class "dataframe_plus" that is going to inherit<br />
+# every existing functions of pd.DataFrame, we then add our own custom function<br />
+class dataframe_plus(pd.DataFrame):<br />
+    def render_images(self, path_column, img_width=80):<br />
+        """render images inside a dataframe by providing the column where we can find<br />
+        paths or urls to the images"""</p>
+<p>        def image_formatter_html(path_or_url):<br />
+            """html formatter for images. It takes as input an image path or<br />
+            a image url."""<br />
+            html_code = f'<img src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/%7Bpath_or_url%7D" width="{img_width}">'<br />
+            return html_code</p>
+<p>        return HTML(self.to_html(formatters={'logo_path': image_formatter_html}, escape = False))</p>
+<p>df = dataframe_plus(data_as_dict)<br />
+df.render_images('logo_path')[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I hope you enjoyed this article ! See ya soon !</p>
+</div>
+</div>
+</div>
+<p><!-- /wp:html --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:jetpack/subscriptions {"fontSize":"13px","customFontSize":"13px"} /--><br />
+</body></html></p>

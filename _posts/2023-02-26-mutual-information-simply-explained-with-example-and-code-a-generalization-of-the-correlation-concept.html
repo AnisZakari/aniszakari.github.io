@@ -1,0 +1,544 @@
+---
+layout: post
+title: Mutual information simply explained with example and code - A generalization
+  of the correlation concept.
+date: 2023-02-26 20:21:05.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Machine Learning
+- Statistics
+tags:
+- contingency table
+- correlation
+- Entropy
+- independence
+- Information
+- information theory
+- mutual information
+- Shannon
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  wordads_ufa: s:wpcom-ufa-v3-beta:1677763557
+  _publicize_job_id: '81849971705'
+  timeline_notification: '1677439266'
+  _cs_poll_c2f0cad4-9e5c-4235-a5d9-976a69b8ee60: a:7:{s:2:"id";i:11806395;s:8:"question";s:0:"";s:4:"note";s:0:"";s:8:"settings";a:10:{s:5:"title";s:15:"Vote
+    sans titre";s:10:"after_vote";s:7:"results";s:13:"after_message";s:0:"";s:17:"randomize_answers";b:0;s:20:"restrict_vote_repeat";b:0;s:7:"captcha";b:0;s:15:"multiple_choice";b:0;s:12:"redirect_url";s:0:"";s:12:"close_status";s:4:"open";s:11:"close_after";b:0;}s:7:"answers";a:2:{i:0;a:3:{s:11:"answer_text";s:2:"up";s:2:"id";i:53801598;s:9:"client_id";s:36:"8500c5cd-a8ca-438c-a6f0-4dfdc42f62c3";}i:1;a:3:{s:11:"answer_text";s:4:"down";s:2:"id";i:53801599;s:9:"client_id";s:36:"2afa8ba0-3e75-4187-8616-1285009751fa";}}s:11:"source_link";s:36:"https://standardscaler.wordpress.com";s:9:"client_id";s:36:"c2f0cad4-9e5c-4235-a5d9-976a69b8ee60";}
+  _crowdsignal_forms_poll_ids: a:0:{}
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:00'
+  reader_suggested_tags: '["Entropy","Travel","Writing","Politics","Photography"]'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2023/02/26/mutual-information-simply-explained-with-example-and-code-a-generalization-of-the-correlation-concept/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Mutual information is a very nice statistical tool that can be seen as a generalization of the correlation concept.<br />
+Indeed, the pearson's correlation allows us to find out if two variables are linearly dependent. The thing is we are not always interested only in linear relationships, that's where mutual information comes into action. It can emphasize any kind of dependance between two distributions.<br />
+Another cool thing about mutual information is that it can be used for both continuous and discrete variables.</p>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="The-formula">The formula<a class="anchor-link" href="#The-formula"></a><br />
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The formula looks like this:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="100" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-25-14-06-5.png?h=100"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I've found out that many people struggle understanding what it exactly does, not because it's difficult to understand per se, but because they get confused by the notation and sometimes they also have some misconceptions. So let's dive into the subject step by step.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Notation-and-misconceptions">Notation and misconceptions<a class="anchor-link" href="#Notation-and-misconceptions"></a><br />
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The core thing to understand is the concept of independence between two <strong>events</strong> A and B.<br />
+The most intuitive way to understand it is perhaps to use conditional probabilities:<br />
+Recall that <code>P(A|B)</code> (Probability of A given B) can be written like so:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="80" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-25-14-49-1.png?h=80"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>if A and B are independents it means that knowing B doesn't help you predict A, in other words, it doesn't give you any information about A.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="100" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-25-14-50-0.png?h=100"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Thus the probability of A given B is simply the probability of A.<br><br />
+This leads to <strong>P(A and B) = P(A).P(B)</strong></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In other words, the product of the separate probabilities is equal to the probability that both events will occur.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I want to point out that most often the concept of independence is confused with the concept of mutuallly exclusive events. That is not the same thing !</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-25-14-57-3.png?w=650" width="650"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Two events are mutually exclusive if they can not occur at the same time. For instance, a tossed coin outcome can be either heads or tails, but both outcomes cannot occur simultaneously, they are mutually exclusive.</p>
+<p>On the other hand, two independent events do occur simultaneously, simply the probability of the intersection is exactly equal to the probability that both events occur.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>One last thing that might disturb you is the notation p(A,B). This is exactly the same thing as P(A and B) or P(A ∩ B).<br><br />
+Moreover, there is  a little bit of lingo to know here:</p>
+<ul>
+<li>P(A, B) or P(A and B) or P(A ∩ B) is said to be the <strong>joint probability</strong>
+</li>
+<li>P(A) is said to be the <strong>marginal probability</strong>
+</li>
+<li>P(B) is said to be the <strong>marginal probability</strong>
+</li>
+<li>P(A | B) is said to be the <strong>conditional probability</strong> </li>
+</ul>
+<p>That's it ! A probability can be either <strong>marginal</strong>, <strong>joint</strong> or <strong>conditional</strong>.</p>
+<p>Now that you are more familiar with the key concepts, the notation and the lingo we are ready to move forward.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="A-simple-example">A simple example<a class="anchor-link" href="#A-simple-example"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I've made up a dataset which features or columns are <code>likes chocolate</code> and <code>gender</code>.<br />
+There are in fact 100 lines but I won't display the whole table for obvious reasons. :D</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-25-21-45-4.png?w=300" width="300"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The random variable <code>likes_chocolate</code> has two possible events:</p>
+<ul>
+<li>Yes </li>
+<li>No</li>
+</ul>
+<p>The random variable <code>gender</code> has two possible events:</p>
+<ul>
+<li>Male </li>
+<li>Female</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>From that, the idea is to see if <code>gender</code> affects <code>likes_chocolate</code> or not and vice versa.<br />
+To do so we are going to change the granularity of the study and see if the events of <code>gender</code> do affect the events of <code>likes_chocolate</code>.</p>
+<p>A simple idea is to build up a contingency table. This is a fancy word to call a table where you count the amount of occurrences of simultaneous events. If you prefere we can also say that this is a table showing the distribution of one variable in rows and another in columns. We use this to study the correlation between the two variables. For instance the first cell which value is 23 corresponds to the number of occurrences of the simultaneous events <code>likes_chocolate = no</code> and <code>gender = female</code>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-25-21-53-4.png?w=600" width="600"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I have generated the data so that for each outcome female and male have 50% chance each to be drawn. In the same fashion, a person has 50% chance to like or not to like chocolate. In fact <strong>I've generated the data so that the variables are independent</strong>.</p>
+<p>If the variables are perfectly independents, there is a priori no reason for a cell of the table to have more occurrences than another. We can also say that for given variables, in our case <code>likes_chocolate</code> and <code>gender</code>, if these two are independent, then there's no reason that <code>gender</code> affects <code>likes_chocolate</code>. In particular, there's no reason to observe a higher probability for the joint events <code>gender=male</code> and <code>likes_chocolate = yes</code> than for the joint events <code>gender=female</code> and <code>likes_chocolate = yes</code>. This holds true for all the other joint events (for every cell of the table).</p>
+<p>What is interesting to understand here is that because the variables should be independent, one would expect to end end up with approximately 25 occurrences for each joint events.</p>
+<p>That is actually what we see, although this is not exactly 25 occurences for each cell !</p>
+<p>This is a toy example and frankly, we can already see that the variables are independent. However, "in the real life" everything is not perfectly balanced, so to ensure that the values of the cells remain comparable we use the following property of independence that we already spoke about:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-25-22-10-5.png?w=300" width="300"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The idea is simple. If A and B are independent then P(A and B) divided by P(A).P(B) is equal to one.<br />
+Otherwise, if the ratio is way higher or way lesser than one then there is some dependency.<br />
+So we are going to calculate how dependent are each pairs of events.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-26-15-10-0.png?w=500" width="500"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>So first let's calculate all the pairs of P(A,B)</strong>. The probability of A and B is simply the number of times events A and B occur simultaneously over the total number of possible outcomes (N).<br />
+here N is 100 (this is the number of lines of the dataset). As we have a contingency table, we already have the occurrences of the pairs of events, <strong>we then simply need to divide all the values by 100</strong>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-26-15-21-3.png?w=800" width="800"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice that we also added a total for the lines and columns. This is helpful as we will need to calculate the marginal probabilities <code>P(female)</code>, <code>P(male)</code>, <code>P(likes_chocolate)</code> and <code>P(dont_like_chocolate)</code>.<br />
+We can easily read for example that <code>P(female)</code>= 0.49.</p>
+<p>Now the last step is to divide all the joint probabilities by the product of their marginal probabilities.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-26-15-28-5.png?w=550" width="550"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So we get a table where all the values are approximately equal to 1 meaning that all the pairs of events are independents (as expected).</p>
+<p>Now if we were to flatten all the values of the table to make the array <code>[0.94, 1.06, 1.06, 0.94]</code><br />
+and display it as a bar plot, this would look like this.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-26-15-34-0.png?w=400" width="400"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I put "distribution" in quotation marks because usually what is meant by distribution is the probability distribution which values are supposed to add up to 1. Here we just see how the values are distributed but they are not proabilities.</p>
+<p>This is interesting to stop a moment to think of what the problem has really become.</p>
+<ul>
+<li>
+<p>If you think about that, when all the events are independents, all the values are equal to 1 so the "distribution" is flat, consequently there is no clear pattern, we can also say that events are drawn from a uniform distribution and therefore <strong>the uncertainty is maximum</strong>.</p>
+</li>
+<li>
+<p>When the variables are very dependents, we should see some values way higher than 1 and some way lesser than 1 (because for example if a pair of events occur 80 times then there is only 20 occurrences remaining for other events) So we are favoring pairs of events over others, in other words, <strong>we are reducing uncertainty</strong>.</p>
+</li>
+</ul>
+<p>So this is really becoming <strong>a problem of quantifying uncertainty in the distribution</strong>. This should be somewhat reminiscent of the concept of entropy. <a href="https://standardscaler.wordpress.com/2022/12/19/what-is-entropy-intuitive-explanation-with-code/">Please read my article about entropy if you are not familiar with this concept</a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>From there, we just calculate the entropy of the "distribution".<br />
+Entropy has this general form :</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-26-16-01-2.png?w=350" width="350"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The only difference is really what's inside the log. Indeed, instead of having a probability inside, we'll have the previous quantity p(x,y)/p(x).p(y).</p>
+<p>the log of p(x,y)/p(x).p(y) in our case has a name, it is called the pointwise mutual information or PMI.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-26-16-05-4.png?w=350" width="350"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The last step is to calculate the PMI of every possible x and y weighted by the probability p(x,y) that x and y occur together. This weighted average measures how much we expect the variables to be dependent of each other. We can also say that this measures how much we expect the variables to predict each other.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This leads us to the formula.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="100" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-26-16-12-1.png?h=100"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Or we can also write this in a more explicit way</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="100" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-25-14-06-5.png?h=100"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Applied to our example, and with the help of our previous tables the calculation is as follows:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="200" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-26-16-27-3.png?h=200"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I(X, Y) = <code>0.23*log(0.94) + 0.27*log(1.06) + 0.26*log(1.06) + 0.24*log(0.94)</code><br><br />
+I(X, Y) ≈ 0</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>
+<p>The mutual information is almost equal to 0 which means that the variables X=<code>likes_chocolate</code> and Y=<code>gender</code> don't share any information together, that is they are independent.</p>
+</li>
+<li>
+<p>A usueful property to know is that the mutual information can never be lesser than 0.</p>
+</li>
+<li>
+<p>When the mutual information is greater than 0 we can say that there is some dependency. The more the value is high the more there is dependency between variables. Unlike pearson's correlation, the upper bound of the mutual information is not 1. In fact there is an upper bound but it depends on your data. Usually it doesn't matter to know the upper bound as you just need a relative value so that you can sort all the features X_i that are the most correlated with a feature Y for instance. By the way, I'll show you how you could use mutual information as a feature selector in a bit :)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Mutual-Information-with-continuous-variables">Mutual Information with continuous variables<a class="anchor-link" href="#Mutual-Information-with-continuous-variables"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Normally we can only use categorical variables with mutual information. The trick here is to transform continuous variables into categorial variables.</p>
+<p>One way to do this is to use binning, which involves dividing the range of values of a continuous variable into a set of bins or intervals and assigning each observation to its corresponding bin.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here a simple example with <code>bins=2</code> and <code>bins=3</code>. The number of bins is the number of categories you want to build up. In the example, we have a continuous variable <code>lkes_chocolate_score</code> that we are going to discretize or to transform into categories.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="350" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-26-20-10-44.png?h=350"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="350" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/02/2023-02-26-20-13-03.png?h=350"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Use-mutual-information-as-a-way-to-do-feature-selection">Use mutual information as a way to do feature selection<a class="anchor-link" href="#Use-mutual-information-as-a-way-to-do-feature-selection"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can use the following code to test de dependency of several features of X against the target variable Y</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]from sklearn.datasets import load_iris<br />
+from sklearn.feature_selection import mutual_info_classif</p>
+<p># Load the iris dataset<br />
+iris = load_iris()</p>
+<p># Separate the features (X) from the target (y)<br />
+X = iris.data<br />
+y = iris.target</p>
+<p># Compute the mutual information between each feature and the target<br />
+mutual_info = mutual_info_classif(X, y)</p>
+<p># Print the mutual information scores for each feature<br />
+for i in range(len(mutual_info)):<br />
+    print(f"{iris.feature_names[i]}: {mutual_info[i]:.3f}")[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<pre><code>sepal length (cm): 0.488
+sepal width (cm): 0.258
+petal length (cm): 0.985
+petal width (cm): 0.969</code></pre>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this example, we first load the iris dataset from the sklearn.datasets module. We then separate the features (X) from the target (y).</p>
+<p>Next, we use the mutual_info_classif function to compute the mutual information between each feature and the target. It returns an array of mutual information scores, one for each feature.</p>
+<p>Finally, we print out the mutual information score for each feature using a loop. The output will show the mutual information score for each of the four features in the iris dataset.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>To select features based on mutual information, we have to choose the features with the highest scores</strong>. These features are considered to have the strongest relationship with the target variable and are likely to provide the most valuable information for predicting the target. In our example <code>petal_width</code> and <code>petal_length</code> appear to be the features that are highly related to the target variable.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>That's it for today, thank you for reading !</p>
+</div>
+</div>
+</div>
+<p><!-- /wp:html --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:jetpack/subscriptions {"fontSize":"13px","customFontSize":"13px","className":"is-style-split"} /-->
+</div>
+<p></body></html></p>

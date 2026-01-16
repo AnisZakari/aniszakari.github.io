@@ -1,0 +1,472 @@
+---
+layout: post
+title: Intuitive explanation of bayes theorem - Part 1/2
+date: 2023-01-20 19:25:50.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Machine Learning
+- Statistics
+tags:
+- bayes
+- bayes theorem
+- conditional probabilities
+- probabilities
+meta:
+  _last_editor_used_jetpack: block-editor
+  _wpcom_is_markdown: '1'
+  wordads_ufa: s:wpcom-ufa-v3-beta:1676584307
+  _publicize_job_id: '80736838992'
+  timeline_notification: '1674239152'
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:00'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2023/01/20/intuitive-explanation-of-bayes-theorem/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>One of the most important formula in statistics is perhaps the bayes theorem.</p>
+<p>Many people see this formula as somewhat magical and struggle to understand its math or getting the intuition of what's going on. In fact, once you understand it, it may seem very trivial and I suspect that teachers don't spend the time needed to really dive into it, instead they just give the formula and ask you to know it by heart. As the formula is quite simple, students find it easy to memorize and don't really spend time to get into it either. Knowing a formula by heart may be useful to pass exams but it won't help you in your scientist journey :)<br />
+In the contrary, understanding the underlining concept will make you able to derive the formula instead of memorizing it.</p>
+<p>I personnaly like to spend time on "easy" and "trivial" things because I consider them as the most important.<br />
+Furthermore, there are many ML models and concepts built on top of the bayes rule so I garantee you that the time spent is worth it.</p>
+<p>Without wasting any more time, let's begin !</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conditional-probabilities">Conditional probabilities<a class="anchor-link" href="#Conditional-probabilities"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As Bayes theorem is all about conditionnal probabilities, we need to understand first what is a conditionnal probability (wink wink captain obvious).</p>
+<p>Let's consider a population of cars in your neighborhood.<br><br />
+Suppose that the distribution of the colors is like so:</p>
+<p>red cars:     30<br><br />
+blue cars:    50<br><br />
+black cars:   100<br><br />
+yellow cars:  20<br><br />
+TOTAL:        200</p>
+<p>If I ask you the question what's the probability of seeing a blue car within your neighborhood, you would answer:<br><br />
+<code>P(blue car) = 50/200 = 1/4</code><br><br />
+This is a probability in its most simple form, it is simply a way to quantify how likely something is to happen.</p>
+<p><strong>What are conditional probabilities then ?</strong></p>
+<p>As their name suggest, it's when we are adding a condition or some may say a restriction.</p>
+<p>Let's now add a condition:<br />
+There are taxi drivers among your neighbors and in your city taxis can be either black or yellow.<br />
+For now, we consider that the ensemble <code>taxi</code> is formed by <code>yellow cars</code> + <code>black cars</code>.<br><br />
+Now what is the probability of seeing a yellow car KNOWING that it's a taxi  ?<br><br />
+This is written:<br><br />
+<code>P(yellow car | taxi)</code><br><br />
+the vertical bar stands for "knowing that"</p>
+<p>As the population is now restricted to only black and yellow cars we are no longer taking into account the whole population but only a subset. We answer the question "What's the amount of yellow cars within the taxis ?"<br><br />
+<code>P(yellow car | taxi) = 20/ (20+100) = 1/6</code></p>
+<p>Still pretty intuitive isn't it ?</p>
+<p>The general form of a conditional probability can be written<br><br />
+<code>P(A | B) = P(A ∩ B) / P(B)</code><br><br />
+the character ∩ symbolizes the intersection,<br />
+in our case <code>A ∩ B</code> = <code>yellow cars ∩ taxis = yellow cars</code><br><br />
+and <code>P(B) = P(taxi)</code></p>
+<p>Once again conditional probabilities are nothing more than calculating probabilities on a subset of the population.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Let's-stick-with-Taxis-a-bit-more">Let's stick with Taxis a bit more<a class="anchor-link" href="#Let's-stick-with-Taxis-a-bit-more"></a><br />
+</h2>
+<p>In fact, not all yellow and black cars are taxis, to be fair taxis are also a subset of the ensemble <code>yellow cars</code> + <code>black cars</code>.<br />
+To make things clearer let's use this little diagram.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="250" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-13-19-37.png?h=250"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's play a bit with conditionnal probabilites in a visual way.</p>
+<p>If a car is at the same time a taxi and a yellow car then it belongs to <code>taxis ∩ yellow cars</code> and it visually corresponds to this:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="50" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-13-24-10.png?h=50"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If we want the probability of a car being a taxi knowing that's it's a yellow car then we simply take the subset of yellow cars and see among it what is the proportion of taxis. Visually, it would look like that:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="200" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-13-29-21.png?h=200"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Got it ?</p>
+<p>Sometimes it's more interesting to have the probability the other way around, that is to say having the probability of a yellow car knowing it's a taxi. No problem, within the subset of the taxis, what is the proportion of yellow cars ?</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="150" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-13-32-23.png?h=150"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's put those two bad boys together in a single image so that we can compare them easily :)</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="250" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-13-33-59.png?h=250"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice how these two probabilities share the same quantity in the numerator. In a way we can say that <code>P(Taxi | Yellow car)</code> and  <code>P(Yellow car | Taxi)</code> are in fact "the same quantity seen through different glasses".</p>
+<ul>
+<li>
+<code>P(Taxi | Yellow car)</code> sees <code>taxis ∩ yellow cars</code> from <code>yellow cars</code> point of view </li>
+<li>whereas  <code>P(Yellow car | Taxi)</code>  sees <code>taxis ∩ yellow cars</code> from <code>Taxi</code> point of view </li>
+</ul>
+<p>To me this is the <strong>key point to understand !</strong> From there, we are one step away from "discovering the bayes theorem".</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Bayes-Theorem">Bayes Theorem<a class="anchor-link" href="#Bayes-Theorem"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The idea of Bayes Theorem is to have a simple formula that links <code>P(A | B)</code> to <code>P(B | A)</code>.<br />
+This would be darn handy because in real life you sometimes have easily access to <code>P(A | B)</code> but your ultimate goal is to find <code>P(B | A)</code> so you want to be able to switch from one quantity to the other.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's get back to the previous image, what if we get rid of the denominators of each quantity ? To do so, we simply multiply each quantity with their denominator:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-14-02-44.png?w=800" width="800"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>These quantities are now equal !</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-14-03-35.png?w=800" width="800"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The last step is to divide each side by <code>P(Yellow car)</code></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-14-04-40.png?w=800" width="800"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ladies and gentleman, I'm very happy to introduce you Bayes theorem :)<br><br />
+It's general form is :</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="150" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-14-05-45.png?h=150"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Should-I-memorize-the-formula-?">Should I memorize the formula ?<a class="anchor-link" href="#Should-I-memorize-the-formula-?"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Hello no ! If someday you forget the formula, just remember that the formula is designed to link <code>P(A | B)</code> with <code>P(B | A)</code> and that they share the same quantity <code>P(A ∩ B)</code> then the following steps are straight forwards as <code>A ∩ B</code> is equivalent to <code>B ∩ A</code>. I just used a little tip by introducing P(A) and P(B) in the equality.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="250" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-14-20-11.png?h=250"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="An-example">An example<a class="anchor-link" href="#An-example"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>We know the proportion of yellow cars among the taxis:  <code>P(Yellow | Taxi) = 0.5</code> </li>
+<li>It is also given that 5% of the cars in the neighborhood are taxis. </li>
+</ul>
+<p>What is the probability of a car being a taxi knowing that it's a yellow car (<code>P(Taxi | Yellow)</code>) ?</p>
+<p><strong>Let's solve this</strong></p>
+<p>Let's calculate first the numerator and the denominator of the formula.</p>
+<p>Numerator = <code>P(Yellow | Taxi)</code> x <code>P(Taxi)</code>=  0.5 x  0.05<br><br />
+Denominator = <code>P(Yellow)</code> = 20/200 = 0.1</p>
+<p>Finally,<br><br />
+<code>P(Taxi | Yellow)</code> = N/D = 0.5 x 0.05 / 0.1 =  0.25</p>
+<p><code>P(Taxi | Yellow)</code> = 25%</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Extended-version-of-the-formula">Extended version of the formula<a class="anchor-link" href="#Extended-version-of-the-formula"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Sometimes you'll see the bayes formula used with a longer denominator.<br />
+In fact it's still the same formula, it's just an "extended version".</p>
+<p>Consider this situation:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="250" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-16-18-56.png?h=250"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="90" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-16-19-22.png?h=90"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>we divided Taxi into two new groups: <code>big taxis</code> and <code>small taxis</code>.<br />
+in order to make it easier to write down things let's consider that:</p>
+<ul>
+<li>
+<code>big taxis</code> = <code>A1</code>
+</li>
+<li>
+<code>small taxis</code> = <code>A2</code>
+</li>
+</ul>
+<p><code>A1</code> and <code>A2</code> form a partition of the space <code>Taxis</code>. This means that the sum of <code>A1</code> + <code>A2</code> forms exactly <code>Taxis</code>, in other words there's no overlap between these two, or you can also say that they are mutually exclusive.</p>
+<p>Now that you are confortable with the concept of partition, let's form a partition of Yellow cars.</p>
+<p>Note that the c above Taxi in the last quantity stands for "not", i.e it represents all the cars that are not taxis.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="200" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-16-25-13.png?h=200"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Thus</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="200" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-16-25-44.png?h=200"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Thus</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="120" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-25-13-30-37.png?h=120"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To simplify writing let's say that <code>not taxi</code> = <code>A3</code></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Finally</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="50" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-25-13-31-54.png?h=50"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's apply bayes theorem to the probability of A1 given Yellow (<code>P(A1 | Yellow)</code>):</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="90" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-16-30-43.png?h=90"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's plug into the formula the "extended version of <code>P(Yellow)</code>"</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="100" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-25-13-34-05.png?h=100"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And voila !</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The general form can be written like so:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="200" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/01/2023-01-20-16-32-46.png?h=200"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Remember ! This holds true only if the events (A1,...,An) form a partition of the space, that is to say they are mutually exclusive and collectively exhaustive.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Merci ! This is the end of the article, I hope I made Bayes formula a little bit easier to understanded. :)</p>
+</div>
+</div>
+</div>
+<p><!-- /wp:html --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:jetpack/subscriptions {"fontSize":"13px","customFontSize":"13px"} /--><br />
+</body></html></p>

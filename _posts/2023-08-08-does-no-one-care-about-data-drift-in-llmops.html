@@ -1,0 +1,72 @@
+---
+layout: post
+title: Does no one care about Data Drift in LLMOps ?
+date: 2023-08-08 23:54:56.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Generative AI
+- MLOps and Coding
+tags:
+- data drift
+- LLM
+- LLMOps
+- MLOps
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  wordads_ufa: s:wpcom-ufa-v3-beta:1691531882
+  _publicize_job_id: '86472440125'
+  timeline_notification: '1691531700'
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:02'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2023/08/08/does-no-one-care-about-data-drift-in-llmops/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>(This article is a transcript in English of <a href="https://www.linkedin.com/posts/anis-zakari_personne-ne-se-soucie-du-data-drift-dans-activity-7094565407696527361-6RCQ?utm_source=share&amp;utm_medium=member_desktop">one of my french LinkedIn posts</a>)</p>
+<p>By the way, there is indeed a term to describe the life cycle management of language models: LLMOps (In the Ops family, following Dev and ML, meet the newest member, LLMOps).</p>
+<p>But back to our question: I had this thought: why doesn't Data Drift seem to concern many when using LLMs? By Data Drift, I mean the evolution of input data (the prompts) over time, which could impact the model's performance. I searched scientific publications, blogs, content specialized in LLMOps... Not much to find.</p>
+<p>It simply doesn't seem to be a topic.</p>
+<p>Is it because this emerging discipline still lacks maturity and tools to tackle this issue? Admittedly, "classic" MLOps hasn't reached its full maturity either.</p>
+<p>Or is it because LLMs are trained on such massive amounts of data that the risk of drift between production and training data is minimal? Therefore, it wouldn't affect the model's performance?</p>
+<p>Or, is it because the input data (the prompts) are shaped and reshaped by the user until the desired result is obtained? So the drift of the prompts wouldn't be an issue.</p>
+<p>However, even if we assume that drift doesn't affect LLMs much (which is debatable), monitoring it seems crucial in many cases...</p>
+<p>Suppose users find a flaw in your production LLM, spread the word, and overnight, hundreds of them have fun generating malicious code with your service.</p>
+<p>Without data drift monitoring, how can you detect that something is happening?</p>
+<p>But then again, how to measure it effectively?</p>
+<p>I guess one solution would be to regularly collect a representative sample of embeddings associated with user prompts, and then devise a clustering and divergence measurement solution based on that.</p>
+<p>Assuming this works and is scalable, there are still data privacy concerns.</p>
+<p>If you store the embeddings of the prompts, it means that you could, using certain techniques, roughly reconstruct the original prompts (though it's not that straightforward)…</p>
+<p>I have so many questions!</p>
+<p>In short, data drift with LLMs seems to be a blind spot even though its monitoring seems crucial to me. Between the lack of maturity of tools, the massive amount of training data, and user intervention on input data, several hypotheses might explain this "lack of interest."</p>
+<p>I am very curious to hear your thoughts on this!</p>
+<p>I'm also looking for resources on the topic</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+</div>
+</div>
+</div>
+<p><!-- /wp:html --><br />
+</body></html></p>

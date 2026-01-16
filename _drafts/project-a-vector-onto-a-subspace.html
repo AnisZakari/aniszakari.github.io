@@ -1,0 +1,86 @@
+---
+layout: post
+title: Project a vector onto a subspace
+date: 
+type: post
+parent_id: '0'
+published: false
+password: ''
+status: draft
+categories:
+- Non classé
+tags: []
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="vector_and_subspace" height="250" src="%7B%7Bsite.baseurl%7D%7D/Users/aniszakari/Documents/personal-blog/assets/media-export-203664368-from-0-to-2031/2022-12-18-15-36-51.png?h=250"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's be clear about the notation I'll use. It is important to understand that beta is a vector, not a scalar. Beta is the vector of the coordinates of Vx</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="notation" height="200" src="%7B%7Bsite.baseurl%7D%7D/Users/aniszakari/Documents/personal-blog/assets/media-export-203664368-from-0-to-2031/2022-12-18-15-00-50.png?h=200"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It is very tempting to try getting thoses betas by projecting V on each one of the vetors that spans X. Yeah ! let's just project <strong>v</strong> on <strong>x1</strong> and on <strong>x2</strong> and I'm done, I have the coordinates of <strong>vx</strong> :)</p>
+<p>It sure would work if <strong>x1</strong> and <strong>x2</strong> form an orthogonal basis but unfortunatly in the problems you'll encounter in ML, it's almost never the case.<br />
+Instead we want to rely on a technique that works everytime, no matter how <strong>X</strong> is formed.</p>
+<p>Let's focus on the things that will always hold true.<br><br />
+As we are projection <strong>v</strong> perpendicularly to <strong>X</strong>, the vector (<strong>v</strong> - <strong>vx</strong>) will always be orthogonal to <strong>v</strong> or to the subspace <strong>X</strong> (because <strong>v</strong> lays on <strong>X</strong>).</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="250" src="%7B%7Bsite.baseurl%7D%7D/Users/aniszakari/Documents/personal-blog/assets/media-export-203664368-from-0-to-2031/2022-12-18-15-15-59.png?h=250"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice that we chose to use the fact that <strong>X</strong> is perpendicular to (<strong>v</strong> - <strong>vx</strong>) rather than the fact that <strong>vx</strong> is perpendicular to (<strong>v</strong> - <strong>vx</strong>) to avoid having twice <strong>vx</strong> in the equation. Indeed <strong>vx</strong> contains the unknown <strong>beta</strong> so it would be clumsy to use an unknown when you can use <strong>X</strong> which is known.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="250" src="%7B%7Bsite.baseurl%7D%7D/Users/aniszakari/Documents/personal-blog/assets/media-export-203664368-from-0-to-2031/2022-12-18-15-32-03.png?h=250"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+</div>
+</div>
+</div>
+<p><!-- /wp:html --><br />
+</body></html></p>

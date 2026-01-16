@@ -1,0 +1,86 @@
+---
+layout: post
+title: The Non-Determinism of OpenAI and Anthropic Models
+date: 2024-03-06 10:26:00.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Generative AI
+- Machine Learning
+- Personal Thoughts
+tags:
+- Anthropic
+- ChatGPT
+- CLAUDE
+- GPT-3.5
+- Large language models
+- machine learning models
+- mixture of experts
+- non-determinism
+- OpenAI
+- reproducibility
+- stochasticity
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  firehose_sent: '1709717561'
+  timeline_notification: '1709717562'
+  reader_suggested_tags: '["AI","Openai","Chatgpt","Artificial Intelligence","Technology"]'
+  _publicize_job_id: '92510600898'
+  wordads_ufa: s:wpcom-ufa-v4:1709717884
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:08'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2024/03/06/the-non-determinism-of-openai-and-anthropic-models/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:image {"id":1997,"sizeSlug":"large","linkDestination":"none"} --><html><body></p>
+<figure class="wp-block-image size-large"><img src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2024/03/image.png?w=1024" alt="" class="wp-image-1997"></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>OpenAI and Anthropic's models are not deterministic, even at temperature zero and with a fixed seed, and this can be a real problem.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>How is it that some models are not deterministic under these conditions? This is a question I've been asking myself for some time now.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>In manipulating models, I observed that with a fixed prompt and temperature at zero, the output was not always the same. At the time, I thought it was a bug, a rounding issue, or that there was deliberately some residual randomness for some unknown reason. I didn't really investigate the issue thoroughly.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>But in some cases, it's quite essential to guarantee reproducible results, for example in a testing/experimentation tracking phase.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Temperature is the parameter that controls a dose of randomness and therefore the model's dose of creativity.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>This "T" comes into play in the model's final layer, the softmax, to transform the output values into a probability distribution. When T tends towards 0, it acts as an amplifier and the highest probability tends towards 1, all others towards 0. In other words, this amounts to always selecting the most probable word (like an argmax).</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Conversely, when T tends towards 1, it reduces differences between probabilities and the distribution becomes more uniform, thus giving the model the opportunity to vary its choice of words.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>OpenAI and Anthropic's models, even with a temperature of 0, are not deterministic. What? A result that changes 1 out of 5 times can't be a rounding problem. It also can't be a bug shared by 2 different services.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Anthropic and OpenAI only provide vague answers on this subject.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Some have hypothesized that since GPT-4 would be a Mixture of Experts, it would have to choose an expert for each token, and this choice would depend on its availability. In other words, if it's already busy processing other requests, another expert takes over, thus causing a difference.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>GPT-3.5 Turbo also isn't deterministic, so according to the preceding hypothesis it too would be a Mixture of Experts.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>What is also interesting is that Mixtral models seem to be deterministic, even though they too are Mixtures of Experts...</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>So, MoE? Floating point operations? Designers' choice?</p>
+<p><!-- /wp:paragraph --><br />
+</body></html></p>

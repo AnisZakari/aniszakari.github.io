@@ -1,0 +1,440 @@
+---
+layout: post
+title: Understanding decorators in Python with a case study
+date: 2022-12-18 21:16:56.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- MLOps and Coding
+tags:
+- coding
+- decorators
+meta:
+  timeline_notification: '1671394619'
+  _publicize_job_id: '79760389440'
+  wordads_ufa: s:wpcom-ufa-v3-beta:1676584385
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:00'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2022/12/18/understanding-decorators-in-python-with-a-case-study/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="What-are-decorators-?">What are decorators ?<a class="anchor-link" href="#What-are-decorators-?"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Today, I would like to speak about decorators. This is quite an advanced technique in Python but you'll see<br />
+that it's not a very difficult concept to understand and once you master it, it will really improve your code quality, making it more concise, more understandable and even faster in some cases.</p>
+<p>So what are these fellow decorators ?</p>
+<p>You may have encountered while reading some code a function definition with a fancy <code>@</code> above. Like so:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]@decorator #&lt;-- this is a decorator<br />
+def func():<br />
+    #do something[/code]
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It may seem very weird but it's actually no big deal. A decorator is a function that takes a function as input and returns another function that is able to do new things. It's like enhancing or giving new super powers to an existing function, got it ? :)</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]def my_decorator(input_func):<br />
+    #do something with input_func<br />
+    return output_func[/code]
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To use it in a more convenient way there is this special syntax:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]@my_decorator<br />
+def func():<br />
+    #do something[/code]
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And this is it you are good to go !</p>
+<p>Well not quite yet, first let's get back to the previous definition and let's elaborate a bit on it because there is something important to understand.</p>
+<p>As you are returning a new function that didn't exist before (<code>output_func</code>), it means that you need to define it inside the decorator <code>my_decorator</code> like so:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]def my_decorator(input_func):<br />
+    def output_func():<br />
+        #do something with input_func<br />
+        input_func(...)<br />
+    return output_func[/code]
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you are not used to nested function it might seem weird but in fact it's a very common thing to define a function inside another one.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Case-Study---map-function-with-multiple-arguments">Case Study - map function with multiple arguments<a class="anchor-link" href="#Case-Study---map-function-with-multiple-arguments"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Do you now the function called <code>map</code> ? It applies a function to each element of an iterable. Here is an example:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]int_list = [2, 3, 4]<br />
+my_func = lambda x: x**2</p>
+<p>map(my_func, int_list)</p>
+<p>#&gt;&gt;&gt; map at 0x1069aa400&gt; #it returns a map object.</p>
+<p>list(map(my_func, int_list)) #let's convert it to a list to see the result</p>
+<p>#&gt;&gt;&gt; [4, 9, 16][/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now the thing is that <code>map</code> doesn't allow you to handle multiple function arguments. If <code>my_func</code> has to take multiple inputs, this just can't work. An example bellow:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]my_list = [('a', 'b'), ('c', 'd')]</p>
+<p>def concat(x, y):<br />
+    return x+y </p>
+<p>list(map(concat, my_list))</p>
+<p>#&gt;&gt;&gt; TypeError: () missing 1 required positional argument: 'y'[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What's happening here is that each tuple of the list is interpreted as one argument. It's basically like trying to execute this line:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]concat(x= ('a', 'b')) # we want concat(x='a', y='b') instead[/code]
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We want to somehow unpack the tuples inside the function <code>concat</code> beforehand. To do so, we could create a function that unpacks tuples.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]my_list = [('a', 'b'), ('c', 'd')]</p>
+<p>def concat(x, y):<br />
+    return x+y </p>
+<p>def unpacker(items):<br />
+    return concat(*items)  #the start operator * unpacks the tuple</p>
+<p>list(map(unpacker, my_list))</p>
+<p>#&gt;&gt;&gt; ['ab', 'cd'][/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It does work fine but there are many reasons not to code it this way.</p>
+<ul>
+<li>
+<p>Firstly, when you read the code <code>map(unpacker, my_list)</code> it's not very clear that you are applying a function that does concatenations. You don't want to make your code implicit.</p>
+</li>
+<li>
+<p>Secondly, the <code>unpacker</code> function is very specific, its only job is to unpack tuples for the <code>concat</code> function.Instead you would want such a function to be more generic so you can use it for other functions, not only <code>concat</code>.</p>
+</li>
+<li>
+<p>...</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To define a more generic unpacker we can use decorators !</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]#define the decorator<br />
+def unpacker(func):<br />
+    #creating a nested function to unpack args for `func`<br />
+    def star_func(args):<br />
+        #unpack args<br />
+        return func(*args)<br />
+    #return the new function<br />
+    return star_func</p>
+<p>@unpacker<br />
+def _concat(x, y):<br />
+    return x+y </p>
+<p>list(map(_concat, my_list))</p>
+<p>#&gt;&gt;&gt; ['ab', 'cd'][/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Isn't it beautiful ? :)</p>
+<p>the function <code>_concat</code> now has the ability to unpack the input arguments ! :). Also this is done in a very clean fashion, very little code and eveything is explicit. Moreover if I need to do this for another function, I can just use <code>@unpacker</code> above it !</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As a final exercice we can definie a function <code>starmap</code> that uses <code>map</code> as core function and that can handle multiple arguments.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]def starmap(func, iterable):<br />
+    """apply map on an iterable where each element of this iterable is a tuple"""</p>
+<p>    #_func derives from func, it just unpacks arguments beforehand.<br />
+    @unpacker<br />
+    def _func(*args):<br />
+        return func(*args)</p>
+<p>    return map(_func, iterable)</p>
+<p>list(starmap(concat, my_list))</p>
+<p>#&gt;&gt;&gt; ['ab', 'cd'][/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you prefer you can code it this way. It's slightly more compact but it may seem weird for someone used to decorators :D .</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]def starmap(func, iterable):<br />
+    """apply map on an iterable where each element of this iterable is a tuple"""<br />
+    _func = unpacker(func)</p>
+<p>    return map(_func, iterable)</p>
+<p>list(starmap(concat, my_list))</p>
+<p>#&gt;&gt;&gt; ['ab', 'cd'][/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Keep in mind this exercice was made for pedagogical purpose, it may not be the most straight forward way to code a <code>starmap</code> function. If you ever need to use map with multiple arguments, I recommand you to use the <a href="https://docs.python.org/3/library/itertools.html#itertools.starmap">starmap function from itertools</a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Some-decorators-to-know">Some decorators to know<a class="anchor-link" href="#Some-decorators-to-know"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://docs.python.org/3/library/functools.html">@cache and @lru_cache</a>:<br><br />
+Most recent calls are cached in a dictionnary. It can save time when using a function that periodically calls same arguments.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]from functools import lru_cache<br />
+@lru_cache<br />
+def factorial(n):<br />
+    return n * factorial(n-1) if n else 1[/code]
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://docs.python.org/fr/3/library/functions.html?highlight=classmethod#classmethod">@classmethod</a><br><br />
+Another built in decorator! Once again the name says it all. It allows you<br><br />
+to define a method or a function that is not associated with an instance but with<br><br />
+the class itself. So as a reference argument we use <code>cls</code> that stands for class<br><br />
+rather than <code>self</code> that is used to symbolize an instance.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]class MyClass:<br />
+    @classmethod<br />
+    #we use cls as it stands for class rather than self that symbolizes the instance.<br />
+    def my_class_method(cls, x, y):<br />
+        return x + y</p>
+<p>#Notice that i didn't create any instance beforehand.<br />
+MyClass.my_class_method(1, 2)<br />
+#&gt;&gt;&gt; 3</p>
+<p>#Of course you can also access this method with an instance of the class.<br />
+instance = MyClass()<br />
+instance.my_class_method(1, 2)<br />
+#&gt;&gt;&gt; 3[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://docs.python.org/3/library/functions.html#staticmethod">@staticmethod</a><br><br />
+This is a built in decorator, it is widely used when defining methods inside a class. Its use is to flag functions that are static as its name suggests. A function is static when it doesn't interact with other functions or attributes of the class. You can see that a function is static when <code>self</code> is not used at all inside its definition.</p>
+<p>In fact, a staticmethod can't have <code>cls</code> or <code>self</code> as parameter nor it can access class atributes or instance attributes.</p>
+<p>A staticmethod is kind of a very lonely function that is not able to interact with anyone or anything excepts its arguments :D</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]class MyClass:<br />
+    my_attribute = 0<br />
+    @staticmethod<br />
+    #note that it didn't have to put `self` as an argument.<br />
+    def my_static_method(x,y):<br />
+        return x + y</p>
+<p>    #This function is dynamic as it interacts with an attribute of the instance.<br />
+    def my_dynamic_method(self, x, y):<br />
+        self.my_attribute = x + y<br />
+        return self.my_attribute</p>
+<p>    #note that for a dynamic method i have to put `self` as an argument but<br />
+    #it feels weird as it's not using any attribute or method of the instance.<br />
+    def my_weird_method(self, x, y):<br />
+        return x + y</p>
+<p>instance = MyClass()<br />
+instance.my_static_method(1,2)<br />
+#&gt;&gt;&gt;3[/code]
+</p></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://flask.palletsprojects.com/en/2.2.x/quickstart/">@app.route in Flask</a><br><br />
+This decorator is very important when using the framework Flask. It's designed to tell Flask what URL should trigger the function you are defining. Similarly there is <a href="https://fastapi.tiangolo.com/tutorial/first-steps/">@app.get for FastAPI</a>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+<div class="input_area">
+[code language="python"]from flask import Flask</p>
+<p>app = Flask(__name__)</p>
+<p>@app.route("/my_url")<br />
+def hello_world():<br />
+    return "
+<p>Hello, World!</p>
+<p>"</p>
+<p>#suppose the url to your website is www.mywebsite.com<br />
+#when you'll go to www.mywebsite.com/my_url it will trigger the function `hello_world`[/code]
+</p></div>
+</div>
+</div>
+</div>
+<p><!-- /wp:html --></p>
+<p><!-- wp:jetpack/subscriptions {"fontSize":"13px","customFontSize":"13px"} /--><br />
+</body></html></p>

@@ -1,0 +1,61 @@
+---
+layout: post
+title: The Era of Fast and Inexpensive LLM is Underway and Microsoft is Joining the
+  Dance!
+date: 2023-10-29 23:55:52.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Generative AI
+tags:
+- inference costs
+- LLMs
+- Microsoft
+- model compression
+- RetNet
+- Transformer
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  timeline_notification: '1698620155'
+  _publicize_job_id: '88912261145'
+  wordads_ufa: s:wpcom-ufa-v4:1698620356
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:04'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2023/10/29/the-era-of-fast-and-inexpensive-llm-is-underway-and-microsoft-is-joining-the-dance/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/10/2023-10-29-23-51-57.png"></p>
+<p>The Era of Fast and Inexpensive LLM is Underway and Microsoft is Joining the Dance!</p>
+<p>This current trend of focusing on developing capable but smaller LMs is not displeasing to me because although recently unveiled models like Falcon 180B are impressive, I doubt many companies in France have use cases that would justify the cost of deploying and maintaining these models in the cloud (you need 8 40GB A100 GPUs just to load the model).</p>
+<p>On the other hand, I am much more stimulated by a model like Microsoft's recently published 1.3B parameter Phi 1.3B because I think that today models between 1 and 13B parameters meet most of the needs of companies.</p>
+<p>Today, the war is more than ever to reduce inference costs.</p>
+<p>Until now, to make models more compact, we could turn to small LLM and use fine-tuning to specialize them on a specific task, thus avoiding the use of larger generalist models.</p>
+<p>We can also use "quantization", i.e. reduce the model weight size by reducing the precision of the calculations (for example from 32 bits to 16, 8 or even 4...).</p>
+<p>(There are other techniques like knowledge distillation or low rank factorization but they are a bit less accessible.)</p>
+<p>Another lever we can act on is the neural network architecture.</p>
+<p>Transformers that emerged in 2017 are still the basis for today's LLM.</p>
+<p>The Transformer architecture has a small flaw: its inference complexity is linear with sequence length, i.e. O(N), due in particular to its characteristic attention layers.</p>
+<p>Yesterday, Microsoft (again) published an article to suggest an alternative to Transformers: the "RetNet" and the results are promising! The inference complexity is constant, i.e. O(1). In particular, inference would be 8.4x faster than with Transformers while saving 70% of GPU memory.</p>
+<p>To get concrete, today to load a 7B LLM on your GPU you need 14GB of memory (with 16-bit precision).</p>
+<p>The longer the text sequence to process, the more additional GPU your model will consume, up to 45GB of RAM in the example.</p>
+<p>With RetNet we stay constant around 15GB.</p>
+<p>I'm excited and at the same time part of me invites me to remain cautious, others have already tried to replace Transformers, without success.</p>
+<p>Wait and see!</p>
+</div>
+</div>
+</div>
+<p><!-- /wp:html --><br />
+</body></html></p>

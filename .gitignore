@@ -1,0 +1,17 @@
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+vendor/
+.bundle/
+Gemfile.lock
+node_modules/
+.DS_Store
+*.log
+
+# One-time fix scripts (can be deleted after use)
+fix_images.rb
+fix_latex.rb
+clean_wordpress_artifacts.rb
+check_articles.rb
+

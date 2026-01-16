@@ -1,0 +1,71 @@
+---
+layout: post
+title: 4 Simple Tips for Improving RAG Performance
+date: 2024-01-08 09:36:00.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Generative AI
+- Machine Learning
+- Natural Language Processing (NLP)
+tags:
+- evaluation
+- improvement
+- LLM
+- performance
+- query optimization
+- rag
+- retrieval
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  wordads_ufa: s:wpcom-ufa-v4:1709500863
+  firehose_sent: '1704705001'
+  reader_suggested_tags: '["LLM","AI","Chatgpt","Artificial Intelligence","Rag"]'
+  _publicize_job_id: '90907532182'
+  timeline_notification: '1704705003'
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:07'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2024/01/08/4-simple-tips-for-improving-rag-performance/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:paragraph --><html><body></p>
+<p>Here are four simple tips for improving the performance of your RAG (Retrieval Augmented Generation):</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list {"ordered":true,"start":0} --></p>
+<ol start="0">
+<!-- wp:list-item --></p>
+<li>Understand the RAG: The RAG combines a "Retrieval" step to find relevant documents for a user query, and a "LLM" step where those documents feed a language model to generate the final response.<br><br>
+</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>You can't improve what you don't measure: Use experiment tracking with tools like MLflow. Log everything necessary to reproduce the experience and analyze it afterwards. This includes scores, prompt templates, queries, retrieved documents, hyperparameters like chunk size, chunk overlap... but also matplotlib visualizations etc. This will avoid the "It was better before but I don't know what I changed". There are still a lot of projects navigating by sight.<br><br>
+</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Evaluation of response quality: How to evaluate LLM responses? What metrics? This is still a complex area, and for good reason it is an active subject of research. Simple metrics like ROUGE can be used but they are limited because they are based solely on the number of common n-grams between the LLM prediction and the target. There is also BertScore to consider, or using another LLM to evaluate the final response. It's up to you to choose your method.<br><br>
+</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Evaluation of Retrieval: What we can do much more easily, however, is measure the ability of retrieval to find relevant documents. Prepare an evaluation dataset with queries and expected relevant documents. The idea is then to compare the documents retrieved by the retrieval to the relevant documents. The metrics to use here are similar to those of recommendation systems: Hitrate, Precision@k, Recall@k, MAP.<br><br>
+</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Query optimization: The assumption of retrieval is the semantic similarity between documents to be retrieved and the user query. This is a very strong assumption that is often inaccurate. To improve this, explore strategies such as query transformation. You can use reformulation via an LLM or go through more classic NLP techniques like NER for keyword extraction, it's up to you. Also consider specialized embedders that have been specifically trained on question-answer pairs. Also pay attention to some embedders that have a fairly low token limit (128 tokens for some Hugging Face models).<br>
+</li>
+<p><!-- /wp:list-item -->
+</ol>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --><br />
+</body></html></p>

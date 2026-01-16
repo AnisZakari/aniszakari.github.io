@@ -1,0 +1,61 @@
+---
+layout: post
+title: RAG vs Finetuning - Complementary not Opposing
+date: 2024-03-08 22:33:42.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Generative AI
+- Personal Thoughts
+tags:
+- few-shot learning
+- finetuning
+- Large language models
+- LLMs
+- model training
+- rag
+- retrieval-augmented generation
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  firehose_sent: '1709942178'
+  wordads_ufa: s:wpcom-ufa-v4:1709942421
+  reader_suggested_tags: '["AI","LLM","Artificial Intelligence","Rag","Large Language
+    Models"]'
+  timeline_notification: '1709942179'
+  _publicize_job_id: '92581404404'
+  _elasticsearch_data_sharing_indexed_on: '2024-03-08 23:56:21'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2024/03/08/rag-vs-finetuning-complementary-not-opposing/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:paragraph --><html><body></p>
+<p>RAG and finetuning are often opposed: Should we fine-tune our LLM or do RAG? In reality, the approaches do not oppose each other. On the contrary, they complement each other.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>RAG, which needs no introduction, allows querying an external knowledge base to enrich the context provided to the LLM. We thus add the relevant documents to the prompt. This approach is very interesting when dealing with evolving information because we update the database, not the model, which is much simpler and less expensive. The double advantage is that by constraining the model to rely on documents, we reduce its propensity to hallucinate.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>The downside is that by adding both context, instructions, documents, thought processes (Chain of Thought), and finally few-shot examples to the prompt, the prompt becomes a whole little booklet.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Even though LLMs have increasingly impressive ingestion capacities (context window of 200k tokens for Claude 2 and 128k for GPT-4), they are designed such that they have attention loss when they have to "read novels". In particular, their focus is on the beginning and the end, with potentially lost information in the middle, hence the interest in staying concise (see the paper "<a href="https://arxiv.org/abs/2307.03172">Lost in the Middle</a>").</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Finetuning, on the other hand, allows adjusting the LLM by training it on your own dataset. This allows it to learn things specific to your field, jargon, tone, behavior, but also to align it with your values... This not only improves its relevance but also means that if you use RAG on top, there will be even less to make explicit in the prompt, thus giving the LLM the opportunity to focus on the key information.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>A recent scientific publication has moreover quantified the performance gain of the finetuning + RAG method. (<a href="https://arxiv.org/abs/2401.08406">RAG vs Finetuning</a>)</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>When possible, the best approach is to do both.</p>
+<p><!-- /wp:paragraph --><br />
+</body></html></p>

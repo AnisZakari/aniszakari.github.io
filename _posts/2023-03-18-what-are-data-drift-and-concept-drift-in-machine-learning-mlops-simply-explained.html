@@ -1,0 +1,249 @@
+---
+layout: post
+title: What are Data Drift and Concept Drift in Machine Learning ? MLOps Simply explained.
+date: 2023-03-18 15:54:33.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- MLOps and Coding
+tags:
+- concept drift
+- data drift
+- DevOps
+- Machine Learning
+- MLOps
+- Monitoring
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  wordads_ufa: s:wpcom-ufa-v3-beta:1679172903
+  _publicize_job_id: '82420897986'
+  timeline_notification: '1679151276'
+  _elasticsearch_data_sharing_indexed_on: '2025-03-15 15:49:01'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2023/03/18/what-are-data-drift-and-concept-drift-in-machine-learning-mlops-simply-explained/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:html --><html><body></p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Once you have trained a successful machine learning model that meets the standards you want to achieve, you can celebrate it ! However, this is far from beeing the end of the story. In fact, most of the time it's the easiest part :D . Now, you have to make the model available at scale for users as an app. This step is called <strong>deployment</strong>.</p>
+<p>Like any normal app, machine learning models may encounter bugs over time, so you occasionally have to change the code in order to fix them. By the way, as you changed the code, what you fixed might have changed the behaviour of other functions. You then have to make sure all the functions still behave the same way. This step is usually performed through <strong>unit testing</strong> and <strong>integration testing</strong>. Finally, you have to redeploy the whole app.</p>
+<p>In addition, users may also request new features to enhance the app, so again you'll need to change the code, perform tests and redeploy it.</p>
+<p>In a nutshell, there is an endless cycle: development, testing, deployment, monitoring, development, testing....</p>
+<p>I think you can guess how annoying it would be to redo all these steps by hand each time.<br />
+You need to automate this process! The process of maintaing your app throughout the software development life cycle in such a fashion is called <strong>DevOps</strong>.</p>
+<p>In machine learning, we have <strong>MLOps</strong> it sounds like <strong>DevOps</strong> but there's a difference. We have all the previous things to take care of... but we also have other sources of hassle. Indeed, <strong>the performances of your model</strong> can degrade over time. Typically, <strong>Data Drift</strong> and <strong>Concept Drift</strong> are common causes of performance degradation in machine learning models.</p>
+<p>In this article, we will focus on the later two.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Monitoring-the-performances">Monitoring the performances<a class="anchor-link" href="#Monitoring-the-performances"></a><br />
+</h2>
+<p>To illustrate the point, let's consider a simple example of a machine learning model that measures the willingness to buy an Iphone given the age. Your model has a very good accuracy for now, however, as you are a fellow MLOps Engineer, you want to keep an eye on the metrics over time. In order to evaluate the performance of the model, you need to calculate the <strong>error</strong> between its predictions and the true values. Wait a second, <strong>How do we calculate the error if we don't have access to the true values at the time of prediction ?</strong> In many real use cases you can have access to the true values with a delay. In our example, let's assume that a month after the predictions, you know if the people have indeed bought the phone or not so you can record the predictions in <strong>logs</strong> and calculate the error later when the outcomes become available.</p>
+<p>In January, your model achieved high accuracy.</p>
+<p>In February your model's accuracy is very low.</p>
+<p>What happened ? Is that even possible ? Does it come from the model ? Is it the Data ?<br />
+We need to investigate the possible causes of this discrepancy.</p>
+<p>To begin the investigation, let's examine the model.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="300" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/03/2023-03-17-23-40-3.png?h=300"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The blue line in this graph represents the predictions made by the model we trained. The red line shows the actual values that we are trying to predict.</p>
+<p>The model appears to accurately predict most of the values of the target variable. A priori, it seems that the model is performing well overall.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Data-Drift">Data Drift<a class="anchor-link" href="#Data-Drift"></a><br />
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="Let's-now-take-a-closer-look-at-the-Data-in-january.">Let's now take a closer look at the Data in january.<a class="anchor-link" href="#Let's-now-take-a-closer-look-at-the-Data-in-january."></a><br />
+</h5>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="300" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/03/2023-03-17-23-47-3.png?h=300"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It seems to follow a bell curve or a normal/gaussian distribution in the statistics lingo.<br />
+The majority of individuals fall between the ages of 20 and 40. As you can see from the blue line on the previous graph, the model's predictions for these age ranges are almost perfectly accurate. The rest of the ages are under-represented. As a result, the model's overall average error is very low.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="Now-let's-look-at-the-Data-in-February">Now let's look at the Data in February<a class="anchor-link" href="#Now-let's-look-at-the-Data-in-February"></a><br />
+</h5>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="300" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/03/2023-03-17-23-55-1.png?h=300"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is kind of extreme, but let's assume this is not a bug and that it reflects real market behavior.</p>
+<p>Now, the model is still the same, but all the data we have has shifted towards the 50-60 years old age range. As a consequence, the model is performing very poorly because all the data is located in the area where the model has the highest error.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="300" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/03/2023-03-18-00-02-4.png?h=300"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So overall, the average error is very high.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is what we call a <strong>Data Drift</strong></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="600" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/03/2023-03-18-00-04-4.png?h=600"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Again, my example is quite extreme, in general your distribution is just a little bit skewed but we can clearly see the impact that the distribution can have on the model.</p>
+<h5 id="How-to-detect-Data-Drift-?">How to detect Data Drift ?<a class="anchor-link" href="#How-to-detect-Data-Drift-?"></a><br />
+</h5>
+<p>In fact, <strong>when monitoring for Data Drift, we don't even need to use the predictions or the real values</strong>. We only need to check that the new data is approximately distributed like the original one. A simple thing to implement, for example, is to set an alert when the mean/median of the data becomes too different from the mean of the original data. Generally speaking, we should monitor statistical properties of the input data, such as the mean, standard deviation, and correlation coefficients. Of course, we can use more advanced tools like statistical tests, etc.</p>
+<p>A <strong>Data Drift</strong> almost always harms your model's performance, and it should always raise attention as it can potentially cause significant problems for the model's accuracy and reliability.</p>
+<h5 id="How-to-address-Data-Drift-?">How to address Data Drift ?<a class="anchor-link" href="#How-to-address-Data-Drift-?"></a><br />
+</h5>
+<p>There are several things you can do:</p>
+<ul>
+<li>In our example we can retrain the model with the initial Dataset on which we'll add more data in the area where the model performs poorly (between 50 and 60) it could solve the problem.</li>
+<li>If the Data Drift is small, fine-tuning the model may be sufficient.</li>
+<li>If the data drift is significant, you may need to retrain the model on new data.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Concept-Drift">Concept Drift<a class="anchor-link" href="#Concept-Drift"></a><br />
+</h2>
+<p>Suppose it is September, and the model has been performing well until November.</p>
+<p>However, in December, the model's performance has dropped significantly, even though the distribution of the data remains constant. So, what could be the reason behind this sudden drop in performance ?</p>
+<p>Okay, now that should be the model's fault, right ?</p>
+<p>Let's see what happened.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="" height="300" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2023/03/2023-03-18-00-22-5.png?h=300"></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Oh my god, this time the model has literally flipped.<br />
+Meaning that the true relationship between X and the target variable has completly changed while your model has remained the same. If we think about that, Apple launches a new Iphone every september so the previous iPhone may become less desirable for people between the ages of 20 and 40, leading to a significant shift in the target variable. However, younger and older people may not be as influenced by the trend, and may still be willing to buy the product, resulting in a complete change in the target variable distribution.</p>
+<p>In essence, <strong>Concept drift</strong> is a phenomenon that occurs when the statistical properties of the target variable (the thing the model is trying to predict) change over time, rendering the model less accurate or even completely obsolete.<br />
+This can occur due to changes in the behavior of the system being modeled, changes in the external environment, or other factors...</p>
+<h5 id="How-to-detect-Concept-Drift-?">How to detect Concept Drift ?<a class="anchor-link" href="#How-to-detect-Concept-Drift-?"></a><br />
+</h5>
+<p>Well, you need to analyze your model's performance over time and compare it to its performance on historical data. If the distribution of the target variable remains relatively stable but your model's performance deteriorates, it may indicate a Concept Drift. If you don't have access to the true values to calculate the error, you can consider maintaining a static model as a baseline for comparison.</p>
+<p>For classification models, you can also check the average confidence score. If it changes significantly over time, it could be an indication of Concept Drift and should be investigated further.</p>
+<h5 id="How-to-address-Concept-Drift-?">How to address Concept Drift ?<a class="anchor-link" href="#How-to-address-Concept-Drift-?"></a><br />
+</h5>
+<p>When there is a Concept Drift in the data, it is usually necessary to <strong>retrain the model</strong> on new data to update the model and ensure that it remains accurate and reliable. This implies collecting new data that reflects the new distribution or behavior of the system.</p>
+<p>Moreover, we may also have to change the model architecture or create a new one. For example, if the true relationship between X and Y changes from linear to logarithmic, we not only have to gather new data but also adapt the model.</p>
+<p>A good practice is to regularly retrain and update the model to ensure that it remains accurate and reliable over time.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Other-things-you-should-be-Monitoring:">Other things you should be Monitoring:<a class="anchor-link" href=""></a><br />
+</h2>
+<p>In addition to model performance, drifts, and bugs, there are several other factors that you should consider.</p>
+<ul>
+<li>
+<p><strong>Outliers</strong>: Identify and handle outliers in the input data, as these can skew the model's output and lead to inaccurate predictions (this can be part of the Data Drift monitoring).</p>
+</li>
+<li>
+<p><strong>Bias</strong>: Monitor for bias in the model's output, especially when the model is used in sensitive applications. Ensure that the model does not discriminate against certain groups of people and that its predictions are fair and ethical.</p>
+</li>
+<li>
+<p><strong>Robustness</strong>: Test the model's robustness by introducing adversarial examples or other forms of attacks that could potentially fool the model. This can help you identify and fix vulnerabilities in the model before they are exploited.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>That's all for today folks, I hope you enjoyed this article !</p>
+</div>
+</div>
+</div>
+<p><!-- /wp:html --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:jetpack/subscriptions {"fontSize":"13px","customFontSize":"13px","className":"is-style-split"} /--><br />
+</body></html></p>

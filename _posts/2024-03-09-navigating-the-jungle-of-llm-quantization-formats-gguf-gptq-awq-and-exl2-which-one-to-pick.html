@@ -1,0 +1,75 @@
+---
+layout: post
+title: Navigating the Jungle of LLM Quantization Formats, GGUF, GPTQ, AWQ and EXL2
+  - Which One To Pick?
+date: 2024-03-09 22:38:11.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Generative AI
+tags:
+- AWQ
+- compression
+- EXL2
+- finetuning
+- formats
+- GGUF
+- GPTQ
+- GPU
+- inference
+- Large language models
+- LLMs
+- quantization
+meta:
+  _wpcom_is_markdown: '1'
+  _last_editor_used_jetpack: block-editor
+  firehose_sent: '1710020911'
+  wordads_ufa: s:wpcom-ufa-v4:1710021094
+  timeline_notification: '1710020912'
+  reader_suggested_tags: '["Large Language Models","AI","Artificial Intelligence","LLMS","Machine
+    Learning"]'
+  _publicize_job_id: '92602398338'
+  _elasticsearch_data_sharing_indexed_on: '2024-03-09 21:48:34'
+author:
+  login: aniszakari
+  email: anis.zakari.pro@gmail.com
+  display_name: aniszakari
+  first_name: ''
+  last_name: ''
+permalink: "/2024/03/09/navigating-the-jungle-of-llm-quantization-formats-gguf-gptq-awq-and-exl2-which-one-to-pick/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- wp:paragraph --><html><body></p>
+<p>Quantizing LLMs reduces calculation precision and thus the required GPU resources, but it can sometimes be a real jungle trying to find your way among all the existing formats.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>GGUF, GPTQ, AWQ, EXL2... Which quantization format to choose and why?</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>There are so many standards and tools because quantization is not just about rounding values. There are in fact more advanced strategies and different philosophies. It's a bit like images with JPEG, PNG, SVG, WEBP formats...</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Take GGUF, the format popularized by llama.cpp, its goal is to reduce precision while optimizing calculations from a CPU perspective, with a particular focus on Apple hardware. It remains possible to offload some of the weights to the GPU for more speed. To run an LLM locally, it's therefore a good candidate, especially if you have a Mac.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>GPTQ is oriented towards GPU inference performance. It quantizes the weights by minimizing error thanks to a calibration dataset. This allows comparing the outputs of the full precision and quantized model. At inference, GPTQ dynamically "dequantizes" the weights in float16 to limit loss of precision, all with low impact on GPU memory.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>AWQ is based on the observation that ~1% of weights contribute significantly to model performance; these must therefore be treated with special care by applying per-channel scaling. AWQ uses a dataset to analyze activation distributions during inference and identify critical weights. AWQ is faster at inference than GPTQ and also seems to have better perplexity but requires slightly more VRAM.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>EXL2 uses the GPTQ philosophy but allows mixing weight precisions within the same model. Some critical weights thus retain high precision, with the rest being more quantized to optimize performance. EXL2 probably offers the fastest inference, at the cost of slightly higher VRAM consumption than AWQ.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>To finetune a quantized LLM with QLoRA, you’ll only be able to do it with GPTQ (or with bitsandbytes for on-the-fly quantization).</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>If you want to avoid quantizing an LLM yourself, the user <a href="https://huggingface.co/TheBloke">TheBloke</a> on Huggingface has close to 4000 models ready to use in GPTQ, GGUF or AWQ formats.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>But things are moving so fast, it’s hard to stay abreast of the latest advances and it wouldn't be surprising to see new standards emerge in the coming months.</p>
+<p><!-- /wp:paragraph --><br />
+</body></html></p>
