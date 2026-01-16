@@ -1,7 +1,7 @@
 # Site Settings
 title: "Scale Up Your Knowledge in Data Science"
 description: "Personal blog about data science, machine learning, and AI"
-url: "https://YOUR_USERNAME.github.io"  # Change this to your GitHub username
+url: "https://aniszakari.github.io"  
 baseurl: ""  # Leave empty if using username.github.io, or set to "/repository-name"
 
 # Repository (optional - for GitHub edit links)
@@ -26,7 +26,7 @@ author:
   links:
     - label: "GitHub"
       icon: "fab fa-github"
-      url: "https://github.com/YOUR_USERNAME"  # Update with your GitHub username
+      url: "https://github.com/AnisZakari"  
 
 # Language
 lang: en
