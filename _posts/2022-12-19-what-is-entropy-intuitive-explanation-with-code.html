@@ -53,7 +53,7 @@ You want to choose the country so that you maximize the probability that the wet
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img alt="low_entropy" height="200" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-16-02-12.png?h=200"></p>
+<p><img alt="low_entropy" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-16-02-12.png" style="height:250px; width:auto"></p>
 <p>In this case, it's not very informative, thus it has low entropy.</p>
 </div>
 </div>
@@ -62,7 +62,7 @@ You want to choose the country so that you maximize the probability that the wet
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In the second case, there is more variety (more information or higher entropy), the probabilities are spread across sunny, cloudy and rainy. With variety comes a way more complete information.</p>
-<p><img alt="high_entropy" height="200" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-16-04-09.png?h=200"></p>
+<p><img alt="high_entropy" src="{{ site.baseurl }}/assets/media-export-203664368-from-0-to-2031/2022/12/2022-12-17-16-04-09.png" style="height:250px; width:auto"></p>
 <p>To put it in a nutshell, entropy is a <strong>way of quantifying uncertainty</strong>. This is probably the most intuitive way to see it. Uncertainty is inversely proportional to probability, that is to say, the more uncertain an outcome is, the least probable it is. As you might have guessed, the uncertainty is maximum when the distribution is uniform (all the probabilities are the same), basically it's a stalemate, it's chaos, you can't take any decision based on the probabilities... which is exactly the scenario where we said that information is maximum. Maximizing information is equivalent to maximizing uncertainty.</p>
 </div>
 </div>
@@ -271,18 +271,19 @@ the Decision tree splits the data at each node using impurity. The goal here is 
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]# Get probabilities associated with every label<br />
-import numpy as np<br />
-labels = [0,0,1,1,1]<br />
-values, counts = np.unique(labels, return_counts=True)<br />
-probs = counts / len(labels)<br />
-print("values:", values)<br />
-print("counts:", counts)<br />
-print("probs:", probs)</p>
-<p>#&gt;&gt;&gt; values: [0, 1]<br />
-#&gt;&gt;&gt; counts: [2, 3]<br />
-#&gt;&gt;&gt; probs: [0.4, 0.6][/code]
-</p></div>
+<pre><code class="language-python"># Get probabilities associated with every label
+import numpy as np
+labels = [0,0,1,1,1]
+values, counts = np.unique(labels, return_counts=True)
+probs = counts / len(labels)
+print("values:", values)
+print("counts:", counts)
+print("probs:", probs)
+
+#>>> values: [0, 1]
+#>>> counts: [2, 3]
+#>>> probs: [0.4, 0.6]</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -297,11 +298,12 @@ print("probs:", probs)</p>
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]from scipy.stats import entropy</p>
-<p>e = entropy(probs, base=2)<br />
-print(e)<br />
-#&gt;&gt;&gt; 0.9709505944546688[/code]
-</p></div>
+<pre><code class="language-python">from scipy.stats import entropy
+
+e = entropy(probs, base=2)
+print(e)
+#>>> 0.9709505944546688</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -316,15 +318,17 @@ print(e)<br />
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]from scipy.stats import entropy</p>
-<p>def entropy_from_labels(labels, base=2):<br />
-  """Take a list of labels as input and return its shannon entropy"""<br />
-  value, counts = np.unique(labels, return_counts=True)<br />
-  probs = counts/len(labels)<br />
-  return entropy(probs, base=base)</p>
-<p>entropy_from_labels(labels, base=2)<br />
-#&gt;&gt;&gt; 0.9709505944546688[/code]
-</p></div>
+<pre><code class="language-python">from scipy.stats import entropy
+
+def entropy_from_labels(labels, base=2):
+  """Take a list of labels as input and return its shannon entropy"""
+  value, counts = np.unique(labels, return_counts=True)
+  probs = counts/len(labels)
+  return entropy(probs, base=base)
+
+entropy_from_labels(labels, base=2)
+#>>> 0.9709505944546688</code></pre>
+</div>
 </div>
 </div>
 </div>

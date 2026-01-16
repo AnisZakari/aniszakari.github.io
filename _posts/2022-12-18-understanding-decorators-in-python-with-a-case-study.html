@@ -49,9 +49,9 @@ that it's not a very difficult concept to understand and once you master it, it 
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]@decorator #&lt;-- this is a decorator<br />
-def func():<br />
-    #do something[/code]
+<pre><code class="language-python">@decorator #<-- this is a decorator
+def func():
+    #do something</code></pre>
 </div>
 </div>
 </div>
@@ -67,9 +67,9 @@ def func():<br />
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]def my_decorator(input_func):<br />
-    #do something with input_func<br />
-    return output_func[/code]
+<pre><code class="language-python">def my_decorator(input_func):
+    #do something with input_func
+    return output_func</code></pre>
 </div>
 </div>
 </div>
@@ -85,9 +85,9 @@ def func():<br />
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]@my_decorator<br />
-def func():<br />
-    #do something[/code]
+<pre><code class="language-python">@my_decorator
+def func():
+    #do something</code></pre>
 </div>
 </div>
 </div>
@@ -105,11 +105,11 @@ def func():<br />
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]def my_decorator(input_func):<br />
-    def output_func():<br />
-        #do something with input_func<br />
-        input_func(...)<br />
-    return output_func[/code]
+<pre><code class="language-python">def my_decorator(input_func):
+    def output_func():
+        #do something with input_func
+        input_func(...)
+    return output_func</code></pre>
 </div>
 </div>
 </div>
@@ -140,13 +140,17 @@ def func():<br />
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]int_list = [2, 3, 4]<br />
-my_func = lambda x: x**2</p>
-<p>map(my_func, int_list)</p>
-<p>#&gt;&gt;&gt; map at 0x1069aa400&gt; #it returns a map object.</p>
-<p>list(map(my_func, int_list)) #let's convert it to a list to see the result</p>
-<p>#&gt;&gt;&gt; [4, 9, 16][/code]
-</p></div>
+<pre><code class="language-python">int_list = [2, 3, 4]
+my_func = lambda x: x**2
+
+map(my_func, int_list)
+
+#>>> map at 0x1069aa400> #it returns a map object.
+
+list(map(my_func, int_list)) #let's convert it to a list to see the result
+
+#>>> [4, 9, 16]</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -161,12 +165,15 @@ my_func = lambda x: x**2</p>
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]my_list = [('a', 'b'), ('c', 'd')]</p>
-<p>def concat(x, y):<br />
-    return x+y </p>
-<p>list(map(concat, my_list))</p>
-<p>#&gt;&gt;&gt; TypeError: () missing 1 required positional argument: 'y'[/code]
-</p></div>
+<pre><code class="language-python">my_list = [('a', 'b'), ('c', 'd')]
+
+def concat(x, y):
+    return x+y 
+
+list(map(concat, my_list))
+
+#>>> TypeError: () missing 1 required positional argument: 'y'</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -181,7 +188,7 @@ my_func = lambda x: x**2</p>
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]concat(x= ('a', 'b')) # we want concat(x='a', y='b') instead[/code]
+<pre><code class="language-python">concat(x= ('a', 'b')) # we want concat(x='a', y='b') instead</code></pre>
 </div>
 </div>
 </div>
@@ -197,14 +204,18 @@ my_func = lambda x: x**2</p>
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]my_list = [('a', 'b'), ('c', 'd')]</p>
-<p>def concat(x, y):<br />
-    return x+y </p>
-<p>def unpacker(items):<br />
-    return concat(*items)  #the start operator * unpacks the tuple</p>
-<p>list(map(unpacker, my_list))</p>
-<p>#&gt;&gt;&gt; ['ab', 'cd'][/code]
-</p></div>
+<pre><code class="language-python">my_list = [('a', 'b'), ('c', 'd')]
+
+def concat(x, y):
+    return x+y 
+
+def unpacker(items):
+    return concat(*items)  #the start operator * unpacks the tuple
+
+list(map(unpacker, my_list))
+
+#>>> ['ab', 'cd']</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -237,20 +248,23 @@ my_func = lambda x: x**2</p>
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]#define the decorator<br />
-def unpacker(func):<br />
-    #creating a nested function to unpack args for `func`<br />
-    def star_func(args):<br />
-        #unpack args<br />
-        return func(*args)<br />
-    #return the new function<br />
-    return star_func</p>
-<p>@unpacker<br />
-def _concat(x, y):<br />
-    return x+y </p>
-<p>list(map(_concat, my_list))</p>
-<p>#&gt;&gt;&gt; ['ab', 'cd'][/code]
-</p></div>
+<pre><code class="language-python">#define the decorator
+def unpacker(func):
+    #creating a nested function to unpack args for `func`
+    def star_func(args):
+        #unpack args
+        return func(*args)
+    #return the new function
+    return star_func
+
+@unpacker
+def _concat(x, y):
+    return x+y 
+
+list(map(_concat, my_list))
+
+#>>> ['ab', 'cd']</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -273,16 +287,20 @@ def _concat(x, y):<br />
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]def starmap(func, iterable):<br />
-    """apply map on an iterable where each element of this iterable is a tuple"""</p>
-<p>    #_func derives from func, it just unpacks arguments beforehand.<br />
-    @unpacker<br />
-    def _func(*args):<br />
-        return func(*args)</p>
-<p>    return map(_func, iterable)</p>
-<p>list(starmap(concat, my_list))</p>
-<p>#&gt;&gt;&gt; ['ab', 'cd'][/code]
-</p></div>
+<pre><code class="language-python">def starmap(func, iterable):
+    """apply map on an iterable where each element of this iterable is a tuple"""
+
+    #_func derives from func, it just unpacks arguments beforehand.
+    @unpacker
+    def _func(*args):
+        return func(*args)
+
+    return map(_func, iterable)
+
+list(starmap(concat, my_list))
+
+#>>> ['ab', 'cd']</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -297,13 +315,16 @@ def _concat(x, y):<br />
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]def starmap(func, iterable):<br />
-    """apply map on an iterable where each element of this iterable is a tuple"""<br />
-    _func = unpacker(func)</p>
-<p>    return map(_func, iterable)</p>
-<p>list(starmap(concat, my_list))</p>
-<p>#&gt;&gt;&gt; ['ab', 'cd'][/code]
-</p></div>
+<pre><code class="language-python">def starmap(func, iterable):
+    """apply map on an iterable where each element of this iterable is a tuple"""
+    _func = unpacker(func)
+
+    return map(_func, iterable)
+
+list(starmap(concat, my_list))
+
+#>>> ['ab', 'cd']</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -334,10 +355,10 @@ Most recent calls are cached in a dictionnary. It can save time when using a fun
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]from functools import lru_cache<br />
-@lru_cache<br />
-def factorial(n):<br />
-    return n * factorial(n-1) if n else 1[/code]
+<pre><code class="language-python">from functools import lru_cache
+@lru_cache
+def factorial(n):
+    return n * factorial(n-1) if n else 1</code></pre>
 </div>
 </div>
 </div>
@@ -357,19 +378,21 @@ rather than <code>self</code> that is used to symbolize an instance.</p>
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]class MyClass:<br />
-    @classmethod<br />
-    #we use cls as it stands for class rather than self that symbolizes the instance.<br />
-    def my_class_method(cls, x, y):<br />
-        return x + y</p>
-<p>#Notice that i didn't create any instance beforehand.<br />
-MyClass.my_class_method(1, 2)<br />
-#&gt;&gt;&gt; 3</p>
-<p>#Of course you can also access this method with an instance of the class.<br />
-instance = MyClass()<br />
-instance.my_class_method(1, 2)<br />
-#&gt;&gt;&gt; 3[/code]
-</p></div>
+<pre><code class="language-python">class MyClass:
+    @classmethod
+    #we use cls as it stands for class rather than self that symbolizes the instance.
+    def my_class_method(cls, x, y):
+        return x + y
+
+#Notice that i didn't create any instance beforehand.
+MyClass.my_class_method(1, 2)
+#>>> 3
+
+#Of course you can also access this method with an instance of the class.
+instance = MyClass()
+instance.my_class_method(1, 2)
+#>>> 3</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -387,24 +410,27 @@ This is a built in decorator, it is widely used when defining methods inside a c
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]class MyClass:<br />
-    my_attribute = 0<br />
-    @staticmethod<br />
-    #note that it didn't have to put `self` as an argument.<br />
-    def my_static_method(x,y):<br />
-        return x + y</p>
-<p>    #This function is dynamic as it interacts with an attribute of the instance.<br />
-    def my_dynamic_method(self, x, y):<br />
-        self.my_attribute = x + y<br />
-        return self.my_attribute</p>
-<p>    #note that for a dynamic method i have to put `self` as an argument but<br />
-    #it feels weird as it's not using any attribute or method of the instance.<br />
-    def my_weird_method(self, x, y):<br />
-        return x + y</p>
-<p>instance = MyClass()<br />
-instance.my_static_method(1,2)<br />
-#&gt;&gt;&gt;3[/code]
-</p></div>
+<pre><code class="language-python">class MyClass:
+    my_attribute = 0
+    @staticmethod
+    #note that it didn't have to put `self` as an argument.
+    def my_static_method(x,y):
+        return x + y
+
+    #This function is dynamic as it interacts with an attribute of the instance.
+    def my_dynamic_method(self, x, y):
+        self.my_attribute = x + y
+        return self.my_attribute
+
+    #note that for a dynamic method i have to put `self` as an argument but
+    #it feels weird as it's not using any attribute or method of the instance.
+    def my_weird_method(self, x, y):
+        return x + y
+
+instance = MyClass()
+instance.my_static_method(1,2)
+#>>>3</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -420,15 +446,16 @@ This decorator is very important when using the framework Flask. It's designed t
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]from flask import Flask</p>
-<p>app = Flask(__name__)</p>
-<p>@app.route("/my_url")<br />
-def hello_world():<br />
-    return "
-<p>Hello, World!</p>
-<p>"</p>
-<p>#suppose the url to your website is www.mywebsite.com<br />
-#when you'll go to www.mywebsite.com/my_url it will trigger the function `hello_world`[/code]
+<pre><code class="language-python">from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/my_url")
+def hello_world():
+    return "&lt;p&gt;Hello, World!&lt;/p&gt;"
+
+#suppose the url to your website is www.mywebsite.com
+#when you'll go to www.mywebsite.com/my_url it will trigger the function `hello_world`</code></pre>
 </p></div>
 </div>
 </div>

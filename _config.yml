@@ -41,6 +41,7 @@ kramdown:
   math_engine: mathjax
   hard_wrap: false
   auto_ids: true
+  syntax_highlighter: rouge
 highlighter: rouge
 
 # Exclude from processing

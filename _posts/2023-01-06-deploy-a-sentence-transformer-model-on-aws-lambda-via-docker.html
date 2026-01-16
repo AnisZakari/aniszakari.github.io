@@ -161,7 +161,7 @@ A virtual environment is a tool that helps to keep dependencies required by diff
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-[code language="bash"]pip install -U sentence-transformers[/code]
+<pre><code class="language-bash">pip install -U sentence-transformers</code></pre>
 </div>
 </div>
 </div>
@@ -176,22 +176,28 @@ A virtual environment is a tool that helps to keep dependencies required by diff
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]from sentence_transformers import SentenceTransformer</p>
-<p># The first time you run this line, it will download and install the chosen model.<br />
-model = SentenceTransformer('all-MiniLM-L6-v2')</p>
-<p>sentences = ['This framework generates embeddings for each input sentence',<br />
-    'Sentences are passed as a list of string.',<br />
-    'The quick brown fox jumps over the lazy dog.']</p>
-<p>sentence = 'This is my input sentence'</p>
-<p># Sentences are encoded by calling model.encode()<br />
-embeddings = model.encode(sentences)<br />
-# See how the model can also take as input a text rather than a list of texts.<br />
-embedding = model.encode(sentence)</p>
-<p>print(embeddings.shape)<br />
-print(embedding.shape)</p>
-<p>#&gt;&gt;&gt; (3, 384)<br />
-#&gt;&gt;&gt; (384,)[/code]
-</p></div>
+<pre><code class="language-python">from sentence_transformers import SentenceTransformer
+
+# The first time you run this line, it will download and install the chosen model.
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+sentences = ['This framework generates embeddings for each input sentence',
+    'Sentences are passed as a list of string.',
+    'The quick brown fox jumps over the lazy dog.']
+
+sentence = 'This is my input sentence'
+
+# Sentences are encoded by calling model.encode()
+embeddings = model.encode(sentences)
+# See how the model can also take as input a text rather than a list of texts.
+embedding = model.encode(sentence)
+
+print(embeddings.shape)
+print(embedding.shape)
+
+#>>> (3, 384)
+#>>> (384,)</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -229,30 +235,34 @@ print(embedding.shape)</p>
 <p>The core module is generally named <code>app.py</code>. Inside this module, the core function is conventionally named <code>lambda_handler</code>, this is the function that will be used by AWS Lambda. This very function has some constraints to satisfy. Indeed, it must have two arguments <code>event</code> and <code>context</code>, we don't have to worry too much about <code>context</code> however <code>event</code> is where the input should be located. <code>event</code> has to be a dictionnary, this is mandatory because of the way Lambda functions work (they expect a JSON as input and return a JSON as output).</p>
 <p>A part from that, there's no particular constraints to point out, at least for now. :)</p>
 <p>In our case we design a very simple input of the following form:</p>
-<p>[code language="javascript"]event = {"my_input": my input sentence...}[/code]
-</p></div>
+<pre><code class="language-javascript">event = {"my_input": "my input sentence..."}</code></pre></div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]# app.py file</p>
-<p>from sentence_transformers import SentenceTransformer</p>
-<p>model_name = 'all-MiniLM-L6-v2'</p>
-<p>model = SentenceTransformer(model_name)</p>
-<p>def my_app(my_input):<br />
-    """Simple app that tranforms text(s) into vector(s) using a sentence transformer model"""<br />
-    output = model.encode(my_input)<br />
-    return output</p>
-<p>def lambda_handler(event:dict, context:str):<br />
-    # unpacking my_input.<br />
-    my_input = event['my_input']<br />
-    # using the transformer model.<br />
-    # don't forget to convert the numpy array to list so it can be JSON Serializable.<br />
-    output = my_app(my_input).tolist()<br />
-    return output[/code]
-</p></div>
+<pre><code class="language-python"># app.py file
+
+from sentence_transformers import SentenceTransformer
+
+model_name = 'all-MiniLM-L6-v2'
+
+model = SentenceTransformer(model_name)
+
+def my_app(my_input):
+    """Simple app that tranforms text(s) into vector(s) using a sentence transformer model"""
+    output = model.encode(my_input)
+    return output
+
+def lambda_handler(event:dict, context:str):
+    # unpacking my_input.
+    my_input = event['my_input']
+    # using the transformer model.
+    # don't forget to convert the numpy array to list so it can be JSON Serializable.
+    output = my_app(my_input).tolist()
+    return output</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -282,7 +292,7 @@ print(embedding.shape)</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>A useful command to know is :</p>
-<p>[code language="bash"]pip freeze&gt;requirements.txt[/code]</p>
+<pre><code class="language-bash">pip freeze > requirements.txt</code></pre>
 <p>This will create in your directory a file named <code>requirements.txt</code> with all the packages used in a particular environment.<br />
 If you don't want to bother, this can be a very quick way to make requirements.</p>
 <p>in our case, we can make things even simpler as the only package installed is <code>sentence-transformers</code>. You'll also need <code>huggingface-hub</code>, for some reason this lib is not automatically installed with <code>sentence-transformers</code> despite beeing a dependency. Lastly we use a cpu only version of torch to make its size smaller and because there's no GPU available with lambda.</p>
@@ -292,11 +302,12 @@ If you don't want to bother, this can be a very quick way to make requirements.<
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-[code language="bash"]#requirements.txt file</p>
-<p>https://download.pytorch.org/whl/cpu/torch-1.10.1%2Bcpu-cp37-cp37m-linux_x86_64.whl<br />
-huggingface-hub==0.11.1<br />
-sentence-transformers==2.2.2[/code]
-</p></div>
+<pre><code class="language-bash">#requirements.txt file
+
+https://download.pytorch.org/whl/cpu/torch-1.10.1%2Bcpu-cp37-cp37m-linux_x86_64.whl
+huggingface-hub==0.11.1
+sentence-transformers==2.2.2</code></pre>
+</div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
@@ -327,32 +338,43 @@ We want our Image to:</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-[code language="yaml"]# Dockerfile</p>
-<p># We install python 3.7 from the AWS repository<br />
-FROM public.ecr.aws/lambda/python:3.7</p>
-<p># Set environment variable ENV_NAME = Docker, you'll understand why we do it in a moment.<br />
-ENV ENV_NAME Docker</p>
-<p># Copy app.py and requirements.txt in the Docker Image we are building.<br />
-COPY app.py requirements.txt ./</p>
-<p># Upgrade pip if needed<br />
-RUN python -m pip install --upgrade pip</p>
-<p># Install Sentence Transformer and other dependencies in requirements.txt<br />
-RUN pip3 install --no-cache-dir -r requirements.txt --default-timeout=2000</p>
-<p># Create the directory 'model'<br />
-RUN mkdir -p ./model</p>
-<p># Download the sentence-transfomer model and put it in the directory './model'<br />
-RUN curl https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/all-MiniLM-L6-v2.zip -o ./model/all-MiniLM-L6-v2.zip</p>
-<p># Unzip the model<br />
-RUN unzip ./model/all-MiniLM-L6-v2.zip -d ./model/all-MiniLM-L6-v2</p>
-<p># Delete the zip file as we don't need it anymore<br />
-RUN rm ./model/all-MiniLM-L6-v2.zip</p>
-<p># Give full access to the dir so that it won't trigger the error permission denied in AWS Lambda<br />
-# "[Errno 13] Permission denied: './all-MiniLM-L6-v2/modules.json'",<br />
-RUN chmod -R 644 ./model<br />
-RUN chmod -R 755 ./model</p>
-<p>#The CMD command​ specifies the instruction that is to be executed when a Docker container starts.<br />
-CMD ["app.lambda_handler"][/code]
-</p></div>
+<pre><code class="language-yaml"># Dockerfile
+
+# We install python 3.7 from the AWS repository
+FROM public.ecr.aws/lambda/python:3.7
+
+# Set environment variable ENV_NAME = Docker, you'll understand why we do it in a moment.
+ENV ENV_NAME Docker
+
+# Copy app.py and requirements.txt in the Docker Image we are building.
+COPY app.py requirements.txt ./
+
+# Upgrade pip if needed
+RUN python -m pip install --upgrade pip
+
+# Install Sentence Transformer and other dependencies in requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt --default-timeout=2000
+
+# Create the directory 'model'
+RUN mkdir -p ./model
+
+# Download the sentence-transfomer model and put it in the directory './model'
+RUN curl https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/all-MiniLM-L6-v2.zip -o ./model/all-MiniLM-L6-v2.zip
+
+# Unzip the model
+RUN unzip ./model/all-MiniLM-L6-v2.zip -d ./model/all-MiniLM-L6-v2
+
+# Delete the zip file as we don't need it anymore
+RUN rm ./model/all-MiniLM-L6-v2.zip
+
+# Give full access to the dir so that it won't trigger the error permission denied in AWS Lambda
+# "[Errno 13] Permission denied: './all-MiniLM-L6-v2/modules.json'",
+RUN chmod -R 644 ./model
+RUN chmod -R 755 ./model
+
+#The CMD command specifies the instruction that is to be executed when a Docker container starts.
+CMD ["app.lambda_handler"]</code></pre>
+</div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
@@ -373,11 +395,12 @@ CMD ["app.lambda_handler"][/code]
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-[code language="bash"]# your project folder should look like this</p>
-<p>├── Dockerfile              # Dockerfile<br />
-├── requirements.txt        # pip requirements<br />
-└──  app.py                  # the core module[/code]
-</p></div>
+<pre><code class="language-bash"># your project folder should look like this
+
+├── Dockerfile              # Dockerfile
+├── requirements.txt        # pip requirements
+└──  app.py                  # the core module</code></pre>
+</div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
@@ -390,12 +413,13 @@ CMD ["app.lambda_handler"][/code]
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-[code language="bash"]# When The Docker container is built, it would look like this</p>
-<p>├── requirements.txt        # pip requirements<br />
-├── app.py                  # the core module<br />
-└── model                   # directory with the sentence-transformer model<br />
-    └── all-MiniLM-L6-v2    # the sentence-transformer model[/code]
-</p></div>
+<pre><code class="language-bash"># When The Docker container is built, it would look like this
+
+├── requirements.txt        # pip requirements
+├── app.py                  # the core module
+└── model                   # directory with the sentence-transformer model
+    └── all-MiniLM-L6-v2    # the sentence-transformer model</code></pre>
+</div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
@@ -421,28 +445,33 @@ That's where the previous environment variable <code>ENV_NAME</code> defined in 
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-[code language="python"]# app.py file</p>
-<p>from sentence_transformers import SentenceTransformer<br />
-import os </p>
-<p># Check if the environment variable ENV_NAME is set and equal to 'Docker'<br />
-# Otherwise if it's not set, we are working locally, we don't need to pass the path to the model.<br />
-if os.environ.get('ENV_NAME') == 'Docker':<br />
-    model_name_or_path = 'model/all-MiniLM-L6-v2'<br />
-    os.environ['TRANSFORMERS_CACHE'] = './model'<br />
-else:<br />
-    model_name_or_path = 'all-MiniLM-L6-v2'</p>
-<p>model = SentenceTransformer(model_name_or_path)</p>
-<p>def my_app(my_input):<br />
-    """Simple app that tranforms text(s) into vector(s) using a sentence transformer"""<br />
-    output = model.encode(my_input)<br />
-    return output</p>
-<p>def lambda_handler(event:dict, context:str):<br />
-    # unpacking my_input<br />
-    my_input = event['my_input']<br />
-    # don't forget to convert the numpy array to list so it can be JSON Serializable<br />
-    output = my_app(my_input).tolist()<br />
-    return output[/code]
-</p></div>
+<pre><code class="language-python"># app.py file
+
+from sentence_transformers import SentenceTransformer
+import os 
+
+# Check if the environment variable ENV_NAME is set and equal to 'Docker'
+# Otherwise if it's not set, we are working locally, we don't need to pass the path to the model.
+if os.environ.get('ENV_NAME') == 'Docker':
+    model_name_or_path = 'model/all-MiniLM-L6-v2'
+    os.environ['TRANSFORMERS_CACHE'] = './model'
+else:
+    model_name_or_path = 'all-MiniLM-L6-v2'
+
+model = SentenceTransformer(model_name_or_path)
+
+def my_app(my_input):
+    """Simple app that tranforms text(s) into vector(s) using a sentence transformer"""
+    output = model.encode(my_input)
+    return output
+
+def lambda_handler(event:dict, context:str):
+    # unpacking my_input
+    my_input = event['my_input']
+    # don't forget to convert the numpy array to list so it can be JSON Serializable
+    output = my_app(my_input).tolist()
+    return output</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -471,7 +500,7 @@ else:<br />
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-[code language="bash"]docker build -t my_transformer_app .[/code]
+<pre><code class="language-bash">docker build -t my_transformer_app .</code></pre>
 </div>
 </div>
 </div>
@@ -494,7 +523,7 @@ else:<br />
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-[code language="bash"]docker run -p 9000:8080 my_transformer_app[/code]
+<pre><code class="language-bash">docker run -p 9000:8080 my_transformer_app</code></pre>
 </div>
 </div>
 </div>
@@ -508,7 +537,7 @@ else:<br />
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-[code language="bash"]curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"my_input": "hello world"}'[/code]
+<pre><code class="language-bash">curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"my_input": "hello world"}'</code></pre>
 </div>
 </div>
 </div>
@@ -780,11 +809,10 @@ A test event is always a JSON input to your function.</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-[code language="javascript"]# Test event<br />
-{<br />
-    "my_input": "hello hello"<br />
-}<br />
-`[/code]
+<pre><code class="language-javascript">// Test event
+{
+    "my_input": "hello hello"
+}</code></pre>
 </div>
 </div>
 </div>
