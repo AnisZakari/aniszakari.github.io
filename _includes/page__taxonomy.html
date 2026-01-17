@@ -1,0 +1,29 @@
+{% if page.categories.size > 0 %}
+  <div class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].categories_label | default: "Categories:" }} </strong>
+    <span itemprop="keywords">
+      {% for category in page.categories %}
+        {% assign category_slug = category | downcase | replace: ' ', '-' | replace: '(', '' | replace: ')', '' | replace: '&', 'and' | replace: 'nlp', '' | strip | replace: '--', '-' %}
+        {% if category == 'Natural Language Processing (NLP)' %}
+          {% assign category_slug = 'natural-language-processing' %}
+        {% elsif category == 'MLOps and Coding' %}
+          {% assign category_slug = 'mlops-and-coding' %}
+        {% elsif category == 'Personal Thoughts' %}
+          {% assign category_slug = 'personal-thoughts' %}
+        {% elsif category == 'Generative AI' %}
+          {% assign category_slug = 'generative-ai' %}
+        {% elsif category == 'Machine Learning' %}
+          {% assign category_slug = 'machine-learning' %}
+        {% elsif category == 'Linear Algebra' %}
+          {% assign category_slug = 'linear-algebra' %}
+        {% elsif category == 'Software Engineering' %}
+          {% assign category_slug = 'software-engineering' %}
+        {% elsif category == 'Statistics' %}
+          {% assign category_slug = 'statistics' %}
+        {% endif %}
+        <a href="/categories/{{ category_slug }}/" class="page__taxonomy-item" rel="tag">{{ category }}</a>{% unless forloop.last %}<span class="sep">, </span>{% endunless %}
+      {% endfor %}
+    </span>
+  </div>
+{% endif %}
+

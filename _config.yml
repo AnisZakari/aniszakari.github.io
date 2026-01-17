@@ -1,5 +1,5 @@
 # Site Settings
-title: "Scale Up Your Knowledge in AI Engineering"
+title: "The AI Engineering Quest"
 description: "Personal blog about data science, machine learning, and AI Engineering"
 url: "https://aniszakari.github.io"  
 baseurl: ""  
@@ -15,14 +15,15 @@ plugins:
   - jekyll-seo-tag
   - jekyll-remote-theme
   - jekyll-include-cache
+  - jekyll-paginate
 
 # Author
 author:
   name: "Anis Zakari"
-  avatar: # Path to avatar image (optional)
-  bio: "I used to be a Data Scientist in NLP. I used to be an ML Engineer. Now I’m a Lead AI Engineer, and I make AI chatbots for a living."  # Optional bio
+  avatar: "/assets/media-export-203664368-from-0-to-2031/2022/03/anis_rond.png"
+  bio: "I used to be a Data Scientist in NLP. I used to be an ML Engineer. Now I'm a Lead AI Engineer, and I make AI chatbots for a living."  # Optional bio
   location: # Optional location
-  email: "anis.zakari.pro@gmail.com"
+  email: "anis.zakari@outlook.fr"
   links:
     - label: "GitHub"
       icon: "fab fa-github"
@@ -67,15 +68,27 @@ collections:
 # Permalinks
 permalink: /:year/:month/:day/:title/
 
+# Pagination
+paginate: 15
+paginate_path: "/page:num/"
+
+# Footer settings
+footer:
+  custom_text: "Made with ❤️ by Anis Zakari" 
+
 # Minimal Mistakes specific settings
 search: true
+search_provider: "lunr"  # "lunr", "algolia", or "google"
+lunr:
+  search_within_pages: true
+  search_full_content: false  # Set to true if you want to search full content (larger index)
 minimal_mistakes_skin: default  # "air", "aqua", "contrast", "dark", "dirt", "neon", "sunrise"
 
 # Sidebar settings
 sidebar:
   - title: "About"
-    image: # Path to sidebar image
-    image_alt: # Alt text for image
+    image: "/assets/media-export-203664368-from-0-to-2031/2022/03/anis_rond.png"
+    image_alt: "Anis Zakari"
     text: "Lead AI Engineer, writing about AI Engineering, machine learning, and Data science."
 
 # Defaults
@@ -95,3 +108,10 @@ defaults:
       type: "pages"
     values:
       layout: single
+      prev: false
+      next: false
+      related: false
+  - scope:
+      path: "assets/js/lunr"
+    values:
+      layout: none
