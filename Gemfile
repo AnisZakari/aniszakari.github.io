@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem "github-pages", group: :jekyll_plugins
 gem "jekyll-remote-theme"
 gem "jekyll-include-cache"
+gem "jekyll-paginate"
 
 platforms :mingw, :x64_mingw, :mswin, :jruby do
   gem "tzinfo", ">= 1", "< 3"
