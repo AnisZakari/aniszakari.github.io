@@ -34,3 +34,121 @@
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 </script>
 
+<!-- Lunr search scripts (only needed for search functionality) -->
+{% if site.search %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ '/assets/js/lunr/lunr.min.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/lunr/lunr-store.js' | relative_url }}"></script>
+<script>
+  // Initialize Lunr search index
+  var idx = lunr(function () {
+    this.field('title')
+    this.field('excerpt')
+    this.field('categories')
+    this.field('tags')
+    this.ref('id')
+    this.pipeline.remove(lunr.trimmer)
+
+    // store is an array, so iterate properly
+    for (var i = 0; i < store.length; i++) {
+      this.add({
+        title: store[i].title,
+        excerpt: store[i].excerpt,
+        categories: store[i].categories,
+        tags: store[i].tags,
+        id: i
+      })
+    }
+  });
+
+  // Search function
+  function performSearch(query, resultdiv) {
+    if (!query || query.trim() === '') {
+      resultdiv.empty();
+      return;
+    }
+
+    var result = idx.query(function (q) {
+      query.split(lunr.tokenizer.separator).forEach(function (term) {
+        q.term(term, { boost: 100 })
+        if(query.lastIndexOf(" ") != query.length-1){
+          q.term(term, { usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 })
+        }
+        if (term != ""){
+          q.term(term, { usePipeline: false, editDistance: 1, boost: 1 })
+        }
+      })
+    });
+
+    resultdiv.empty();
+    resultdiv.prepend('<p class="results__found">'+result.length+' Result(s) found</p>');
+    
+    for (var i = 0; i < result.length; i++) {
+      var ref = parseInt(result[i].ref);
+      if (ref >= 0 && ref < store.length) {
+        var searchitem;
+        if(store[ref].teaser){
+          searchitem =
+            '<div class="list__item">'+
+              '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+                '<h2 class="archive__item-title" itemprop="headline">'+
+                  '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+                '</h2>'+
+                '<div class="archive__item-teaser">'+
+                  '<img src="'+store[ref].teaser+'" alt="">'+
+                '</div>'+
+                '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+              '</article>'+
+            '</div>';
+        } else {
+          searchitem =
+            '<div class="list__item">'+
+              '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+                '<h2 class="archive__item-title" itemprop="headline">'+
+                  '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+                '</h2>'+
+                '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+              '</article>'+
+            '</div>';
+        }
+        resultdiv.append(searchitem);
+      }
+    }
+  }
+
+  // Initialize search on document ready
+  $(document).ready(function() {
+    // Search toggle button functionality
+    $(".search__toggle").on("click", function() {
+      $(".search-content").toggleClass("is--visible");
+      $(".initial-content").toggleClass("is--hidden");
+      // set focus on input
+      setTimeout(function() {
+        $(".search-content input").focus();
+      }, 400);
+    });
+
+    // Close search screen with Esc key
+    $(document).keyup(function(e) {
+      if (e.keyCode === 27) {
+        if ($(".initial-content").hasClass("is--hidden")) {
+          $(".search-content").toggleClass("is--visible");
+          $(".initial-content").toggleClass("is--hidden");
+        }
+      }
+    });
+
+    // Handle both search inputs (main content and overlay)
+    $('input#search, input.search-input').on('keyup', function () {
+      var query = $(this).val().toLowerCase();
+      // Find the closest results div
+      var resultdiv = $(this).closest('.archive, .search-content__inner-wrap').find('#results').first();
+      if (resultdiv.length === 0) {
+        resultdiv = $('#results').first();
+      }
+      performSearch(query, resultdiv);
+    });
+  });
+</script>
+{% endif %}
+
